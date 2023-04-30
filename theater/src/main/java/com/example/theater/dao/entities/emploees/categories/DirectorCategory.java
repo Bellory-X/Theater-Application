@@ -6,13 +6,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
 
-@ToString
-@RequiredArgsConstructor
-@AllArgsConstructor
 @Entity
-@Table(name = "DirectorCategory")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "DirectorCategory")
+@EqualsAndHashCode
 public class DirectorCategory {
     @Id
     @Column(name = "category")

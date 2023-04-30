@@ -3,17 +3,18 @@ package com.example.theater.dao.entities.performances;
 import jakarta.persistence.*;
 import lombok.*;
 
-@ToString
-@RequiredArgsConstructor
-@AllArgsConstructor
 @Entity
-@Table(name = "Place")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "Place")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Place {
     @Id
     @Column(name = "Id")
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @EqualsAndHashCode.Include
     int id;
     @Column(name = "Number")
     int number;

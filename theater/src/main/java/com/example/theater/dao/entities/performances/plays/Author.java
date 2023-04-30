@@ -5,17 +5,18 @@ import lombok.*;
 
 import java.util.Date;
 
-@ToString
-@RequiredArgsConstructor
-@AllArgsConstructor
 @Entity
-@Table(name = "Author")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "Author")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Author {
     @Id
     @Column(name = "Id")
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @EqualsAndHashCode.Include
     int id;
     @Column(name = "FullName")
     String fullName;

@@ -5,17 +5,18 @@ import lombok.*;
 
 import java.util.Date;
 
-@ToString
-@RequiredArgsConstructor
-@AllArgsConstructor
 @Entity
-@Table(name = "Play")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "Play")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Play {
     @Id
     @Column(name = "Id")
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @EqualsAndHashCode.Include
     int id;
     @Column(name = "Name")
     String name;

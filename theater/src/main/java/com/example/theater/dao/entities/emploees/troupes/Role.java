@@ -3,17 +3,18 @@ package com.example.theater.dao.entities.emploees.troupes;
 import jakarta.persistence.*;
 import lombok.*;
 
-@ToString
-@RequiredArgsConstructor
-@AllArgsConstructor
 @Entity
-@Table(name = "Role")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "Role")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Role {
     @Id
     @Column(name = "Id")
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @EqualsAndHashCode.Include
     int id;
     @Column(name = "Name")
     int count;
@@ -23,16 +24,4 @@ public class Role {
     boolean understudy;
     @Column(name = "IdPerformance")
     int idPerformance;
-
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-//        return false;
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return getClass().hashCode();
-//    }
 }

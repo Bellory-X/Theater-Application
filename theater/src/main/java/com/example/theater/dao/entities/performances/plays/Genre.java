@@ -6,13 +6,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
 
-@ToString
-@RequiredArgsConstructor
-@AllArgsConstructor
 @Entity
-@Table(name = "Genre")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "Genre")
+@EqualsAndHashCode
 public class Genre {
     @Id
     @Column(name = "Name")

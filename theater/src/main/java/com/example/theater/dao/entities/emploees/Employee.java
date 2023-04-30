@@ -1,21 +1,23 @@
 package com.example.theater.dao.entities.emploees;
 
+import com.example.theater.dao.entities.Theater;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
 
-@ToString
-@RequiredArgsConstructor
-@AllArgsConstructor
 @Entity
-@Table(name = "Employee")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "Employee")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Employee {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @EqualsAndHashCode.Include
     int id;
 
     @Column(name = "fullName")

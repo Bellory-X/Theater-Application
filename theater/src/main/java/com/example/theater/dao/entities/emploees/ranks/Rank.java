@@ -5,17 +5,18 @@ import lombok.*;
 
 import java.util.Date;
 
-@ToString
-@RequiredArgsConstructor
-@AllArgsConstructor
 @Entity
-@Table(name = "Rank")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "Rank")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Rank {
     @Id
     @Column(name = "Id")
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @EqualsAndHashCode.Include
     int id;
     @Column(name = "Name")
     String name;
@@ -23,16 +24,4 @@ public class Rank {
     String contest;
     @Column(name = "Data")
     Date data;
-
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-//        return false;
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return getClass().hashCode();
-//    }
 }

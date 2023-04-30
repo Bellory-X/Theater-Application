@@ -3,21 +3,24 @@ package com.example.theater.dao.entities.emploees;
 import jakarta.persistence.*;
 import lombok.*;
 
-@ToString
-@RequiredArgsConstructor
-@AllArgsConstructor
 @Entity
-@Table(name = "Director")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "Director")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Director {
     @Id
     @Column(name = "IdEmployee")
+    @EqualsAndHashCode.Include
     int id;
     @Column(name = "category")
     String category;
-    @OneToOne(mappedBy = "id")
-    Employee employee;
+
+//    @OneToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "IdEmployee")
+//    Employee employee;
 
 //    @Override
 //    public boolean equals(Object o) {

@@ -3,24 +3,24 @@ package com.example.theater.dao.entities.performances;
 import jakarta.persistence.*;
 import lombok.*;
 
+@Entity
 @Getter
 @Setter
-@ToString
-@RequiredArgsConstructor
-@NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@NoArgsConstructor
 @Table(name = "Subscription")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Subscription {
     @Id
     @Column(name = "Id")
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @EqualsAndHashCode.Include
     int id;
     @Column(name = "Count")
     int count;
     @Column(name = "Price")
     int price;
-//
+
 //    @Override
 //    public boolean equals(Object o) {
 //        if (this == o) return true;

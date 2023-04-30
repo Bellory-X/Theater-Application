@@ -3,17 +3,20 @@ package com.example.theater.dao.entities.performances;
 import jakarta.persistence.*;
 import lombok.*;
 
-@ToString
-@RequiredArgsConstructor
-@AllArgsConstructor
+import java.util.List;
+
 @Entity
-@Table(name = "Performance")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "Performance")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Performance {
     @Id
     @Column(name = "Id")
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @EqualsAndHashCode.Include
     int id;
     @Column(name = "IdPlay")
     int idPlay;
@@ -23,6 +26,11 @@ public class Performance {
     int price;
     @Column(name = "Theater")
     String theater;
+
+
+
+//    @OneToMany(fetch = FetchType.EAGER)@JoinColumn()
+//    List<Hall> halls;
 
 //    @Override
 //    public boolean equals(Object o) {
