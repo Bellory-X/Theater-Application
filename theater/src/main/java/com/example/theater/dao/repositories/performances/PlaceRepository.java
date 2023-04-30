@@ -1,6 +1,5 @@
 package com.example.theater.dao.repositories.performances;
 
-import com.example.theater.dao.entities.emploees.categories.ActorCategory;
 import com.example.theater.dao.entities.performances.Place;
 import org.springframework.data.repository.CrudRepository;
 
