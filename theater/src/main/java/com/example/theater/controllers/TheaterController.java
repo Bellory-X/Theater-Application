@@ -1,5 +1,6 @@
 package com.example.theater.controllers;
 
+import com.example.theater.mappers.TheaterMapper;
 import com.example.theater.services.TheaterService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,12 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 //@RequiredArgsConstructor
 public class TheaterController {
     private final TheaterService theaterService;
-//    private final TheaterMapper mapper;
 
-    TheaterController(TheaterService theaterService) {
+    TheaterController(TheaterService theaterService, TheaterMapper mapper) {
         this.theaterService = theaterService;
-//        this.mapper = mapper;
-        theaterService.getAllTheaters().forEach(System.out::println);
+        theaterService.getAll().forEach(System.out::println);
     }
 
     @GetMapping("/{id}")

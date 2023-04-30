@@ -4,5 +4,5 @@ import com.example.theater.dao.entities.emploees.troupes.MusiciansPerformance;
 import com.example.theater.dao.entities.emploees.troupes.MusiciansPerformanceKey;
 import org.springframework.data.repository.CrudRepository;
 
-public interface MusicianPerformanceRepository extends CrudRepository<MusiciansPerformance, MusiciansPerformanceKey> {
+public interface MusiciansPerformanceRepository extends CrudRepository<MusiciansPerformance, MusiciansPerformanceKey> {
 }
