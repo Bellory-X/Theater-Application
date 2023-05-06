@@ -7,16 +7,16 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "PlaysAuthor")
+@Table(name = "plays_author")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class PlaysAuthor {
     @Id
-    @Column(name = "Id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     int id;
-    @Column(name = "IdAuthor")
+    @Column(name = "id_author")
     int idAuthor;
-    @Column(name = "IdPlay")
+    @Column(name = "id_play")
     int idPlay;
 }

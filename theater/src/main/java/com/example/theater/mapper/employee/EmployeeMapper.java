@@ -8,6 +8,5 @@ import org.mapstruct.Mapper;
 public interface EmployeeMapper {
     Employee toEmployee(EmployeeDTO employeeDTO);
 
-//    @Mapping(target = "id", source = "isWorker")
     EmployeeDTO toEmployeeDTO(Employee employee);
 }

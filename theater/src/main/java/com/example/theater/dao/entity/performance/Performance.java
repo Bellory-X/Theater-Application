@@ -7,21 +7,21 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "Performance")
+@Table(name = "performance")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Performance {
     @Id
-    @Column(name = "Id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     int id;
-    @Column(name = "IdPlay")
+    @Column(name = "id_play")
     int idPlay;
-    @Column(name = "IdRepertoire")
+    @Column(name = "id_repertoire")
     int idRepertoire;
-    @Column(name = "Price")
+    @Column(name = "price")
     int price;
-    @Column(name = "Theater")
+    @Column(name = "theater")
     String theater;
 
 

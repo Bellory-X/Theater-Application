@@ -7,6 +7,6 @@ import lombok.Data;
 @Builder
 public class RepertoireDTO {
     int id;
-    int count;
-    String price;
+    int number;
+    String theater;
 }

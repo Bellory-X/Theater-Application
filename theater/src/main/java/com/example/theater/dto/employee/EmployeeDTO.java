@@ -15,6 +15,6 @@ public class EmployeeDTO {
     Date birthday;
     int countChild;
     int salary;
-    boolean isWorker;
+    boolean worker;
     String theater;
 }

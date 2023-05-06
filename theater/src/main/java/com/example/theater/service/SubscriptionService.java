@@ -3,6 +3,7 @@ package com.example.theater.service;
 import com.example.theater.dao.entity.Subscription;
 import com.example.theater.dao.repository.SubscriptionRepository;
 import com.example.theater.dto.SubscriptionDTO;
+import com.example.theater.exception.QueryException;
 import com.example.theater.exception.RecordNotFoundException;
 import com.example.theater.mapper.SubscriptionMapper;
 import lombok.AllArgsConstructor;
@@ -27,13 +28,13 @@ public class SubscriptionService {
     }
 
     public void add(SubscriptionDTO subscriptionDTO) {
-        Subscription subscription = mapper.toSubscription(subscriptionDTO);
+        Subscription subscription = mapper.toNewSubscription(subscriptionDTO);
         repository.save(subscription);
     }
 
     public void edit(SubscriptionDTO subscriptionDTO) {
         if (!repository.existsById(subscriptionDTO.getId()))
-            throw new RecordNotFoundException("Not found " + subscriptionDTO.getId());
+            throw new QueryException("Not found");
 
         Subscription subscription = mapper.toSubscription(subscriptionDTO);
         repository.save(subscription);
@@ -41,7 +42,7 @@ public class SubscriptionService {
 
     public void drop(SubscriptionDTO subscriptionDTO) {
         if (!repository.existsById(subscriptionDTO.getId()))
-            throw new RecordNotFoundException("Not found " + subscriptionDTO.getId());
+            throw new QueryException("Not found");
 
         Subscription subscription = mapper.toSubscription(subscriptionDTO);
         repository.delete(subscription);

@@ -7,21 +7,17 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "Actor")
+@Table(name = "actor")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Actor {
     @Id
-    @Column(name = "IdEmployee")
+    @Column(name = "id_employee")
     @EqualsAndHashCode.Include
     int idEmployee;
     @Column(name = "category")
     String category;
 
-//    @OneToOne(fetch = FetchType.LAZY)
-//    @MapsId
-//    @JoinColumn(name = "IdEmployee")
-//    Employee employee;
-
-//    @OneToMany(mappedBy = "actorCharacter", cascade = CascadeType.ALL, orphanRemoval = true)
-//    List<CharactersActor> characters;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_employee")
+    Employee employee;
 }

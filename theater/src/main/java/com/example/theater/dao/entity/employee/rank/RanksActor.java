@@ -1,22 +1,29 @@
 package com.example.theater.dao.entity.employee.rank;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "RanksActor")
+@Table(name = "ranks_actor")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class RanksActor {
     @Id
-    @Column(name = "Id")
+    @Column(name = "id")
     @EqualsAndHashCode.Include
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
-    @Column(name = "IdEmployee")
+    @Column(name = "id_employee")
     int idEmployee;
-    @Column(name = "IdRank")
+    @Column(name = "id_rank")
     int idRank;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_rank")
+    Rank rank;
 }

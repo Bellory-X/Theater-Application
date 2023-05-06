@@ -7,29 +7,17 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "Worker")
+@Table(name = "worker")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Worker {
     @Id
-    @Column(name = "IdEmployee")
+    @Column(name = "id_employee")
     @EqualsAndHashCode.Include
     int idEmployee;
     @Column(name = "category")
     String category;
 
-//    @OneToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "IdEmployee")
-//    Employee employee;
-
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-//        return false;
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return getClass().hashCode();
-//    }
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_employee")
+    Employee employee;
 }

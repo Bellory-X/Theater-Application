@@ -4,6 +4,7 @@ import com.example.theater.dto.employee.EmployeeDTO;
 import com.example.theater.service.employee.*;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -44,7 +45,6 @@ public class EmployeeController {
     @FXML
     public void initialize() {
         initTable();
-        table.setItems(FXCollections.observableList(employeeService.getAll()));
         clickButton();
     }
 
@@ -54,28 +54,18 @@ public class EmployeeController {
             table.setItems(FXCollections.observableList(employeeService.getAll()));
             table.refresh();
         });
-        actor.setOnAction(event -> {
-            Stage stage = new Stage();
-            stage.setScene(new Scene(fxWeaver.loadView(ActorController.class)));
-            stage.show();
-        });
-        musician.setOnAction(event -> {
-            Stage stage = new Stage();
-            stage.setScene(new Scene(fxWeaver.loadView(MusicianController.class)));
-            stage.show();
-        });
-        director.setOnAction(event -> {
-            Stage stage = new Stage();
-            stage.setScene(new Scene(fxWeaver.loadView(DirectorController.class)));
-            stage.show();
-        });
-        worker.setOnAction(event -> {
-            Stage stage = new Stage();
-            stage.setScene(new Scene(fxWeaver.loadView(WorkerController.class)));
-            stage.show();
-        });
+        actor.setOnAction(event -> showNewStage(fxWeaver.loadView(ActorController.class)));
+        musician.setOnAction(event -> showNewStage(fxWeaver.loadView(MusicianController.class)));
+        director.setOnAction(event -> showNewStage(fxWeaver.loadView(DirectorController.class)));
+        worker.setOnAction(event -> showNewStage(fxWeaver.loadView(WorkerController.class)));
         back.setOnAction(event -> {});
         close.setOnAction(event -> close.getScene().getWindow().hide());
+    }
+
+    private void showNewStage(Parent parent) {
+        Stage stage = new Stage();
+        stage.setScene(new Scene(parent));
+        stage.show();
     }
 
     private void initTable() {
@@ -110,5 +100,7 @@ public class EmployeeController {
         TableColumn<EmployeeDTO, String> column8 = new TableColumn<>("Theater");
         column8.setCellValueFactory(new PropertyValueFactory<>("theater"));
         table.getColumns().add(column8);
+
+        table.setItems(FXCollections.observableList(employeeService.getAll()));
     }
 }

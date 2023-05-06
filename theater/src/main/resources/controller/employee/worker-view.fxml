@@ -25,27 +25,27 @@
                 <Font name="Times New Roman Bold" size="20.0" />
             </font>
         </Button>
-        <Button fx:id="worker" layoutX="14.0" layoutY="313.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Characters" textAlignment="CENTER" wrapText="true">
+        <Button fx:id="characters" layoutX="14.0" layoutY="313.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Characters" textAlignment="CENTER" wrapText="true">
             <font>
                 <Font name="Times New Roman Bold" size="18.0" />
             </font>
         </Button>
-        <Button fx:id="director" layoutX="14.0" layoutY="214.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Character" textAlignment="CENTER" wrapText="true">
+        <Button fx:id="character" layoutX="14.0" layoutY="214.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Character" textAlignment="CENTER" wrapText="true">
             <font>
                 <Font name="Times New Roman Bold" size="20.0" />
             </font>
         </Button>
-        <Button fx:id="musician" layoutX="14.0" layoutY="120.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Category" textAlignment="CENTER" wrapText="true">
+        <Button fx:id="category" layoutX="14.0" layoutY="120.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Category" textAlignment="CENTER" wrapText="true">
             <font>
                 <Font name="Times New Roman Bold" size="20.0" />
             </font>
         </Button>
-        <Button fx:id="actor" layoutX="14.0" layoutY="26.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Worker" textAlignment="CENTER" wrapText="true">
+        <Button fx:id="worker" layoutX="14.0" layoutY="26.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Worker" textAlignment="CENTER" wrapText="true">
             <font>
                 <Font name="Times New Roman Bold" size="20.0" />
             </font>
         </Button>
-        <TableView fx:id="actorTable" layoutX="134.0" layoutY="26.0" prefHeight="445.0" prefWidth="561.0" />
+        <TableView fx:id="workerTable" layoutX="134.0" layoutY="26.0" prefHeight="445.0" prefWidth="561.0" />
         <TextField fx:id="name" layoutX="869.0" layoutY="586.0" prefHeight="25.0" prefWidth="174.0" text="Full Name">
             <font>
                 <Font size="20.0" />
@@ -108,6 +108,7 @@
                 <Font size="20.0" />
             </font>
         </TextField>
+
         <Text layoutX="1107.0" layoutY="615.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Experience">
             <font>
                 <Font size="20.0" />

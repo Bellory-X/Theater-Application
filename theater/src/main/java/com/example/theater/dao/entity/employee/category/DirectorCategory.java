@@ -7,13 +7,13 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "DirectorCategory")
+@Table(name = "director_category")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class DirectorCategory {
     @Id
-    @Column(name = "Id")
+    @Column(name = "id")
     @EqualsAndHashCode.Include
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
     @Column(name = "category")
     String category;

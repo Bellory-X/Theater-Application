@@ -7,7 +7,7 @@ import lombok.Data;
 @Builder
 public class RoleDTO {
     int id;
-    int count;
+    String name;
     boolean main;
     boolean understudy;
     int idPerformance;

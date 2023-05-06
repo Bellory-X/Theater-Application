@@ -7,22 +7,22 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "Place")
+@Table(name = "place")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Place {
     @Id
-    @Column(name = "Id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     int id;
-    @Column(name = "Number")
+    @Column(name = "number")
     int number;
-    @Column(name = "IdHall")
+    @Column(name = "id_hall")
     int idHall;
-    @Column(name = "Price")
+    @Column(name = "price")
     int price;
-    @Column(name = "Reserve")
+    @Column(name = "reserve")
     boolean reserve;
-    @Column(name = "idSubscription")
+    @Column(name = "id_subscription")
     int idSubscription;
 }

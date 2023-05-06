@@ -7,15 +7,15 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "CharactersActor")
+@Table(name = "characters_actor")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class CharactersActor {
     @Id
-    @Column(name = "Id")
+    @Column(name = "id")
     @EqualsAndHashCode.Include
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
-    @Column(name = "IdEmployee")
+    @Column(name = "id_employee")
     int idEmployee;
     @Column(name = "character")
     String character;

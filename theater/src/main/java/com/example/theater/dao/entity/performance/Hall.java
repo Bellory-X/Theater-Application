@@ -9,20 +9,20 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "Hall")
+@Table(name = "hall")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Hall {
     @Id
-    @Column(name = "Id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     int id;
-    @Column(name = "StartData")
+    @Column(name = "start_data")
     Date start;
-    @Column(name = "EndData")
+    @Column(name = "end_data")
     Date end;
-    @Column(name = "Name")
+    @Column(name = "name")
     String name;
-    @Column(name = "IdPerformance")
+    @Column(name = "id_performance")
     int idPerformance;
 }

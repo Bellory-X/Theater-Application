@@ -9,18 +9,18 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "Author")
+@Table(name = "author")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Author {
     @Id
-    @Column(name = "Id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     int id;
-    @Column(name = "FullName")
+    @Column(name = "full_name")
     String fullName;
-    @Column(name = "Birthday")
+    @Column(name = "birthday")
     Date birthday;
-    @Column(name = "Country")
+    @Column(name = "country")
     String country;
 }

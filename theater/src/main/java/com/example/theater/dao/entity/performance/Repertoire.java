@@ -7,18 +7,18 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "Repertoire")
+@Table(name = "repertoire")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Repertoire {
     @Id
-    @Column(name = "Id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     int id;
-    @Column(name = "Number")
-    int count;
-    @Column(name = "Theater")
-    String price;
+    @Column(name = "number")
+    int number;
+    @Column(name = "theater")
+    String theater;
 
 //    @Override
 //    public boolean equals(Object o) {
