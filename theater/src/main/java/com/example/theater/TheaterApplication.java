@@ -1,17 +1,21 @@
 package com.example.theater;
 
-import org.springframework.boot.SpringApplication;
+import javafx.application.Application;
+import net.rgielen.fxweaver.core.FxWeaver;
+import net.rgielen.fxweaver.spring.SpringFxWeaver;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import java.util.Collections;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class TheaterApplication {
 
     public static void main(String[] args) {
-        SpringApplication app = new SpringApplication(TheaterApplication.class);
-        app.setDefaultProperties(Collections.singletonMap("server.port", "8081"));
-        app.run();
+        Application.launch(JavaFxApplication.class, args);
     }
 
+    @Bean
+    public FxWeaver fxWeaver(ConfigurableApplicationContext context) {
+        return new SpringFxWeaver(context);
+    }
 }

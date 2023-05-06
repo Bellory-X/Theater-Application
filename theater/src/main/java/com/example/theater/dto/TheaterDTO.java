@@ -4,7 +4,9 @@ import lombok.*;
 
 import java.io.Serializable;
 
-@Value
+@Data
+@Builder
 public class TheaterDTO implements Serializable {
-    String id;
+    private int id;
+    private String name;
 }

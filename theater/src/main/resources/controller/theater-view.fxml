@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:controller="com.example.theater.controller.TheaterController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1049.0" prefWidth="1479.0" style="-fx-background-color: #000000; " xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+    <Text fill="WHITE" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Theater" textAlignment="CENTER" wrappingWidth="1479.0">
+        <font>
+            <Font name="Times New Roman Bold" size="40.0" />
+        </font>
+    </Text>
+    <AnchorPane layoutX="5.0" layoutY="67.0" prefHeight="980.0" prefWidth="1469.0" style="-fx-background-color: #ffffff;">
+        <TextField fx:id="result" alignment="CENTER" layoutX="942.0" layoutY="914.0" prefHeight="40.0" prefWidth="265.0" />
+        <Button fx:id="back" layoutX="14.0" layoutY="765.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Back" textAlignment="CENTER" wrapText="true">
+            <font>
+                <Font name="Times New Roman Bold" size="20.0" />
+            </font>
+        </Button>
+        <Button fx:id="close" layoutX="14.0" layoutY="860.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Exit" textAlignment="CENTER" wrapText="true">
+            <font>
+                <Font name="Times New Roman Bold" size="20.0" />
+            </font>
+        </Button>
+        <Button fx:id="performance" layoutX="14.0" layoutY="493.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Performance" textAlignment="CENTER" wrapText="true">
+            <font>
+                <Font name="Times New Roman Bold" size="16.0" />
+            </font>
+        </Button>
+        <Button fx:id="employee" layoutX="14.0" layoutY="399.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Employee" textAlignment="CENTER" wrapText="true">
+            <font>
+                <Font name="Times New Roman Bold" size="20.0" />
+            </font>
+        </Button>
+        <TableView fx:id="table" layoutX="134.0" layoutY="26.0" prefHeight="928.0" prefWidth="545.0" />
+        <Button fx:id="add" layoutX="896.0" layoutY="816.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Add" textAlignment="CENTER" wrapText="true">
+            <font>
+                <Font name="Times New Roman Bold" size="20.0" />
+            </font>
+        </Button>
+        <TextField fx:id="name" layoutX="1033.0" layoutY="754.0" prefHeight="25.0" prefWidth="174.0" text="">
+         <font>
+            <Font size="20.0" />
+         </font></TextField>
+        <Text layoutX="958.0" layoutY="783.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
+         <font>
+            <Font size="20.0" />
+         </font></Text>
+      <Button fx:id="edit" layoutX="1019.0" layoutY="816.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Edit" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="Times New Roman Bold" size="20.0" />
+         </font>
+      </Button>
+      <Button fx:id="drop" layoutX="1140.0" layoutY="816.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Drop" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="Times New Roman Bold" size="20.0" />
+         </font>
+      </Button>
+    </AnchorPane>
+</AnchorPane>

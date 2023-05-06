@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1049.0" prefWidth="1479.0" style="-fx-background-color: #000000; " xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.theater.controller.employee.DirectorController">
+    <Text fill="WHITE" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Director" textAlignment="CENTER" wrappingWidth="1479.0">
+        <font>
+            <Font name="Times New Roman Bold" size="40.0" />
+        </font>
+    </Text>
+    <AnchorPane layoutX="5.0" layoutY="67.0" prefHeight="980.0" prefWidth="1469.0" style="-fx-background-color: #ffffff;">
+        <Button fx:id="back" layoutX="14.0" layoutY="765.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Back" textAlignment="CENTER" wrapText="true">
+            <font>
+                <Font name="Times New Roman Bold" size="20.0" />
+            </font>
+        </Button>
+        <Button fx:id="close" layoutX="14.0" layoutY="860.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Exit" textAlignment="CENTER" wrapText="true">
+            <font>
+                <Font name="Times New Roman Bold" size="20.0" />
+            </font>
+        </Button>
+        <Button fx:id="worker" layoutX="14.0" layoutY="313.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Characters" textAlignment="CENTER" wrapText="true">
+            <font>
+                <Font name="Times New Roman Bold" size="18.0" />
+            </font>
+        </Button>
+        <Button fx:id="director" layoutX="14.0" layoutY="214.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Character" textAlignment="CENTER" wrapText="true">
+            <font>
+                <Font name="Times New Roman Bold" size="20.0" />
+            </font>
+        </Button>
+        <Button fx:id="musician" layoutX="14.0" layoutY="120.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Category" textAlignment="CENTER" wrapText="true">
+            <font>
+                <Font name="Times New Roman Bold" size="20.0" />
+            </font>
+        </Button>
+        <Button fx:id="actor" layoutX="14.0" layoutY="26.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Director" textAlignment="CENTER" wrapText="true">
+            <font>
+                <Font name="Times New Roman Bold" size="20.0" />
+            </font>
+        </Button>
+        <TableView fx:id="actorTable" layoutX="134.0" layoutY="26.0" prefHeight="445.0" prefWidth="561.0" />
+        <ListView fx:id="queries" layoutX="1042.0" layoutY="25.0" prefHeight="539.0" prefWidth="416.0" />
+        <TextField fx:id="theater" layoutX="824.0" layoutY="42.0" prefHeight="25.0" prefWidth="174.0">
+            <font>
+                <Font size="20.0" />
+            </font></TextField>
+        <Text layoutX="726.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Theater">
+            <font>
+                <Font size="20.0" />
+            </font></Text>
+        <DatePicker fx:id="birthday" layoutX="824.0" layoutY="198.0" prefHeight="44.0" prefWidth="174.0" />
+        <TextField fx:id="experience" layoutX="824.0" layoutY="93.0" prefHeight="44.0" prefWidth="174.0">
+            <font>
+                <Font size="20.0" />
+            </font></TextField>
+        <TextField fx:id="gender" layoutX="824.0" layoutY="147.0" prefHeight="25.0" prefWidth="174.0">
+            <font>
+                <Font size="20.0" />
+            </font></TextField>
+        <TextField fx:id="countChild" layoutX="824.0" layoutY="252.0" prefHeight="25.0" prefWidth="174.0">
+            <font>
+                <Font size="20.0" />
+            </font></TextField>
+        <TextField fx:id="salary" layoutX="824.0" layoutY="306.0" prefHeight="25.0" prefWidth="174.0">
+            <font>
+                <Font size="20.0" />
+            </font></TextField>
+        <Text layoutX="734.0" layoutY="335.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Salary">
+            <font>
+                <Font size="20.0" />
+            </font></Text>
+        <Text layoutX="702.0" layoutY="282.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Count child">
+            <font>
+                <Font size="20.0" />
+            </font></Text>
+        <Text layoutX="724.0" layoutY="228.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Birthday">
+            <font>
+                <Font size="20.0" />
+            </font></Text>
+        <Text layoutX="728.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gender">
+            <font>
+                <Font size="20.0" />
+            </font></Text>
+        <Text layoutX="713.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Experience">
+            <font>
+                <Font size="20.0" />
+            </font></Text>
+        <Button fx:id="search" layoutX="824.0" layoutY="476.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Search" textAlignment="CENTER" wrapText="true">
+            <font>
+                <Font name="Times New Roman Bold" size="20.0" />
+            </font>
+        </Button>
+        <TextField fx:id="name" layoutX="869.0" layoutY="586.0" prefHeight="25.0" prefWidth="174.0" text="Full Name">
+            <font>
+                <Font size="20.0" />
+            </font></TextField>
+        <Text layoutX="763.0" layoutY="615.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Full Name">
+            <font>
+                <Font size="20.0" />
+            </font></Text>
+        <Button fx:id="add" layoutX="896.0" layoutY="816.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Add" textAlignment="CENTER" wrapText="true">
+            <font>
+                <Font name="Times New Roman Bold" size="20.0" />
+            </font>
+        </Button>
+        <Button fx:id="edit" layoutX="1019.0" layoutY="816.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Edit" textAlignment="CENTER" wrapText="true">
+            <font>
+                <Font name="Times New Roman Bold" size="20.0" />
+            </font>
+        </Button>
+        <Button fx:id="drop" layoutX="1140.0" layoutY="816.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Drop" textAlignment="CENTER" wrapText="true">
+            <font>
+                <Font name="Times New Roman Bold" size="20.0" />
+            </font>
+        </Button>
+        <TableView fx:id="categoryTable" layoutX="134.0" layoutY="479.0" prefHeight="258.0" prefWidth="274.0" />
+        <TableView fx:id="characterTable" layoutX="421.0" layoutY="479.0" prefHeight="258.0" prefWidth="274.0" />
+        <TableView fx:id="charactersTable" layoutX="134.0" layoutY="753.0" prefHeight="200.0" prefWidth="561.0" />
+        <TextField layoutX="1230.0" layoutY="586.0" prefHeight="44.0" prefWidth="174.0" text="Experience">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </TextField>
+        <TextField layoutX="869.0" layoutY="643.0" prefHeight="44.0" prefWidth="174.0" text="Gender">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </TextField>
+        <TextField layoutX="1230.0" layoutY="697.0" prefHeight="44.0" prefWidth="174.0" text="Salary">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </TextField>
+        <TextField layoutX="869.0" layoutY="697.0" prefHeight="44.0" prefWidth="174.0" text="Count child">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </TextField>
+        <TextField layoutX="869.0" layoutY="753.0" prefHeight="44.0" prefWidth="174.0" text="Is Worker">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </TextField>
+        <TextField layoutX="1230.0" layoutY="753.0" prefHeight="44.0" prefWidth="174.0" text="Theater">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </TextField>
+        <DatePicker layoutX="1230.0" layoutY="643.0" prefHeight="44.0" prefWidth="174.0" />
+        <TextField layoutX="896.0" layoutY="912.0" prefHeight="44.0" prefWidth="360.0">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </TextField>
+        <Text layoutX="1107.0" layoutY="615.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Experience">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </Text>
+        <Text layoutX="1123.0" layoutY="670.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Birthday">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </Text>
+        <Text layoutX="1133.0" layoutY="726.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Salary">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </Text>
+        <Text layoutX="1126.0" layoutY="782.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Theater">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </Text>
+        <Text layoutX="763.0" layoutY="782.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Is Worker">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </Text>
+        <Text layoutX="756.0" layoutY="727.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Count child">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </Text>
+        <Text layoutX="775.0" layoutY="671.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gender">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </Text>
+    </AnchorPane>
+</AnchorPane>
