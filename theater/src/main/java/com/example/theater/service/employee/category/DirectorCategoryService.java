@@ -27,7 +27,7 @@ public class DirectorCategoryService {
     }
 
     public void add(DirectorCategoryDTO directorCategoryDTO) {
-        DirectorCategory directorCategory = mapper.toDirectorCategory(directorCategoryDTO);
+        DirectorCategory directorCategory = mapper.toNewDirectorCategory(directorCategoryDTO);
         repository.save(directorCategory);
     }
 

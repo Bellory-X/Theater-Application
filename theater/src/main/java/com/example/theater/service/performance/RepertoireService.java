@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -17,6 +18,10 @@ import java.util.stream.StreamSupport;
 public class RepertoireService {
     private final RepertoireRepository repository;
     private final RepertoireMapper mapper;
+
+    public Optional<RepertoireDTO> getById(int id) {
+        return repository.findById(id).map(mapper::toRepertoireDTO);
+    }
 
     public List<RepertoireDTO> getAll() {
         Iterable<Repertoire> iterable = repository.findAll();

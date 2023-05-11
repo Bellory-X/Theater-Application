@@ -27,7 +27,7 @@ public class WorkerCategoryService {
     }
 
     public void add(WorkerCategoryDTO workerCategoryDTO) {
-        WorkerCategory workerCategory = mapper.toWorkerCategory(workerCategoryDTO);
+        WorkerCategory workerCategory = mapper.toNewWorkerCategory(workerCategoryDTO);
         repository.save(workerCategory);
     }
 

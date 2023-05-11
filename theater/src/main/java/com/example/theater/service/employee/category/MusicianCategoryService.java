@@ -27,7 +27,7 @@ public class MusicianCategoryService {
     }
 
     public void add(MusicianCategoryDTO musicianCategoryDTO) {
-        MusicianCategory musicianCategory = mapper.toMusicianCategory(musicianCategoryDTO);
+        MusicianCategory musicianCategory = mapper.toNewMusicianCategory(musicianCategoryDTO);
         repository.save(musicianCategory);
     }
 

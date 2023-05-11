@@ -27,7 +27,7 @@ public class ActorCategoryService {
     }
 
     public void add(ActorCategoryDTO actorCategoryDTO) {
-        ActorCategory actorCategory = mapper.toActorCategory(actorCategoryDTO);
+        ActorCategory actorCategory = mapper.toNewActorCategory(actorCategoryDTO);
         repository.save(actorCategory);
     }
 

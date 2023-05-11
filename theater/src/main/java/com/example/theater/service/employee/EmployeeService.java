@@ -26,9 +26,11 @@ public class EmployeeService {
                 .collect(Collectors.toList());
     }
 
-    public void add(EmployeeDTO employeeDTO) {
-        Employee employee = mapper.toEmployee(employeeDTO);
+    public int add(EmployeeDTO employeeDTO) {
+        Employee employee = mapper.toNewEmployee(employeeDTO);
         repository.save(employee);
+
+        return employee.getId();
     }
 
     public void edit(EmployeeDTO employeeDTO) {

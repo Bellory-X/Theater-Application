@@ -27,7 +27,7 @@ public class CharactersMusicianService {
     }
 
     public void add(CharactersMusicianDTO charactersMusicianDTO) {
-        CharactersMusician charactersMusician = mapper.toCharactersMusician(charactersMusicianDTO);
+        CharactersMusician charactersMusician = mapper.toNewCharactersMusician(charactersMusicianDTO);
         repository.save(charactersMusician);
     }
 

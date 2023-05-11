@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -17,6 +18,10 @@ import java.util.stream.StreamSupport;
 public class MusicianCharacterService {
     private final MusicianCharacterRepository repository;
     private final MusicianCharacterMapper mapper;
+
+    public Optional<MusicianCharacterDTO> getById(int id) {
+        return repository.findById(id).map(mapper::toMusicianCharacterDTO);
+    }
 
     public List<MusicianCharacterDTO> getAll() {
         Iterable<MusicianCharacter> iterable = repository.findAll();
@@ -27,7 +32,7 @@ public class MusicianCharacterService {
     }
 
     public void add(MusicianCharacterDTO musicianCharacterDTO) {
-        MusicianCharacter musicianCharacter = mapper.toMusicianCharacter(musicianCharacterDTO);
+        MusicianCharacter musicianCharacter = mapper.toNewMusicianCharacter(musicianCharacterDTO);
         repository.save(musicianCharacter);
     }
 

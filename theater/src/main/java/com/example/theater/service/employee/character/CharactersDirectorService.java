@@ -27,7 +27,7 @@ public class CharactersDirectorService {
     }
 
     public void add(CharactersDirectorDTO charactersDirectorDTO) {
-        CharactersDirector charactersDirector = mapper.toCharactersDirector(charactersDirectorDTO);
+        CharactersDirector charactersDirector = mapper.toNewCharactersDirector(charactersDirectorDTO);
         repository.save(charactersDirector);
     }
 

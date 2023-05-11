@@ -27,7 +27,7 @@ public class RanksActorService {
     }
 
     public void add(RanksActorDTO ranksActorDTO) {
-        RanksActor ranksActor = mapper.toRanksActor(ranksActorDTO);
+        RanksActor ranksActor = mapper.toNewRanksActor(ranksActorDTO);
         repository.save(ranksActor);
     }
 

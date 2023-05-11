@@ -27,7 +27,7 @@ public class CharactersActorService {
     }
 
     public void add(CharactersActorDTO charactersActorDTO) {
-        CharactersActor charactersActor = mapper.toCharactersActor(charactersActorDTO);
+        CharactersActor charactersActor = mapper.toNewCharactersActor(charactersActorDTO);
         repository.save(charactersActor);
     }
 

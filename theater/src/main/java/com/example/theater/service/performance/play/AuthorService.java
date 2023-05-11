@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -17,6 +18,10 @@ import java.util.stream.StreamSupport;
 public class AuthorService {
     private final AuthorRepository repository;
     private final AuthorMapper mapper;
+
+    public Optional<AuthorDTO> getById(int id) {
+        return repository.findById(id).map(mapper::toAuthorDTO);
+    }
 
     public List<AuthorDTO> getAll() {
         Iterable<Author> iterable = repository.findAll();

@@ -11,8 +11,4 @@ public class RanksActorDTO {
     int id;
     int idEmployee;
     int idRank;
-
-    String name;
-    String contest;
-    Date data;
 }

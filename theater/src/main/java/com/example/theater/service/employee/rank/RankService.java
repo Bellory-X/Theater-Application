@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -17,6 +18,10 @@ import java.util.stream.StreamSupport;
 public class RankService {
     private final RankRepository repository;
     private final RankMapper mapper;
+
+    public Optional<RankDTO> getById(int id) {
+        return repository.findById(id).map(mapper::toRankDTO);
+    }
 
     public List<RankDTO> getAll() {
         Iterable<Rank> iterable = repository.findAll();
@@ -27,7 +32,7 @@ public class RankService {
     }
 
     public void add(RankDTO rankDTO) {
-        Rank rank = mapper.toRank(rankDTO);
+        Rank rank = mapper.toNewRank(rankDTO);
         repository.save(rank);
     }
 

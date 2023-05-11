@@ -1,5 +1,6 @@
 package com.example.theater.dao.entity.employee.rank;
 
+import com.example.theater.dao.entity.employee.Employee;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -22,8 +23,4 @@ public class RanksActor {
     int idEmployee;
     @Column(name = "id_rank")
     int idRank;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_rank")
-    Rank rank;
 }

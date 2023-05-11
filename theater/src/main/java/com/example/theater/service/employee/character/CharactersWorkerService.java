@@ -27,7 +27,7 @@ public class CharactersWorkerService {
     }
 
     public void add(CharactersWorkerDTO charactersWorkerDTO) {
-        CharactersWorker charactersWorker = mapper.toCharactersWorker(charactersWorkerDTO);
+        CharactersWorker charactersWorker = mapper.toNewCharactersWorker(charactersWorkerDTO);
         repository.save(charactersWorker);
     }
 

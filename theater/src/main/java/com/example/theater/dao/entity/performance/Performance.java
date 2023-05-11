@@ -23,21 +23,4 @@ public class Performance {
     int price;
     @Column(name = "theater")
     String theater;
-
-
-
-//    @OneToMany(fetch = FetchType.EAGER)@JoinColumn()
-//    List<Hall> halls;
-
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-//        return false;
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return getClass().hashCode();
-//    }
 }

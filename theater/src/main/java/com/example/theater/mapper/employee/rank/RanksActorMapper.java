@@ -7,11 +7,10 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface RanksActorMapper {
-    @Mapping(target = "rank", ignore = true)
+    @Mapping(target = "id", ignore = true)
+    RanksActor toNewRanksActor(RanksActorDTO ranksActorDTO);
+
     RanksActor toRanksActor(RanksActorDTO ranksActorDTO);
 
-    @Mapping(target = "name", source = "rank.name")
-    @Mapping(target = "contest", source = "rank.contest")
-    @Mapping(target = "data", source = "rank.data")
     RanksActorDTO toRanksActorDTO(RanksActor ranksActor);
 }

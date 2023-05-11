@@ -16,6 +16,8 @@ import org.springframework.stereotype.Component;
 @Component
 @FxmlView("/controller/employee/employee-view.fxml")
 public class EmployeeController {
+    /*TODO:
+       1.Получить список и общее число всех работников театра*/
     @FXML private Button employee;
     @FXML private TextField salary;
     @FXML private TextField countChild;
@@ -39,8 +41,6 @@ public class EmployeeController {
         this.employeeService = employeeService;
         this.fxWeaver = fxWeaver;
     }
-
-    /*TODO: 1.Получить список и общее число всех работников театра*/
 
     @FXML
     public void initialize() {

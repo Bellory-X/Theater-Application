@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -17,6 +18,10 @@ import java.util.stream.StreamSupport;
 public class RoleService {
     private final RoleRepository repository;
     private final RoleMapper mapper;
+
+    public Optional<RoleDTO> getById(int id) {
+        return repository.findById(id).map(mapper::toRoleDTO);
+    }
 
     public List<RoleDTO> getAll() {
         Iterable<Role> iterable = repository.findAll();

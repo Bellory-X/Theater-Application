@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -17,6 +18,10 @@ import java.util.stream.StreamSupport;
 public class PerformanceService {
     private final PerformanceRepository repository;
     private final PerformanceMapper mapper;
+
+    public Optional<PerformanceDTO> getById(int id) {
+        return repository.findById(id).map(mapper::toPerformanceDTO);
+    }
 
     public List<PerformanceDTO> getAll() {
         Iterable<Performance> iterable = repository.findAll();
