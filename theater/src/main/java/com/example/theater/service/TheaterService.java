@@ -32,24 +32,25 @@ public class TheaterService {
                 .collect(Collectors.toList());
     }
 
-    public void add(TheaterDTO theaterDTO) {
-        Theater theaterEntity = mapper.toNewTheater(theaterDTO);
+    public void add(TheaterDTO dto) {
+        dto.setId(Generator.generateId());
+        Theater theaterEntity = mapper.toTheater(dto);
         repository.save(theaterEntity);
     }
 
-    public void edit(TheaterDTO theaterDTO) {
-        if (!repository.existsById(theaterDTO.getId()))
+    public void edit(TheaterDTO dto) {
+        if (!repository.existsById(dto.getId()))
             throw new QueryException("Not found");
 
-        Theater theaterEntity = mapper.toTheater(theaterDTO);
+        Theater theaterEntity = mapper.toTheater(dto);
         repository.save(theaterEntity);
     }
 
-    public void drop(TheaterDTO theaterDTO) {
-        if (!repository.existsById(theaterDTO.getId()))
+    public void drop(TheaterDTO dto) {
+        if (!repository.existsById(dto.getId()))
             throw new QueryException("Not found");
 
-        Theater theaterEntity = mapper.toTheater(theaterDTO);
+        Theater theaterEntity = mapper.toTheater(dto);
         repository.delete(theaterEntity);
     }
 }

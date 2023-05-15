@@ -27,24 +27,25 @@ public class SubscriptionService {
                 .collect(Collectors.toList());
     }
 
-    public void add(SubscriptionDTO subscriptionDTO) {
-        Subscription subscription = mapper.toNewSubscription(subscriptionDTO);
+    public void add(SubscriptionDTO dto) {
+        dto.setId(Generator.generateId());
+        Subscription subscription = mapper.toSubscription(dto);
         repository.save(subscription);
     }
 
-    public void edit(SubscriptionDTO subscriptionDTO) {
-        if (!repository.existsById(subscriptionDTO.getId()))
+    public void edit(SubscriptionDTO dto) {
+        if (!repository.existsById(dto.getId()))
             throw new QueryException("Not found");
 
-        Subscription subscription = mapper.toSubscription(subscriptionDTO);
+        Subscription subscription = mapper.toSubscription(dto);
         repository.save(subscription);
     }
 
-    public void drop(SubscriptionDTO subscriptionDTO) {
-        if (!repository.existsById(subscriptionDTO.getId()))
+    public void drop(SubscriptionDTO dto) {
+        if (!repository.existsById(dto.getId()))
             throw new QueryException("Not found");
 
-        Subscription subscription = mapper.toSubscription(subscriptionDTO);
+        Subscription subscription = mapper.toSubscription(dto);
         repository.delete(subscription);
     }
 }

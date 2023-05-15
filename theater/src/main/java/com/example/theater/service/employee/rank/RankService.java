@@ -5,6 +5,7 @@ import com.example.theater.dao.repository.employee.rank.RankRepository;
 import com.example.theater.dto.employee.rank.RankDTO;
 import com.example.theater.exception.RecordNotFoundException;
 import com.example.theater.mapper.employee.rank.RankMapper;
+import com.example.theater.service.Generator;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -31,24 +32,25 @@ public class RankService {
                 .collect(Collectors.toList());
     }
 
-    public void add(RankDTO rankDTO) {
-        Rank rank = mapper.toNewRank(rankDTO);
+    public void add(RankDTO dto) {
+        dto.setId(Generator.generateId());
+        Rank rank = mapper.toRank(dto);
         repository.save(rank);
     }
 
-    public void edit(RankDTO rankDTO) {
-        if (!repository.existsById(rankDTO.getId()))
-            throw new RecordNotFoundException("Not found " + rankDTO.getId());
+    public void edit(RankDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getId());
 
-        Rank rank = mapper.toRank(rankDTO);
+        Rank rank = mapper.toRank(dto);
         repository.save(rank);
     }
 
-    public void drop(RankDTO rankDTO) {
-        if (!repository.existsById(rankDTO.getId()))
-            throw new RecordNotFoundException("Not found " + rankDTO.getId());
+    public void drop(RankDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getId());
 
-        Rank rank = mapper.toRank(rankDTO);
+        Rank rank = mapper.toRank(dto);
         repository.delete(rank);
     }
 }

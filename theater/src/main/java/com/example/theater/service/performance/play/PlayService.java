@@ -31,24 +31,24 @@ public class PlayService {
                 .collect(Collectors.toList());
     }
 
-    public void add(PlayDTO playDTO) {
-        Play play = mapper.toPlay(playDTO);
+    public void add(PlayDTO dto) {
+        Play play = mapper.toPlay(dto);
         repository.save(play);
     }
 
-    public void edit(PlayDTO playDTO) {
-        if (!repository.existsById(playDTO.getId()))
-            throw new RecordNotFoundException("Not found " + playDTO.getId());
+    public void edit(PlayDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getId());
 
-        Play play = mapper.toPlay(playDTO);
+        Play play = mapper.toPlay(dto);
         repository.save(play);
     }
 
-    public void drop(PlayDTO playDTO) {
-        if (!repository.existsById(playDTO.getId()))
-            throw new RecordNotFoundException("Not found " + playDTO.getId());
+    public void drop(PlayDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getId());
 
-        Play play = mapper.toPlay(playDTO);
+        Play play = mapper.toPlay(dto);
         repository.delete(play);
     }
 }

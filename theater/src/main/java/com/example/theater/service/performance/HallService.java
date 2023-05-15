@@ -31,24 +31,24 @@ public class HallService {
                 .collect(Collectors.toList());
     }
 
-    public void add(HallDTO hallDTO) {
-        Hall hall = mapper.toHall(hallDTO);
+    public void add(HallDTO dto) {
+        Hall hall = mapper.toHall(dto);
         repository.save(hall);
     }
 
-    public void edit(HallDTO hallDTO) {
-        if (!repository.existsById(hallDTO.getId()))
-            throw new RecordNotFoundException("Not found " + hallDTO.getId());
+    public void edit(HallDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getId());
 
-        Hall hall = mapper.toHall(hallDTO);
+        Hall hall = mapper.toHall(dto);
         repository.save(hall);
     }
 
-    public void drop(HallDTO hallDTO) {
-        if (!repository.existsById(hallDTO.getId()))
-            throw new RecordNotFoundException("Not found " + hallDTO.getId());
+    public void drop(HallDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getId());
 
-        Hall hall = mapper.toHall(hallDTO);
+        Hall hall = mapper.toHall(dto);
         repository.delete(hall);
     }
 }

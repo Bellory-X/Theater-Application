@@ -5,6 +5,7 @@ import com.example.theater.dao.repository.employee.EmployeeRepository;
 import com.example.theater.dto.employee.EmployeeDTO;
 import com.example.theater.exception.RecordNotFoundException;
 import com.example.theater.mapper.employee.EmployeeMapper;
+import com.example.theater.service.Generator;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,26 +27,27 @@ public class EmployeeService {
                 .collect(Collectors.toList());
     }
 
-    public int add(EmployeeDTO employeeDTO) {
-        Employee employee = mapper.toNewEmployee(employeeDTO);
+    public int add(EmployeeDTO dto) {
+        dto.setId(Generator.generateId());
+        Employee employee = mapper.toEmployee(dto);
         repository.save(employee);
 
         return employee.getId();
     }
 
-    public void edit(EmployeeDTO employeeDTO) {
-        if (!repository.existsById(employeeDTO.getId()))
-            throw new RecordNotFoundException("Not found " + employeeDTO.getId());
+    public void edit(EmployeeDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getId());
 
-        Employee employee = mapper.toEmployee(employeeDTO);
+        Employee employee = mapper.toEmployee(dto);
         repository.save(employee);
     }
 
-    public void drop(EmployeeDTO employeeDTO) {
-        if (!repository.existsById(employeeDTO.getId()))
-            throw new RecordNotFoundException("Not found " + employeeDTO.getId());
+    public void drop(EmployeeDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getId());
 
-        Employee employee = mapper.toEmployee(employeeDTO);
+        Employee employee = mapper.toEmployee(dto);
         repository.delete(employee);
     }
 }

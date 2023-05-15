@@ -5,6 +5,7 @@ import com.example.theater.dao.repository.employee.category.ActorCategoryReposit
 import com.example.theater.dto.employee.category.ActorCategoryDTO;
 import com.example.theater.exception.RecordNotFoundException;
 import com.example.theater.mapper.employee.category.ActorCategoryMapper;
+import com.example.theater.service.Generator;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,24 +27,25 @@ public class ActorCategoryService {
                 .collect(Collectors.toList());
     }
 
-    public void add(ActorCategoryDTO actorCategoryDTO) {
-        ActorCategory actorCategory = mapper.toNewActorCategory(actorCategoryDTO);
-        repository.save(actorCategory);
+    public void add(ActorCategoryDTO dto) {
+        dto.setId(Generator.generateId());
+        ActorCategory category = mapper.toActorCategory(dto);
+        repository.save(category);
     }
 
-    public void edit(ActorCategoryDTO actorCategoryDTO) {
-        if (!repository.existsById(actorCategoryDTO.getId()))
-            throw new RecordNotFoundException("Not found " + actorCategoryDTO.getCategory());
+    public void edit(ActorCategoryDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getCategory());
 
-        ActorCategory actorCategory = mapper.toActorCategory(actorCategoryDTO);
-        repository.save(actorCategory);
+        ActorCategory category = mapper.toActorCategory(dto);
+        repository.save(category);
     }
 
-    public void drop(ActorCategoryDTO actorCategoryDTO) {
-        if (!repository.existsById(actorCategoryDTO.getId()))
-            throw new RecordNotFoundException("Not found " + actorCategoryDTO.getCategory());
+    public void drop(ActorCategoryDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getCategory());
 
-        ActorCategory actorCategory = mapper.toActorCategory(actorCategoryDTO);
-        repository.delete(actorCategory);
+        ActorCategory category = mapper.toActorCategory(dto);
+        repository.delete(category);
     }
 }

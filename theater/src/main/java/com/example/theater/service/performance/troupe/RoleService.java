@@ -31,24 +31,24 @@ public class RoleService {
                 .collect(Collectors.toList());
     }
 
-    public void add(RoleDTO roleDTO) {
-        Role role = mapper.toRole(roleDTO);
+    public void add(RoleDTO dto) {
+        Role role = mapper.toRole(dto);
         repository.save(role);
     }
 
-    public void edit(RoleDTO roleDTO) {
-        if (!repository.existsById(roleDTO.getId()))
-            throw new RecordNotFoundException("Not found " + roleDTO.getId());
+    public void edit(RoleDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getId());
 
-        Role role = mapper.toRole(roleDTO);
+        Role role = mapper.toRole(dto);
         repository.save(role);
     }
 
-    public void drop(RoleDTO roleDTO) {
-        if (!repository.existsById(roleDTO.getId()))
-            throw new RecordNotFoundException("Not found " + roleDTO.getId());
+    public void drop(RoleDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getId());
 
-        Role role = mapper.toRole(roleDTO);
+        Role role = mapper.toRole(dto);
         repository.delete(role);
     }
 }

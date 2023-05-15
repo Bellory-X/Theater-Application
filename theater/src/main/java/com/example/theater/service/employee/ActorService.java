@@ -5,9 +5,12 @@ import com.example.theater.dao.entity.employee.Employee;
 import com.example.theater.dao.repository.employee.ActorRepository;
 import com.example.theater.dto.employee.ActorDTO;
 import com.example.theater.dto.employee.EmployeeDTO;
+import com.example.theater.exception.QueryException;
 import com.example.theater.exception.RecordNotFoundException;
 import com.example.theater.mapper.employee.ActorMapper;
+import com.example.theater.service.Generator;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -30,35 +33,61 @@ public class ActorService {
                 .collect(Collectors.toList());
     }
 
-    public void add(ActorDTO actorDTO) {
-        int idEmployee = employeeService.add(EmployeeDTO.builder()
-                .fullName(actorDTO.getFullName())
-                .experience(actorDTO.getExperience())
-                .gender(actorDTO.getGender())
-                .birthday(actorDTO.getBirthday())
-                .countChild(actorDTO.getCountChild())
-                .salary(actorDTO.getSalary())
-                .worker(actorDTO.isWorker())
-                .theater(actorDTO.getTheater())
+    public void add(ActorDTO dto) {
+        try {
+            int idEmployee = employeeService.add(EmployeeDTO.builder()
+                    .fullName(dto.getFullName())
+                    .experience(dto.getExperience())
+                    .gender(dto.getGender())
+                    .birthday(dto.getBirthday())
+                    .countChild(dto.getCountChild())
+                    .salary(dto.getSalary())
+                    .worker(dto.isWorker())
+                    .theater(dto.getTheater())
+                    .build());
+            dto.setIdEmployee(idEmployee);
+            Actor actor = mapper.toActor(dto);
+            repository.save(actor);
+        } catch (DataAccessException e) {
+            throw new QueryException("query error", e);
+        }
+    }
+
+    public void edit(ActorDTO dto) {
+        if (!repository.existsById(dto.getIdEmployee()))
+            throw new RecordNotFoundException("Not found " + dto.getIdEmployee());
+
+        employeeService.edit(EmployeeDTO.builder()
+                .id(dto.getIdEmployee())
+                .fullName(dto.getFullName())
+                .experience(dto.getExperience())
+                .gender(dto.getGender())
+                .birthday(dto.getBirthday())
+                .countChild(dto.getCountChild())
+                .salary(dto.getSalary())
+                .worker(dto.isWorker())
+                .theater(dto.getTheater())
                 .build());
-        actorDTO.setIdEmployee(idEmployee);
-        Actor actor = mapper.toActor(actorDTO);
+        Actor actor = mapper.toActor(dto);
         repository.save(actor);
     }
 
-    public void edit(ActorDTO actorDTO) {
-        if (!repository.existsById(actorDTO.getIdEmployee()))
-            throw new RecordNotFoundException("Not found " + actorDTO.getIdEmployee());
+    public void drop(ActorDTO dto) {
+        if (!repository.existsById(dto.getIdEmployee()))
+            throw new RecordNotFoundException("Not found " + dto.getIdEmployee());
 
-        Actor actor = mapper.toActor(actorDTO);
-        repository.save(actor);
-    }
-
-    public void drop(ActorDTO actorDTO) {
-        if (!repository.existsById(actorDTO.getIdEmployee()))
-            throw new RecordNotFoundException("Not found " + actorDTO.getIdEmployee());
-
-        Actor actor = mapper.toActor(actorDTO);
+        employeeService.drop(EmployeeDTO.builder()
+                .id(dto.getIdEmployee())
+                .fullName(dto.getFullName())
+                .experience(dto.getExperience())
+                .gender(dto.getGender())
+                .birthday(dto.getBirthday())
+                .countChild(dto.getCountChild())
+                .salary(dto.getSalary())
+                .worker(dto.isWorker())
+                .theater(dto.getTheater())
+                .build());
+        Actor actor = mapper.toActor(dto);
         repository.delete(actor);
     }
 

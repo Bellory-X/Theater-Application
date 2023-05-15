@@ -31,24 +31,24 @@ public class PlaceService {
                 .collect(Collectors.toList());
     }
 
-    public void add(PlaceDTO placeDTO) {
-        Place place = mapper.toPlace(placeDTO);
+    public void add(PlaceDTO dto) {
+        Place place = mapper.toPlace(dto);
         repository.save(place);
     }
 
-    public void edit(PlaceDTO placeDTO) {
-        if (!repository.existsById(placeDTO.getId()))
-            throw new RecordNotFoundException("Not found " + placeDTO.getId());
+    public void edit(PlaceDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getId());
 
-        Place place = mapper.toPlace(placeDTO);
+        Place place = mapper.toPlace(dto);
         repository.save(place);
     }
 
-    public void drop(PlaceDTO placeDTO) {
-        if (!repository.existsById(placeDTO.getId()))
-            throw new RecordNotFoundException("Not found " + placeDTO.getId());
+    public void drop(PlaceDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getId());
 
-        Place place = mapper.toPlace(placeDTO);
+        Place place = mapper.toPlace(dto);
         repository.delete(place);
     }
 }

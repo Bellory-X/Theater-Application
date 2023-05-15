@@ -17,7 +17,7 @@ public class Actor {
     @Column(name = "category")
     String category;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_employee")
     Employee employee;
 }

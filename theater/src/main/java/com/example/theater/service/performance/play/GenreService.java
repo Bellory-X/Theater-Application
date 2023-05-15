@@ -31,24 +31,24 @@ public class GenreService {
                 .collect(Collectors.toList());
     }
 
-    public void add(GenreDTO genreDTO) {
-        Genre genre = mapper.toGenre(genreDTO);
+    public void add(GenreDTO dto) {
+        Genre genre = mapper.toGenre(dto);
         repository.save(genre);
     }
 
-    public void edit(GenreDTO genreDTO) {
-        if (!repository.existsById(genreDTO.getId()))
-            throw new RecordNotFoundException("Not found " + genreDTO.getId());
+    public void edit(GenreDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getId());
 
-        Genre genre = mapper.toGenre(genreDTO);
+        Genre genre = mapper.toGenre(dto);
         repository.save(genre);
     }
 
-    public void drop(GenreDTO genreDTO) {
-        if (!repository.existsById(genreDTO.getId()))
-            throw new RecordNotFoundException("Not found " + genreDTO.getId());
+    public void drop(GenreDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getId());
 
-        Genre genre = mapper.toGenre(genreDTO);
+        Genre genre = mapper.toGenre(dto);
         repository.delete(genre);
     }
 }

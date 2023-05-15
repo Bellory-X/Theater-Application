@@ -5,6 +5,7 @@ import com.example.theater.dao.repository.employee.charecter.MusicianCharacterRe
 import com.example.theater.dto.employee.character.MusicianCharacterDTO;
 import com.example.theater.exception.RecordNotFoundException;
 import com.example.theater.mapper.employee.character.MusicianCharacterMapper;
+import com.example.theater.service.Generator;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -31,24 +32,25 @@ public class MusicianCharacterService {
                 .collect(Collectors.toList());
     }
 
-    public void add(MusicianCharacterDTO musicianCharacterDTO) {
-        MusicianCharacter musicianCharacter = mapper.toNewMusicianCharacter(musicianCharacterDTO);
+    public void add(MusicianCharacterDTO dto) {
+        dto.setId(Generator.generateId());
+        MusicianCharacter musicianCharacter = mapper.toMusicianCharacter(dto);
         repository.save(musicianCharacter);
     }
 
-    public void edit(MusicianCharacterDTO musicianCharacterDTO) {
-        if (!repository.existsById(musicianCharacterDTO.getId()))
-            throw new RecordNotFoundException("Not found " + musicianCharacterDTO.getCharacter());
+    public void edit(MusicianCharacterDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getCharacter());
 
-        MusicianCharacter musicianCharacter = mapper.toMusicianCharacter(musicianCharacterDTO);
+        MusicianCharacter musicianCharacter = mapper.toMusicianCharacter(dto);
         repository.save(musicianCharacter);
     }
 
-    public void drop(MusicianCharacterDTO musicianCharacterDTO) {
-        if (!repository.existsById(musicianCharacterDTO.getId()))
-            throw new RecordNotFoundException("Not found " + musicianCharacterDTO.getCharacter());
+    public void drop(MusicianCharacterDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getCharacter());
 
-        MusicianCharacter musicianCharacter = mapper.toMusicianCharacter(musicianCharacterDTO);
+        MusicianCharacter musicianCharacter = mapper.toMusicianCharacter(dto);
         repository.delete(musicianCharacter);
     }
 }

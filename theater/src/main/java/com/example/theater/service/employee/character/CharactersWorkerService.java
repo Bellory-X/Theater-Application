@@ -5,6 +5,7 @@ import com.example.theater.dao.repository.employee.charecter.CharactersWorkerRep
 import com.example.theater.dto.employee.character.CharactersWorkerDTO;
 import com.example.theater.exception.RecordNotFoundException;
 import com.example.theater.mapper.employee.character.CharactersWorkerMapper;
+import com.example.theater.service.Generator;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,24 +27,25 @@ public class CharactersWorkerService {
                 .collect(Collectors.toList());
     }
 
-    public void add(CharactersWorkerDTO charactersWorkerDTO) {
-        CharactersWorker charactersWorker = mapper.toNewCharactersWorker(charactersWorkerDTO);
+    public void add(CharactersWorkerDTO dto) {
+        dto.setId(Generator.generateId());
+        CharactersWorker charactersWorker = mapper.toCharactersWorker(dto);
         repository.save(charactersWorker);
     }
 
-    public void edit(CharactersWorkerDTO charactersWorkerDTO) {
-        if (!repository.existsById(charactersWorkerDTO.getId()))
-            throw new RecordNotFoundException("Not found " + charactersWorkerDTO.getId());
+    public void edit(CharactersWorkerDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getId());
 
-        CharactersWorker charactersWorker = mapper.toCharactersWorker(charactersWorkerDTO);
+        CharactersWorker charactersWorker = mapper.toCharactersWorker(dto);
         repository.save(charactersWorker);
     }
 
-    public void drop(CharactersWorkerDTO charactersWorkerDTO) {
-        if (!repository.existsById(charactersWorkerDTO.getId()))
-            throw new RecordNotFoundException("Not found " + charactersWorkerDTO.getId());
+    public void drop(CharactersWorkerDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getId());
 
-        CharactersWorker charactersWorker = mapper.toCharactersWorker(charactersWorkerDTO);
+        CharactersWorker charactersWorker = mapper.toCharactersWorker(dto);
         repository.delete(charactersWorker);
     }
 }

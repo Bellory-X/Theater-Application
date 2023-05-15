@@ -22,7 +22,7 @@ public class Play {
     @Column(name = "data")
     Date data;
     @Column(name = "rating")
-    String rating;
+    int rating;
     @Column(name = "genre")
     String genre;
 }

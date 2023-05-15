@@ -28,35 +28,57 @@ public class DirectorService {
                 .collect(Collectors.toList());
     }
 
-    public void add(DirectorDTO directorDTO) {
+    public void add(DirectorDTO dto) {
         int idEmployee = employeeService.add(EmployeeDTO.builder()
-                .fullName(directorDTO.getFullName())
-                .experience(directorDTO.getExperience())
-                .gender(directorDTO.getGender())
-                .birthday(directorDTO.getBirthday())
-                .countChild(directorDTO.getCountChild())
-                .salary(directorDTO.getSalary())
-                .worker(directorDTO.isWorker())
-                .theater(directorDTO.getTheater())
+                .fullName(dto.getFullName())
+                .experience(dto.getExperience())
+                .gender(dto.getGender())
+                .birthday(dto.getBirthday())
+                .countChild(dto.getCountChild())
+                .salary(dto.getSalary())
+                .worker(dto.isWorker())
+                .theater(dto.getTheater())
                 .build());
-        directorDTO.setIdEmployee(idEmployee);
-        Director director = mapper.toDirector(directorDTO);
+        dto.setIdEmployee(idEmployee);
+        Director director = mapper.toDirector(dto);
         repository.save(director);
     }
 
-    public void edit(DirectorDTO directorDTO) {
-        if (!repository.existsById(directorDTO.getIdEmployee()))
-            throw new RecordNotFoundException("Not found " + directorDTO.getIdEmployee());
+    public void edit(DirectorDTO dto) {
+        if (!repository.existsById(dto.getIdEmployee()))
+            throw new RecordNotFoundException("Not found " + dto.getIdEmployee());
 
-        Director director = mapper.toDirector(directorDTO);
+        employeeService.edit(EmployeeDTO.builder()
+                .id(dto.getIdEmployee())
+                .fullName(dto.getFullName())
+                .experience(dto.getExperience())
+                .gender(dto.getGender())
+                .birthday(dto.getBirthday())
+                .countChild(dto.getCountChild())
+                .salary(dto.getSalary())
+                .worker(dto.isWorker())
+                .theater(dto.getTheater())
+                .build());
+        Director director = mapper.toDirector(dto);
         repository.save(director);
     }
 
-    public void drop(DirectorDTO directorDTO) {
-        if (!repository.existsById(directorDTO.getIdEmployee()))
-            throw new RecordNotFoundException("Not found " + directorDTO.getIdEmployee());
+    public void drop(DirectorDTO dto) {
+        if (!repository.existsById(dto.getIdEmployee()))
+            throw new RecordNotFoundException("Not found " + dto.getIdEmployee());
 
-        Director director = mapper.toDirector(directorDTO);
+        employeeService.drop(EmployeeDTO.builder()
+                .id(dto.getIdEmployee())
+                .fullName(dto.getFullName())
+                .experience(dto.getExperience())
+                .gender(dto.getGender())
+                .birthday(dto.getBirthday())
+                .countChild(dto.getCountChild())
+                .salary(dto.getSalary())
+                .worker(dto.isWorker())
+                .theater(dto.getTheater())
+                .build());
+        Director director = mapper.toDirector(dto);
         repository.delete(director);
     }
 }

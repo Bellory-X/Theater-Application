@@ -31,24 +31,24 @@ public class RoleCharacterService {
                 .collect(Collectors.toList());
     }
 
-    public void add(RoleCharacterDTO roleCharacterDTO) {
-        RoleCharacter roleCharacter = mapper.toRoleCharacter(roleCharacterDTO);
+    public void add(RoleCharacterDTO dto) {
+        RoleCharacter roleCharacter = mapper.toRoleCharacter(dto);
         repository.save(roleCharacter);
     }
 
-    public void edit(RoleCharacterDTO roleCharacterDTO) {
-        if (!repository.existsById(roleCharacterDTO.getId()))
-            throw new RecordNotFoundException("Not found " + roleCharacterDTO.getId());
+    public void edit(RoleCharacterDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getId());
 
-        RoleCharacter roleCharacter = mapper.toRoleCharacter(roleCharacterDTO);
+        RoleCharacter roleCharacter = mapper.toRoleCharacter(dto);
         repository.save(roleCharacter);
     }
 
-    public void drop(RoleCharacterDTO roleCharacterDTO) {
-        if (!repository.existsById(roleCharacterDTO.getId()))
-            throw new RecordNotFoundException("Not found " + roleCharacterDTO.getId());
+    public void drop(RoleCharacterDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getId());
 
-        RoleCharacter roleCharacter = mapper.toRoleCharacter(roleCharacterDTO);
+        RoleCharacter roleCharacter = mapper.toRoleCharacter(dto);
         repository.delete(roleCharacter);
     }
 }

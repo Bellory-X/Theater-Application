@@ -5,6 +5,7 @@ import com.example.theater.dao.repository.employee.category.WorkerCategoryReposi
 import com.example.theater.dto.employee.category.WorkerCategoryDTO;
 import com.example.theater.exception.RecordNotFoundException;
 import com.example.theater.mapper.employee.category.WorkerCategoryMapper;
+import com.example.theater.service.Generator;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,24 +27,25 @@ public class WorkerCategoryService {
                 .collect(Collectors.toList());
     }
 
-    public void add(WorkerCategoryDTO workerCategoryDTO) {
-        WorkerCategory workerCategory = mapper.toNewWorkerCategory(workerCategoryDTO);
+    public void add(WorkerCategoryDTO dto) {
+        dto.setId(Generator.generateId());
+        WorkerCategory workerCategory = mapper.toWorkerCategory(dto);
         repository.save(workerCategory);
     }
 
-    public void edit(WorkerCategoryDTO workerCategoryDTO) {
-        if (!repository.existsById(workerCategoryDTO.getId()))
-            throw new RecordNotFoundException("Not found " + workerCategoryDTO.getCategory());
+    public void edit(WorkerCategoryDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getCategory());
 
-        WorkerCategory workerCategory = mapper.toWorkerCategory(workerCategoryDTO);
+        WorkerCategory workerCategory = mapper.toWorkerCategory(dto);
         repository.save(workerCategory);
     }
 
-    public void drop(WorkerCategoryDTO workerCategoryDTO) {
-        if (!repository.existsById(workerCategoryDTO.getId()))
-            throw new RecordNotFoundException("Not found " + workerCategoryDTO.getCategory());
+    public void drop(WorkerCategoryDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getCategory());
 
-        WorkerCategory workerCategory = mapper.toWorkerCategory(workerCategoryDTO);
+        WorkerCategory workerCategory = mapper.toWorkerCategory(dto);
         repository.delete(workerCategory);
     }
 }

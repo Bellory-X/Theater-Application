@@ -11,6 +11,6 @@ public class PlayDTO {
     int id;
     String name;
     Date data;
-    String rating;
+    int rating;
     String genre;
 }

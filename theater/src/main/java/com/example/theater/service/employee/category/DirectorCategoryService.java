@@ -5,6 +5,7 @@ import com.example.theater.dao.repository.employee.category.DirectorCategoryRepo
 import com.example.theater.dto.employee.category.DirectorCategoryDTO;
 import com.example.theater.exception.RecordNotFoundException;
 import com.example.theater.mapper.employee.category.DirectorCategoryMapper;
+import com.example.theater.service.Generator;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,24 +27,25 @@ public class DirectorCategoryService {
                 .collect(Collectors.toList());
     }
 
-    public void add(DirectorCategoryDTO directorCategoryDTO) {
-        DirectorCategory directorCategory = mapper.toNewDirectorCategory(directorCategoryDTO);
-        repository.save(directorCategory);
+    public void add(DirectorCategoryDTO dto) {
+        dto.setId(Generator.generateId());
+        DirectorCategory category = mapper.toDirectorCategory(dto);
+        repository.save(category);
     }
 
-    public void edit(DirectorCategoryDTO directorCategoryDTO) {
-        if (!repository.existsById(directorCategoryDTO.getId()))
-            throw new RecordNotFoundException("Not found " + directorCategoryDTO.getCategory());
+    public void edit(DirectorCategoryDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getCategory());
 
-        DirectorCategory directorCategory = mapper.toDirectorCategory(directorCategoryDTO);
-        repository.save(directorCategory);
+        DirectorCategory category = mapper.toDirectorCategory(dto);
+        repository.save(category);
     }
 
-    public void drop(DirectorCategoryDTO directorCategoryDTO) {
-        if (!repository.existsById(directorCategoryDTO.getId()))
-            throw new RecordNotFoundException("Not found " + directorCategoryDTO.getCategory());
+    public void drop(DirectorCategoryDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getCategory());
 
-        DirectorCategory directorCategory = mapper.toDirectorCategory(directorCategoryDTO);
-        repository.delete(directorCategory);
+        DirectorCategory category = mapper.toDirectorCategory(dto);
+        repository.delete(category);
     }
 }

@@ -31,24 +31,24 @@ public class PerformanceService {
                 .collect(Collectors.toList());
     }
 
-    public void add(PerformanceDTO performanceDTO) {
-        Performance performance = mapper.toPerformance(performanceDTO);
+    public void add(PerformanceDTO dto) {
+        Performance performance = mapper.toPerformance(dto);
         repository.save(performance);
     }
 
-    public void edit(PerformanceDTO performanceDTO) {
-        if (!repository.existsById(performanceDTO.getId()))
-            throw new RecordNotFoundException("Not found " + performanceDTO.getId());
+    public void edit(PerformanceDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getId());
 
-        Performance performance = mapper.toPerformance(performanceDTO);
+        Performance performance = mapper.toPerformance(dto);
         repository.save(performance);
     }
 
-    public void drop(PerformanceDTO performanceDTO) {
-        if (!repository.existsById(performanceDTO.getId()))
-            throw new RecordNotFoundException("Not found " + performanceDTO.getId());
+    public void drop(PerformanceDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getId());
 
-        Performance performance = mapper.toPerformance(performanceDTO);
+        Performance performance = mapper.toPerformance(dto);
         repository.delete(performance);
     }
 }

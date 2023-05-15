@@ -19,4 +19,9 @@ public class PlaysAuthor {
     int idAuthor;
     @Column(name = "id_play")
     int idPlay;
+
+//    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    @MapsId
+//    @JoinColumn(name = "id_author")
+//    Author author;
 }

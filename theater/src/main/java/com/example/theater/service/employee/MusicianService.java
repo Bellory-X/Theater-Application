@@ -30,35 +30,57 @@ public class MusicianService {
                 .collect(Collectors.toList());
     }
 
-    public void add(MusicianDTO musicianDTO) {
+    public void add(MusicianDTO dto) {
         int idEmployee = employeeService.add(EmployeeDTO.builder()
-                .fullName(musicianDTO.getFullName())
-                .experience(musicianDTO.getExperience())
-                .gender(musicianDTO.getGender())
-                .birthday(musicianDTO.getBirthday())
-                .countChild(musicianDTO.getCountChild())
-                .salary(musicianDTO.getSalary())
-                .worker(musicianDTO.isWorker())
-                .theater(musicianDTO.getTheater())
+                .fullName(dto.getFullName())
+                .experience(dto.getExperience())
+                .gender(dto.getGender())
+                .birthday(dto.getBirthday())
+                .countChild(dto.getCountChild())
+                .salary(dto.getSalary())
+                .worker(dto.isWorker())
+                .theater(dto.getTheater())
                 .build());
-        musicianDTO.setIdEmployee(idEmployee);
-        Musician musician = mapper.toMusician(musicianDTO);
+        dto.setIdEmployee(idEmployee);
+        Musician musician = mapper.toMusician(dto);
         repository.save(musician);
     }
 
-    public void edit(MusicianDTO musicianDTO) {
-        if (!repository.existsById(musicianDTO.getIdEmployee()))
-            throw new RecordNotFoundException("Not found " + musicianDTO.getIdEmployee());
+    public void edit(MusicianDTO dto) {
+        if (!repository.existsById(dto.getIdEmployee()))
+            throw new RecordNotFoundException("Not found " + dto.getIdEmployee());
 
-        Musician musician = mapper.toMusician(musicianDTO);
+        employeeService.edit(EmployeeDTO.builder()
+                .id(dto.getIdEmployee())
+                .fullName(dto.getFullName())
+                .experience(dto.getExperience())
+                .gender(dto.getGender())
+                .birthday(dto.getBirthday())
+                .countChild(dto.getCountChild())
+                .salary(dto.getSalary())
+                .worker(dto.isWorker())
+                .theater(dto.getTheater())
+                .build());
+        Musician musician = mapper.toMusician(dto);
         repository.save(musician);
     }
 
-    public void drop(MusicianDTO musicianDTO) {
-        if (!repository.existsById(musicianDTO.getIdEmployee()))
-            throw new RecordNotFoundException("Not found " + musicianDTO.getIdEmployee());
+    public void drop(MusicianDTO dto) {
+        if (!repository.existsById(dto.getIdEmployee()))
+            throw new RecordNotFoundException("Not found " + dto.getIdEmployee());
 
-        Musician musician = mapper.toMusician(musicianDTO);
+        employeeService.drop(EmployeeDTO.builder()
+                .id(dto.getIdEmployee())
+                .fullName(dto.getFullName())
+                .experience(dto.getExperience())
+                .gender(dto.getGender())
+                .birthday(dto.getBirthday())
+                .countChild(dto.getCountChild())
+                .salary(dto.getSalary())
+                .worker(dto.isWorker())
+                .theater(dto.getTheater())
+                .build());
+        Musician musician = mapper.toMusician(dto);
         repository.delete(musician);
     }
 

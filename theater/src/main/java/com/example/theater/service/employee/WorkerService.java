@@ -28,35 +28,57 @@ public class WorkerService {
                 .collect(Collectors.toList());
     }
 
-    public void add(WorkerDTO workerDTO) {
+    public void add(WorkerDTO dto) {
         int idEmployee = employeeService.add(EmployeeDTO.builder()
-                .fullName(workerDTO.getFullName())
-                .experience(workerDTO.getExperience())
-                .gender(workerDTO.getGender())
-                .birthday(workerDTO.getBirthday())
-                .countChild(workerDTO.getCountChild())
-                .salary(workerDTO.getSalary())
-                .worker(workerDTO.isWorker())
-                .theater(workerDTO.getTheater())
+                .fullName(dto.getFullName())
+                .experience(dto.getExperience())
+                .gender(dto.getGender())
+                .birthday(dto.getBirthday())
+                .countChild(dto.getCountChild())
+                .salary(dto.getSalary())
+                .worker(dto.isWorker())
+                .theater(dto.getTheater())
                 .build());
-        workerDTO.setIdEmployee(idEmployee);
-        Worker worker = mapper.toWorker(workerDTO);
+        dto.setIdEmployee(idEmployee);
+        Worker worker = mapper.toWorker(dto);
         repository.save(worker);
     }
 
-    public void edit(WorkerDTO workerDTO) {
-        if (!repository.existsById(workerDTO.getIdEmployee()))
-            throw new RecordNotFoundException("Not found " + workerDTO.getIdEmployee());
+    public void edit(WorkerDTO dto) {
+        if (!repository.existsById(dto.getIdEmployee()))
+            throw new RecordNotFoundException("Not found " + dto.getIdEmployee());
 
-        Worker worker = mapper.toWorker(workerDTO);
+        employeeService.edit(EmployeeDTO.builder()
+                .id(dto.getIdEmployee())
+                .fullName(dto.getFullName())
+                .experience(dto.getExperience())
+                .gender(dto.getGender())
+                .birthday(dto.getBirthday())
+                .countChild(dto.getCountChild())
+                .salary(dto.getSalary())
+                .worker(dto.isWorker())
+                .theater(dto.getTheater())
+                .build());
+        Worker worker = mapper.toWorker(dto);
         repository.save(worker);
     }
 
-    public void drop(WorkerDTO workerDTO) {
-        if (!repository.existsById(workerDTO.getIdEmployee()))
-            throw new RecordNotFoundException("Not found " + workerDTO.getIdEmployee());
+    public void drop(WorkerDTO dto) {
+        if (!repository.existsById(dto.getIdEmployee()))
+            throw new RecordNotFoundException("Not found " + dto.getIdEmployee());
 
-        Worker worker = mapper.toWorker(workerDTO);
+        employeeService.edit(EmployeeDTO.builder()
+                .id(dto.getIdEmployee())
+                .fullName(dto.getFullName())
+                .experience(dto.getExperience())
+                .gender(dto.getGender())
+                .birthday(dto.getBirthday())
+                .countChild(dto.getCountChild())
+                .salary(dto.getSalary())
+                .worker(dto.isWorker())
+                .theater(dto.getTheater())
+                .build());
+        Worker worker = mapper.toWorker(dto);
         repository.delete(worker);
     }
 }

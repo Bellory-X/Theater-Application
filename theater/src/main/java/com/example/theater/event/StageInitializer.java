@@ -1,8 +1,7 @@
 package com.example.theater.event;
 
-import com.example.theater.controller.TheaterController;
 import com.example.theater.controller.employee.ActorController;
-import com.example.theater.controller.employee.MusicianController;
+import com.example.theater.controller.performance.PlayController;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import net.rgielen.fxweaver.core.FxWeaver;
@@ -25,7 +24,7 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
     @Override
     public void onApplicationEvent(StageReadyEvent event) {
         Stage stage = event.getStage();
-        Scene scene = new Scene(fxWeaver.loadView(TheaterController.class));
+        Scene scene = new Scene(fxWeaver.loadView(ActorController.class));
         stage.setScene(scene);
         stage.setTitle(title);
         stage.show();

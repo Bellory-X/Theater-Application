@@ -31,24 +31,24 @@ public class RepertoireService {
                 .collect(Collectors.toList());
     }
 
-    public void add(RepertoireDTO repertoireDTO) {
-        Repertoire repertoire = mapper.toRepertoire(repertoireDTO);
+    public void add(RepertoireDTO dto) {
+        Repertoire repertoire = mapper.toRepertoire(dto);
         repository.save(repertoire);
     }
 
-    public void edit(RepertoireDTO repertoireDTO) {
-        if (!repository.existsById(repertoireDTO.getId()))
-            throw new RecordNotFoundException("Not found " + repertoireDTO.getId());
+    public void edit(RepertoireDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getId());
 
-        Repertoire repertoire = mapper.toRepertoire(repertoireDTO);
+        Repertoire repertoire = mapper.toRepertoire(dto);
         repository.save(repertoire);
     }
 
-    public void drop(RepertoireDTO repertoireDTO) {
-        if (!repository.existsById(repertoireDTO.getId()))
-            throw new RecordNotFoundException("Not found " + repertoireDTO.getId());
+    public void drop(RepertoireDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getId());
 
-        Repertoire repertoire = mapper.toRepertoire(repertoireDTO);
+        Repertoire repertoire = mapper.toRepertoire(dto);
         repository.delete(repertoire);
     }
 }

@@ -31,24 +31,24 @@ public class AuthorService {
                 .collect(Collectors.toList());
     }
 
-    public void add(AuthorDTO authorDTO) {
-        Author author = mapper.toAuthor(authorDTO);
+    public void add(AuthorDTO dto) {
+        Author author = mapper.toAuthor(dto);
         repository.save(author);
     }
 
-    public void edit(AuthorDTO authorDTO) {
-        if (!repository.existsById(authorDTO.getId()))
-            throw new RecordNotFoundException("Not found " + authorDTO.getId());
+    public void edit(AuthorDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getId());
 
-        Author author = mapper.toAuthor(authorDTO);
+        Author author = mapper.toAuthor(dto);
         repository.save(author);
     }
 
-    public void drop(AuthorDTO authorDTO) {
-        if (!repository.existsById(authorDTO.getId()))
-            throw new RecordNotFoundException("Not found " + authorDTO.getId());
+    public void drop(AuthorDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getId());
 
-        Author author = mapper.toAuthor(authorDTO);
+        Author author = mapper.toAuthor(dto);
         repository.delete(author);
     }
 }

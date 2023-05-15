@@ -31,24 +31,24 @@ public class DirectorsPerformanceService {
                 .collect(Collectors.toList());
     }
 
-    public void add(DirectorsPerformanceDTO directorsPerformanceDTO) {
-        DirectorsPerformance directorsPerformance = mapper.toDirectorsPerformance(directorsPerformanceDTO);
+    public void add(DirectorsPerformanceDTO dto) {
+        DirectorsPerformance directorsPerformance = mapper.toDirectorsPerformance(dto);
         repository.save(directorsPerformance);
     }
 
-    public void edit(DirectorsPerformanceDTO directorsPerformanceDTO) {
-        if (!repository.existsById(directorsPerformanceDTO.getId()))
-            throw new RecordNotFoundException("Not found " + directorsPerformanceDTO.getIdPerformance());
+    public void edit(DirectorsPerformanceDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getIdPerformance());
 
-        DirectorsPerformance directorsPerformance = mapper.toDirectorsPerformance(directorsPerformanceDTO);
+        DirectorsPerformance directorsPerformance = mapper.toDirectorsPerformance(dto);
         repository.save(directorsPerformance);
     }
 
-    public void drop(DirectorsPerformanceDTO directorsPerformanceDTO) {
-        if (!repository.existsById(directorsPerformanceDTO.getId()))
-            throw new RecordNotFoundException("Not found " + directorsPerformanceDTO.getIdPerformance());
+    public void drop(DirectorsPerformanceDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getIdPerformance());
 
-        DirectorsPerformance directorsPerformance = mapper.toDirectorsPerformance(directorsPerformanceDTO);
+        DirectorsPerformance directorsPerformance = mapper.toDirectorsPerformance(dto);
         repository.delete(directorsPerformance);
     }
 }

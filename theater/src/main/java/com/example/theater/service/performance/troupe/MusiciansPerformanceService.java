@@ -31,24 +31,24 @@ public class MusiciansPerformanceService {
                 .collect(Collectors.toList());
     }
 
-    public void add(MusiciansPerformanceDTO musiciansPerformanceDTO) {
-        MusiciansPerformance musiciansPerformance = mapper.toMusiciansPerformance(musiciansPerformanceDTO);
+    public void add(MusiciansPerformanceDTO dto) {
+        MusiciansPerformance musiciansPerformance = mapper.toMusiciansPerformance(dto);
         repository.save(musiciansPerformance);
     }
 
-    public void edit(MusiciansPerformanceDTO musiciansPerformanceDTO) {
-        if (!repository.existsById(musiciansPerformanceDTO.getId()))
-            throw new RecordNotFoundException("Not found " + musiciansPerformanceDTO.getIdPerformance());
+    public void edit(MusiciansPerformanceDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getIdPerformance());
 
-        MusiciansPerformance musiciansPerformance = mapper.toMusiciansPerformance(musiciansPerformanceDTO);
+        MusiciansPerformance musiciansPerformance = mapper.toMusiciansPerformance(dto);
         repository.save(musiciansPerformance);
     }
 
-    public void drop(MusiciansPerformanceDTO musiciansPerformanceDTO) {
-        if (!repository.existsById(musiciansPerformanceDTO.getId()))
-            throw new RecordNotFoundException("Not found " + musiciansPerformanceDTO.getIdPerformance());
+    public void drop(MusiciansPerformanceDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getIdPerformance());
 
-        MusiciansPerformance musiciansPerformance = mapper.toMusiciansPerformance(musiciansPerformanceDTO);
+        MusiciansPerformance musiciansPerformance = mapper.toMusiciansPerformance(dto);
         repository.delete(musiciansPerformance);
     }
 }

@@ -5,6 +5,7 @@ import com.example.theater.dao.repository.employee.category.MusicianCategoryRepo
 import com.example.theater.dto.employee.category.MusicianCategoryDTO;
 import com.example.theater.exception.RecordNotFoundException;
 import com.example.theater.mapper.employee.category.MusicianCategoryMapper;
+import com.example.theater.service.Generator;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,24 +27,25 @@ public class MusicianCategoryService {
                 .collect(Collectors.toList());
     }
 
-    public void add(MusicianCategoryDTO musicianCategoryDTO) {
-        MusicianCategory musicianCategory = mapper.toNewMusicianCategory(musicianCategoryDTO);
-        repository.save(musicianCategory);
+    public void add(MusicianCategoryDTO dto) {
+        dto.setId(Generator.generateId());
+        MusicianCategory category = mapper.toMusicianCategory(dto);
+        repository.save(category);
     }
 
-    public void edit(MusicianCategoryDTO musicianCategoryDTO) {
-        if (!repository.existsById(musicianCategoryDTO.getId()))
-            throw new RecordNotFoundException("Not found " + musicianCategoryDTO.getCategory());
+    public void edit(MusicianCategoryDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getCategory());
 
-        MusicianCategory musicianCategory = mapper.toMusicianCategory(musicianCategoryDTO);
-        repository.save(musicianCategory);
+        MusicianCategory category = mapper.toMusicianCategory(dto);
+        repository.save(category);
     }
 
-    public void drop(MusicianCategoryDTO musicianCategoryDTO) {
-        if (!repository.existsById(musicianCategoryDTO.getId()))
-            throw new RecordNotFoundException("Not found " + musicianCategoryDTO.getCategory());
+    public void drop(MusicianCategoryDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getCategory());
 
-        MusicianCategory musicianCategory = mapper.toMusicianCategory(musicianCategoryDTO);
-        repository.delete(musicianCategory);
+        MusicianCategory category = mapper.toMusicianCategory(dto);
+        repository.delete(category);
     }
 }

@@ -31,24 +31,24 @@ public class RolesActorService {
                 .collect(Collectors.toList());
     }
 
-    public void add(RolesActorDTO rolesActorDTO) {
-        RolesActor rolesActor = mapper.toRolesActor(rolesActorDTO);
+    public void add(RolesActorDTO dto) {
+        RolesActor rolesActor = mapper.toRolesActor(dto);
         repository.save(rolesActor);
     }
 
-    public void edit(RolesActorDTO rolesActorDTO) {
-        if (!repository.existsById(rolesActorDTO.getId()))
-            throw new RecordNotFoundException("Not found " + rolesActorDTO.getId());
+    public void edit(RolesActorDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getId());
 
-        RolesActor rolesActor = mapper.toRolesActor(rolesActorDTO);
+        RolesActor rolesActor = mapper.toRolesActor(dto);
         repository.save(rolesActor);
     }
 
-    public void drop(RolesActorDTO rolesActorDTO) {
-        if (!repository.existsById(rolesActorDTO.getId()))
-            throw new RecordNotFoundException("Not found " + rolesActorDTO.getId());
+    public void drop(RolesActorDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getId());
 
-        RolesActor rolesActor = mapper.toRolesActor(rolesActorDTO);
+        RolesActor rolesActor = mapper.toRolesActor(dto);
         repository.delete(rolesActor);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.theater.service.performance.play;
 
 import com.example.theater.dao.entity.performance.play.PlaysAuthor;
+import com.example.theater.dao.repository.performance.play.AuthorRepository;
 import com.example.theater.dao.repository.performance.play.PlaysAuthorRepository;
 import com.example.theater.dto.performance.play.PlaysAuthorDTO;
 import com.example.theater.exception.RecordNotFoundException;
@@ -31,24 +32,24 @@ public class PlaysAuthorService {
                 .collect(Collectors.toList());
     }
 
-    public void add(PlaysAuthorDTO playsAuthorDTO) {
-        PlaysAuthor playsAuthor = mapper.toPlaysAuthor(playsAuthorDTO);
+    public void add(PlaysAuthorDTO dto) {
+        PlaysAuthor playsAuthor = mapper.toPlaysAuthor(dto);
         repository.save(playsAuthor);
     }
 
-    public void edit(PlaysAuthorDTO playsAuthorDTO) {
-        if (!repository.existsById(playsAuthorDTO.getId()))
-            throw new RecordNotFoundException("Not found " + playsAuthorDTO.getIdAuthor());
+    public void edit(PlaysAuthorDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getIdAuthor());
 
-        PlaysAuthor playsAuthor = mapper.toPlaysAuthor(playsAuthorDTO);
+        PlaysAuthor playsAuthor = mapper.toPlaysAuthor(dto);
         repository.save(playsAuthor);
     }
 
-    public void drop(PlaysAuthorDTO playsAuthorDTO) {
-        if (!repository.existsById(playsAuthorDTO.getId()))
-            throw new RecordNotFoundException("Not found " + playsAuthorDTO.getIdAuthor());
+    public void drop(PlaysAuthorDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getIdAuthor());
 
-        PlaysAuthor playsAuthor = mapper.toPlaysAuthor(playsAuthorDTO);
+        PlaysAuthor playsAuthor = mapper.toPlaysAuthor(dto);
         repository.delete(playsAuthor);
     }
 }

@@ -8,6 +8,7 @@ import com.example.theater.dto.employee.rank.RankDTO;
 import com.example.theater.dto.employee.rank.RanksActorDTO;
 import com.example.theater.exception.QueryException;
 import com.example.theater.service.employee.ActorService;
+import com.example.theater.service.employee.EmployeeService;
 import com.example.theater.service.employee.category.ActorCategoryService;
 import com.example.theater.service.employee.character.ActorCharacterService;
 import com.example.theater.service.employee.character.CharactersActorService;
@@ -93,6 +94,7 @@ public class ActorController {
     private final CharactersActorService charactersActorService;
     private final RankService rankService;
     private final RanksActorService ranksActorService;
+    private final EmployeeService employeeService;
     private final FxWeaver fxWeaver;
     private TableStatus tableStatus = TableStatus.ACTOR;
     private QueryStatus queryStatus = QueryStatus.QUERY1;
@@ -100,13 +102,14 @@ public class ActorController {
 
     public ActorController(ActorService actorService, ActorCategoryService actorCategoryService,
                            ActorCharacterService actorCharacterService, CharactersActorService charactersActorService,
-                           RankService rankService, RanksActorService ranksActorService, FxWeaver fxWeaver) {
+                           RankService rankService, RanksActorService ranksActorService, EmployeeService employeeService, FxWeaver fxWeaver) {
         this.actorService = actorService;
         this.actorCategoryService = actorCategoryService;
         this.actorCharacterService = actorCharacterService;
         this.charactersActorService = charactersActorService;
         this.rankService = rankService;
         this.ranksActorService = ranksActorService;
+        this.employeeService = employeeService;
         this.fxWeaver = fxWeaver;
     }
 
@@ -144,23 +147,37 @@ public class ActorController {
                     characterTable.refresh();
                 }
                 case RANK -> {
-                    rankService.drop(ranksTable.getSelectionModel().getSelectedItem());
+                    rankService.drop(rankTable.getSelectionModel().getSelectedItem());
                     rankTable.setItems(FXCollections.observableList(rankService.getAll()));
                     rankTable.refresh();
                 }
                 case RANKS -> {
-                    ranksActorService.drop(RanksActorDTO.builder()
-                            .id(ranksTable.getSelectionModel().getSelectedItem().getId())
-                            .idEmployee(actorTable.getSelectionModel().getSelectedItem().getIdEmployee())
-                            .idRank(rankTable.getSelectionModel().getSelectedItem().getId())
-                            .build());
-                    characterTable.setItems(FXCollections.observableList(actorCharacterService.getAll()));
-                    characterTable.refresh();
+                    Optional<RanksActorDTO> ddto = ranksActorService.getAll().stream().filter(el ->
+                            el.getIdEmployee() == actorTable.getSelectionModel().getSelectedItem().getIdEmployee()
+                                    && el.getIdRank() == ranksTable.getSelectionModel().getSelectedItem().getId()).findFirst();
+                    if (ddto.isPresent())
+                        ranksActorService.drop(ddto.get());
+                    else
+                        throw new QueryException("Not found");
+
+                    ActorDTO dto = actorTable.getSelectionModel().getSelectedItem();
+                    List<RanksActorDTO> ranksList = ranksActorService.getAll().stream()
+                            .filter(el -> el.getIdEmployee() == dto.getIdEmployee()).toList();
+                    List<RankDTO> rankList = new ArrayList<>();
+                    ranksList.forEach(el-> rankService.getById(el.getIdRank()).ifPresent(rankList::add));
+                    ranksTable.getItems().clear();
+                    ranksTable.getItems().addAll(rankList);
+                    ranksTable.refresh();
                 }
                 case CHARACTERS -> {
                     charactersActorService.drop(charactersTable.getSelectionModel().getSelectedItem());
-                    characterTable.setItems(FXCollections.observableList(actorCharacterService.getAll()));
-                    characterTable.refresh();
+
+                    ActorDTO dto = actorTable.getSelectionModel().getSelectedItem();
+                    List<CharactersActorDTO> charactersList = charactersActorService.getAll().stream()
+                            .filter(el -> el.getIdEmployee() == dto.getIdEmployee()).toList();
+                    charactersTable.getItems().clear();
+                    charactersTable.getItems().addAll(charactersList);
+                    charactersTable.refresh();
                 }
             }
             result.setText("Success");
@@ -200,7 +217,7 @@ public class ActorController {
                 }
                 case CHARACTER -> {
                     actorCharacterService.edit(ActorCharacterDTO.builder()
-                            .id(charactersTable.getSelectionModel().getSelectedItem().getId())
+                            .id(characterTable.getSelectionModel().getSelectedItem().getId())
                             .character(addField1.getText())
                             .build());
                     characterTable.setItems(FXCollections.observableList(actorCharacterService.getAll()));
@@ -217,13 +234,25 @@ public class ActorController {
                     rankTable.refresh();
                 }
                 case RANKS -> {
-                    ranksActorService.edit(RanksActorDTO.builder()
-                            .id(ranksTable.getSelectionModel().getSelectedItem().getId())
-                            .idEmployee(actorTable.getSelectionModel().getSelectedItem().getIdEmployee())
-                            .idRank(rankTable.getSelectionModel().getSelectedItem().getId())
-                            .build());
-                    characterTable.setItems(FXCollections.observableList(actorCharacterService.getAll()));
-                    characterTable.refresh();
+                    Optional<RanksActorDTO> ddto = ranksActorService.getAll().stream().filter(el ->
+                            el.getIdEmployee() == actorTable.getSelectionModel().getSelectedItem().getIdEmployee()
+                                    && el.getIdRank() == ranksTable.getSelectionModel().getSelectedItem().getId()).findFirst();
+                    if (ddto.isPresent())
+                        ranksActorService.edit(RanksActorDTO.builder()
+                                .id(ddto.get().getId())
+                                .idEmployee(actorTable.getSelectionModel().getSelectedItem().getIdEmployee())
+                                .idRank(rankTable.getSelectionModel().getSelectedItem().getId())
+                                .build());
+                    else
+                        throw new QueryException("Not found");
+                    ActorDTO dto = actorTable.getSelectionModel().getSelectedItem();
+                    List<RanksActorDTO> ranksList = ranksActorService.getAll().stream()
+                            .filter(el -> el.getIdEmployee() == dto.getIdEmployee()).toList();
+                    List<RankDTO> rankList = new ArrayList<>();
+                    ranksList.forEach(el-> rankService.getById(el.getIdRank()).ifPresent(rankList::add));
+                    ranksTable.getItems().clear();
+                    ranksTable.getItems().addAll(rankList);
+                    ranksTable.refresh();
                 }
                 case CHARACTERS -> {
                     charactersActorService.edit(CharactersActorDTO.builder()
@@ -231,8 +260,13 @@ public class ActorController {
                             .idEmployee(actorTable.getSelectionModel().getSelectedItem().getIdEmployee())
                             .character(characterTable.getSelectionModel().getSelectedItem().getCharacter())
                             .build());
-                    characterTable.setItems(FXCollections.observableList(actorCharacterService.getAll()));
-                    characterTable.refresh();
+
+                    ActorDTO dto = actorTable.getSelectionModel().getSelectedItem();
+                    List<CharactersActorDTO> charactersList = charactersActorService.getAll().stream()
+                            .filter(el -> el.getIdEmployee() == dto.getIdEmployee()).toList();
+                    charactersTable.getItems().clear();
+                    charactersTable.getItems().addAll(charactersList);
+                    charactersTable.refresh();
                 }
             }
             result.setText("Success");
@@ -282,6 +316,16 @@ public class ActorController {
                             .idEmployee(actorTable.getSelectionModel().getSelectedItem().getIdEmployee())
                             .idRank(rankTable.getSelectionModel().getSelectedItem().getId())
                             .build());
+
+                    ActorDTO dto = actorTable.getSelectionModel().getSelectedItem();
+                    List<RanksActorDTO> ranksList = ranksActorService.getAll().stream()
+                            .filter(el -> el.getIdEmployee() == dto.getIdEmployee()).toList();
+                    List<RankDTO> rankList = new ArrayList<>();
+                    ranksList.forEach(el-> rankService.getById(el.getIdRank()).ifPresent(rankList::add));
+                    ranksTable.getItems().clear();
+                    ranksTable.getItems().addAll(rankList);
+                    ranksTable.refresh();
+
                     characterTable.setItems(FXCollections.observableList(actorCharacterService.getAll()));
                     characterTable.refresh();
                 }
@@ -290,8 +334,13 @@ public class ActorController {
                             .idEmployee(actorTable.getSelectionModel().getSelectedItem().getIdEmployee())
                             .character(characterTable.getSelectionModel().getSelectedItem().getCharacter())
                             .build());
-                    characterTable.setItems(FXCollections.observableList(actorCharacterService.getAll()));
-                    characterTable.refresh();
+
+                    ActorDTO dto = actorTable.getSelectionModel().getSelectedItem();
+                    List<CharactersActorDTO> charactersList = charactersActorService.getAll().stream()
+                            .filter(el -> el.getIdEmployee() == dto.getIdEmployee()).toList();
+                    charactersTable.getItems().clear();
+                    charactersTable.getItems().addAll(charactersList);
+                    charactersTable.refresh();
                 }
             }
             result.setText("Success");

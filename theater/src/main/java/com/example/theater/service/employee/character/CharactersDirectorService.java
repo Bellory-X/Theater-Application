@@ -5,6 +5,7 @@ import com.example.theater.dao.repository.employee.charecter.CharactersDirectorR
 import com.example.theater.dto.employee.character.CharactersDirectorDTO;
 import com.example.theater.exception.RecordNotFoundException;
 import com.example.theater.mapper.employee.character.CharactersDirectorMapper;
+import com.example.theater.service.Generator;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,24 +27,25 @@ public class CharactersDirectorService {
                 .collect(Collectors.toList());
     }
 
-    public void add(CharactersDirectorDTO charactersDirectorDTO) {
-        CharactersDirector charactersDirector = mapper.toNewCharactersDirector(charactersDirectorDTO);
+    public void add(CharactersDirectorDTO dto) {
+        dto.setId(Generator.generateId());
+        CharactersDirector charactersDirector = mapper.toCharactersDirector(dto);
         repository.save(charactersDirector);
     }
 
-    public void edit(CharactersDirectorDTO charactersDirectorDTO) {
-        if (!repository.existsById(charactersDirectorDTO.getId()))
-            throw new RecordNotFoundException("Not found " + charactersDirectorDTO.getId());
+    public void edit(CharactersDirectorDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getId());
 
-        CharactersDirector charactersDirector = mapper.toCharactersDirector(charactersDirectorDTO);
+        CharactersDirector charactersDirector = mapper.toCharactersDirector(dto);
         repository.save(charactersDirector);
     }
 
-    public void drop(CharactersDirectorDTO charactersDirectorDTO) {
-        if (!repository.existsById(charactersDirectorDTO.getId()))
-            throw new RecordNotFoundException("Not found " + charactersDirectorDTO.getId());
+    public void drop(CharactersDirectorDTO dto) {
+        if (!repository.existsById(dto.getId()))
+            throw new RecordNotFoundException("Not found " + dto.getId());
 
-        CharactersDirector charactersDirector = mapper.toCharactersDirector(charactersDirectorDTO);
+        CharactersDirector charactersDirector = mapper.toCharactersDirector(dto);
         repository.delete(charactersDirector);
     }
 }
