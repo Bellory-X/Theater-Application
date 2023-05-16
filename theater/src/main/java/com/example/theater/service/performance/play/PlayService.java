@@ -5,6 +5,7 @@ import com.example.theater.dao.repository.performance.play.PlayRepository;
 import com.example.theater.dto.performance.play.PlayDTO;
 import com.example.theater.exception.RecordNotFoundException;
 import com.example.theater.mapper.performance.play.PlayMapper;
+import com.example.theater.service.Generator;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,7 @@ public class PlayService {
     }
 
     public void add(PlayDTO dto) {
+        dto.setId(Generator.generateId());
         Play play = mapper.toPlay(dto);
         repository.save(play);
     }

@@ -5,6 +5,7 @@ import com.example.theater.dao.repository.performance.troupe.RoleCharacterReposi
 import com.example.theater.dto.performance.troupe.RoleCharacterDTO;
 import com.example.theater.exception.RecordNotFoundException;
 import com.example.theater.mapper.performance.troupe.RoleCharacterMapper;
+import com.example.theater.service.Generator;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,7 @@ public class RoleCharacterService {
     }
 
     public void add(RoleCharacterDTO dto) {
+        dto.setId(Generator.generateId());
         RoleCharacter roleCharacter = mapper.toRoleCharacter(dto);
         repository.save(roleCharacter);
     }

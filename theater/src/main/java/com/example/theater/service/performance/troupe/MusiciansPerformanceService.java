@@ -5,6 +5,7 @@ import com.example.theater.dao.repository.performance.troupe.MusiciansPerformanc
 import com.example.theater.dto.performance.troupe.MusiciansPerformanceDTO;
 import com.example.theater.exception.RecordNotFoundException;
 import com.example.theater.mapper.performance.troupe.MusiciansPerformanceMapper;
+import com.example.theater.service.Generator;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,7 @@ public class MusiciansPerformanceService {
     }
 
     public void add(MusiciansPerformanceDTO dto) {
+        dto.setId(Generator.generateId());
         MusiciansPerformance musiciansPerformance = mapper.toMusiciansPerformance(dto);
         repository.save(musiciansPerformance);
     }

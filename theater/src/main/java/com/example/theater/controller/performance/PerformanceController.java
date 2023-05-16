@@ -5,6 +5,7 @@ import com.example.theater.dto.performance.HallDTO;
 import com.example.theater.dto.performance.PerformanceDTO;
 import com.example.theater.dto.performance.PlaceDTO;
 import com.example.theater.dto.performance.RepertoireDTO;
+import com.example.theater.dto.performance.play.AuthorDTO;
 import com.example.theater.dto.performance.play.PlayDTO;
 import com.example.theater.service.employee.category.ActorCategoryService;
 import com.example.theater.service.employee.character.ActorCharacterService;
@@ -16,8 +17,11 @@ import com.example.theater.service.performance.PerformanceService;
 import com.example.theater.service.performance.PlaceService;
 import com.example.theater.service.performance.RepertoireService;
 import com.example.theater.service.performance.play.PlayService;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import net.rgielen.fxweaver.core.FxWeaver;
 import net.rgielen.fxweaver.core.FxmlView;
@@ -88,8 +92,8 @@ public class PerformanceController {
     private final RepertoireService repertoireService;
     private final PlayService playService;
     private final FxWeaver fxWeaver;
-    private ActorController.TableStatus tableStatus = ActorController.TableStatus.ACTOR;
-    private ActorController.QueryStatus queryStatus = ActorController.QueryStatus.QUERY1;
+    private TableStatus tableStatus = TableStatus.PERFORMANCE;
+    private QueryStatus queryStatus = QueryStatus.QUERY1;
     private final Map<QueryStatus, String> queryMap = new HashMap<>();
 
     public PerformanceController(PerformanceService performanceService, HallService hallService,
@@ -115,19 +119,68 @@ public class PerformanceController {
         queryMap.put(QueryStatus.QUERY7, "Получить число свободных мест на все спектакли");
         queryMap.put(QueryStatus.QUERY8, "Получить число свободных мест на конкpетный спектакль");
         queryMap.put(QueryStatus.QUERY9, "Получить число свободных мест на пpемьеpы");
+        initPlayTable();
+        initPerformanceTable();
     }
 
-    private void initPerformanceTable() {
+    private void initHallTable() {
         
     }
 
+    private void initPerformanceTable() {
+        TableColumn<PerformanceDTO, String> column1 = new TableColumn<>("Name");
+        column1.setCellValueFactory(new PropertyValueFactory<>("name"));
+        performanceTable.getColumns().add(column1);
+
+        TableColumn<PerformanceDTO, Date> column2 = new TableColumn<>("Data");
+        column2.setCellValueFactory(new PropertyValueFactory<>("data"));
+        performanceTable.getColumns().add(column2);
+
+        TableColumn<PerformanceDTO, String> column3 = new TableColumn<>("Rating");
+        column3.setCellValueFactory(new PropertyValueFactory<>("rating"));
+        performanceTable.getColumns().add(column3);
+
+        TableColumn<PerformanceDTO, String> column4 = new TableColumn<>("Genre");
+        column4.setCellValueFactory(new PropertyValueFactory<>("Genre"));
+        performanceTable.getColumns().add(column4);
+
+        TableColumn<PerformanceDTO, Integer> column5 = new TableColumn<>("price");
+        column5.setCellValueFactory(new PropertyValueFactory<>("price"));
+        performanceTable.getColumns().add(column5);
+
+        TableColumn<PerformanceDTO, String> column6 = new TableColumn<>("theater");
+        column6.setCellValueFactory(new PropertyValueFactory<>("theater"));
+        performanceTable.getColumns().add(column6);
+
+        performanceTable.setItems(FXCollections.observableList(performanceService.getAll()));
+    }
+
+    private void initPlayTable() {
+        TableColumn<PlayDTO, String> column1 = new TableColumn<>("Name");
+        column1.setCellValueFactory(new PropertyValueFactory<>("name"));
+        playTable.getColumns().add(column1);
+
+        TableColumn<PlayDTO, Date> column2 = new TableColumn<>("Data");
+        column2.setCellValueFactory(new PropertyValueFactory<>("data"));
+        playTable.getColumns().add(column2);
+
+        TableColumn<PlayDTO, String> column3 = new TableColumn<>("Rating");
+        column3.setCellValueFactory(new PropertyValueFactory<>("rating"));
+        playTable.getColumns().add(column3);
+
+        TableColumn<PlayDTO, String> column4 = new TableColumn<>("Genre");
+        column4.setCellValueFactory(new PropertyValueFactory<>("Genre"));
+        playTable.getColumns().add(column4);
+
+        playTable.setItems(FXCollections.observableList(playService.getAll()));
+    }
+
     public enum TableStatus {
-        ACTOR,
-        CATEGORY,
-        CHARACTER,
-        CHARACTERS,
-        RANK,
-        RANKS
+        PERFORMANCE,
+        HALL,
+        PLACE,
+        REPERTOIRE,
+        PLAY
     }
 
     public enum QueryStatus {

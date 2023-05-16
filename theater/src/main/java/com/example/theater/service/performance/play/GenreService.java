@@ -5,6 +5,7 @@ import com.example.theater.dao.repository.performance.play.GenreRepository;
 import com.example.theater.dto.performance.play.GenreDTO;
 import com.example.theater.exception.RecordNotFoundException;
 import com.example.theater.mapper.performance.play.GenreMapper;
+import com.example.theater.service.Generator;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,7 @@ public class GenreService {
     }
 
     public void add(GenreDTO dto) {
+        dto.setId(Generator.generateId());
         Genre genre = mapper.toGenre(dto);
         repository.save(genre);
     }

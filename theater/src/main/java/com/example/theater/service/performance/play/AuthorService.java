@@ -5,6 +5,7 @@ import com.example.theater.dao.repository.performance.play.AuthorRepository;
 import com.example.theater.dto.performance.play.AuthorDTO;
 import com.example.theater.exception.RecordNotFoundException;
 import com.example.theater.mapper.performance.play.AuthorMapper;
+import com.example.theater.service.Generator;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,7 @@ public class AuthorService {
     }
 
     public void add(AuthorDTO dto) {
+        dto.setId(Generator.generateId());
         Author author = mapper.toAuthor(dto);
         repository.save(author);
     }

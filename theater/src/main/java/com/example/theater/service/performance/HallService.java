@@ -5,6 +5,7 @@ import com.example.theater.dao.repository.performance.HallRepository;
 import com.example.theater.dto.performance.HallDTO;
 import com.example.theater.exception.RecordNotFoundException;
 import com.example.theater.mapper.performance.HallMapper;
+import com.example.theater.service.Generator;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,7 @@ public class HallService {
     }
 
     public void add(HallDTO dto) {
+        dto.setId(Generator.generateId());
         Hall hall = mapper.toHall(dto);
         repository.save(hall);
     }
