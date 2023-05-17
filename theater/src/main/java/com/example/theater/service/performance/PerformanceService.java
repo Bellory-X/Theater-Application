@@ -3,9 +3,11 @@ package com.example.theater.service.performance;
 import com.example.theater.dao.entity.performance.Performance;
 import com.example.theater.dao.repository.performance.PerformanceRepository;
 import com.example.theater.dto.performance.PerformanceDTO;
+import com.example.theater.dto.performance.RepertoireDTO;
 import com.example.theater.exception.RecordNotFoundException;
 import com.example.theater.mapper.performance.PerformanceMapper;
 import com.example.theater.service.Generator;
+import com.example.theater.service.performance.play.PlayService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,8 @@ import java.util.stream.StreamSupport;
 public class PerformanceService {
     private final PerformanceRepository repository;
     private final PerformanceMapper mapper;
+    private final PlayService playService;
+    private final RepertoireService repertoireService;
 
     public Optional<PerformanceDTO> getById(int id) {
         return repository.findById(id).map(mapper::toPerformanceDTO);
@@ -28,8 +32,22 @@ public class PerformanceService {
         Iterable<Performance> iterable = repository.findAll();
 
         return StreamSupport.stream(iterable.spliterator(), false)
-                .map(mapper::toPerformanceDTO)
-                .collect(Collectors.toList());
+                .map(el -> {
+                    PerformanceDTO dto = mapper.toPerformanceDTO(el);
+                    playService.getById(dto.getIdPlay())
+                            .ifPresent(v -> {
+                                dto.setName(v.getName());
+                                dto.setData(v.getData());
+                                dto.setRating(v.getRating());
+                                dto.setGenre(v.getGenre());
+                            });
+                    repertoireService.getById(dto.getIdRepertoire())
+                            .ifPresent(v -> {
+                                dto.setNumber(v.getNumber());
+                                dto.setTo_theater(v.getTheater());
+                            });
+                    return dto;
+                }).toList();
     }
 
     public void add(PerformanceDTO dto) {

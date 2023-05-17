@@ -1,5 +1,6 @@
 package com.example.theater.controller.performance;
 
+import com.example.theater.controller.TheaterController;
 import com.example.theater.controller.employee.ActorController;
 import com.example.theater.dto.performance.HallDTO;
 import com.example.theater.dto.performance.PerformanceDTO;
@@ -19,10 +20,13 @@ import com.example.theater.service.performance.RepertoireService;
 import com.example.theater.service.performance.play.PlayService;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import net.rgielen.fxweaver.core.FxWeaver;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
@@ -109,6 +113,37 @@ public class PerformanceController {
 
     @FXML
     public void initialize() {
+        initQueries();
+        initPlayTable();
+        initPerformanceTable();
+        initHallTable();
+        initPlaceTable();
+        initRepertoireTable();
+        clickButton();
+    }
+
+    private void clickButton() {
+        performance.setOnAction(event -> {});
+        hall.setOnAction(event -> {});
+        place.setOnAction(event -> {});
+        repertoire.setOnAction(event -> {});
+        troupe.setOnAction(event -> {});
+        play.setOnAction(event -> {});
+        add.setOnAction(event -> {});
+        edit.setOnAction(event -> {});
+        drop.setOnAction(event -> {});
+        search.setOnAction(event -> {});
+        back.setOnAction(event -> showNewStage(fxWeaver.loadView(TheaterController.class)));
+        close.setOnAction(event -> close.getScene().getWindow().hide());
+    }
+
+    private void showNewStage(Parent parent) {
+        Stage stage = new Stage();
+        stage.setScene(new Scene(parent));
+        stage.show();
+    }
+
+    private void initQueries() {
         queryMap.put(QueryStatus.QUERY0, "Получить все скектакли");
         queryMap.put(QueryStatus.QUERY1, "Получить скектакли, сыгранных в театре");
         queryMap.put(QueryStatus.QUERY2, "Получить скектакли по автору");
@@ -119,12 +154,54 @@ public class PerformanceController {
         queryMap.put(QueryStatus.QUERY7, "Получить число свободных мест на все спектакли");
         queryMap.put(QueryStatus.QUERY8, "Получить число свободных мест на конкpетный спектакль");
         queryMap.put(QueryStatus.QUERY9, "Получить число свободных мест на пpемьеpы");
-        initPlayTable();
-        initPerformanceTable();
+    }
+
+    private void initRepertoireTable() {
+        TableColumn<RepertoireDTO, Integer> column1 = new TableColumn<>("Number");
+        column1.setCellValueFactory(new PropertyValueFactory<>("number"));
+        repertoireTable.getColumns().add(column1);
+
+        TableColumn<RepertoireDTO, String> column2 = new TableColumn<>("Theater");
+        column2.setCellValueFactory(new PropertyValueFactory<>("theater"));
+        repertoireTable.getColumns().add(column2);
+
+        repertoireTable.setItems(FXCollections.observableList(repertoireService.getAll()));
+    }
+
+    private void initPlaceTable() {
+        TableColumn<PlaceDTO, Integer> column1 = new TableColumn<>("Number");
+        column1.setCellValueFactory(new PropertyValueFactory<>("number"));
+        placeTable.getColumns().add(column1);
+
+        TableColumn<PlaceDTO, Integer> column2 = new TableColumn<>("Price");
+        column2.setCellValueFactory(new PropertyValueFactory<>("price"));
+        placeTable.getColumns().add(column2);
+
+        TableColumn<PlaceDTO, Boolean> column3 = new TableColumn<>("Reserve");
+        column3.setCellValueFactory(new PropertyValueFactory<>("reserve"));
+        placeTable.getColumns().add(column3);
     }
 
     private void initHallTable() {
-        
+        TableColumn<HallDTO, Date> column1 = new TableColumn<>("Start");
+        column1.setCellValueFactory(new PropertyValueFactory<>("start"));
+        hallTable.getColumns().add(column1);
+
+        TableColumn<HallDTO, Date> column2 = new TableColumn<>("End");
+        column2.setCellValueFactory(new PropertyValueFactory<>("end"));
+        hallTable.getColumns().add(column2);
+
+        TableColumn<HallDTO, String> column3 = new TableColumn<>("Name");
+        column3.setCellValueFactory(new PropertyValueFactory<>("name"));
+        hallTable.getColumns().add(column3);
+
+        hallTable.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
+            placeTable.getItems().clear();
+            placeTable.getItems().addAll(placeService.getAll().stream()
+                    .filter(el -> el.getIdHall() == hallTable.getSelectionModel().getSelectedItem().getId())
+                    .toList());
+            placeTable.refresh();
+        });
     }
 
     private void initPerformanceTable() {
@@ -148,9 +225,25 @@ public class PerformanceController {
         column5.setCellValueFactory(new PropertyValueFactory<>("price"));
         performanceTable.getColumns().add(column5);
 
-        TableColumn<PerformanceDTO, String> column6 = new TableColumn<>("theater");
+        TableColumn<PerformanceDTO, String> column6 = new TableColumn<>("From theater");
         column6.setCellValueFactory(new PropertyValueFactory<>("theater"));
         performanceTable.getColumns().add(column6);
+
+        TableColumn<PerformanceDTO, Integer> column7 = new TableColumn<>("Number");
+        column7.setCellValueFactory(new PropertyValueFactory<>("number"));
+        performanceTable.getColumns().add(column7);
+
+        TableColumn<PerformanceDTO, String> column8 = new TableColumn<>("To theater");
+        column8.setCellValueFactory(new PropertyValueFactory<>("to_theater"));
+        performanceTable.getColumns().add(column8);
+
+        performanceTable.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
+            hallTable.getItems().clear();
+            hallTable.getItems().addAll(hallService.getAll().stream()
+                    .filter(el -> el.getIdPerformance() == performanceTable.getSelectionModel().getSelectedItem().getId())
+                    .toList());
+            hallTable.refresh();
+        });
 
         performanceTable.setItems(FXCollections.observableList(performanceService.getAll()));
     }

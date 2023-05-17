@@ -11,10 +11,13 @@ import com.example.theater.service.performance.play.PlayService;
 import com.example.theater.service.performance.play.PlaysAuthorService;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import net.rgielen.fxweaver.core.FxWeaver;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
@@ -92,6 +95,12 @@ public class PlayController {
         eventButton();
     }
 
+    private void showNewStage(Parent parent) {
+        Stage stage = new Stage();
+        stage.setScene(new Scene(parent));
+        stage.show();
+    }
+
     private void eventButton() {
         play.setOnAction(event -> playEvent());
         author.setOnAction(event -> authorEvent());
@@ -100,7 +109,7 @@ public class PlayController {
         add.setOnAction(event -> addEvent());
         edit.setOnAction(event -> editEvent());
         drop.setOnAction(event -> dropEvent());
-        back.setOnAction(event -> {});
+        back.setOnAction(event -> showNewStage(fxWeaver.loadView(PerformanceController.class)));
         close.setOnAction(event -> close.getScene().getWindow().hide());
     }
 
@@ -339,13 +348,12 @@ public class PlayController {
         playTable.getColumns().add(column4);
 
         playTable.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
-            PlayDTO dto = playTable.getSelectionModel().getSelectedItem();
-            List<AuthorDTO> list = playsAuthorService.getAll().stream()
-                    .filter(el -> el.getIdPlay() == dto.getId()).map(el ->
-                        authorService.getById(el.getIdAuthor())
-                    ).filter(Optional::isPresent).map(Optional::get).toList();
             authorsTable.getItems().clear();
-            authorsTable.getItems().addAll(list);
+            authorsTable.getItems().addAll(playsAuthorService.getAll().stream()
+                    .filter(el -> el.getIdPlay() == playTable.getSelectionModel().getSelectedItem().getId())
+                    .map(el -> authorService.getById(el.getIdAuthor()))
+                    .filter(Optional::isPresent).map(Optional::get)
+                    .toList());
             authorsTable.refresh();
         });
 

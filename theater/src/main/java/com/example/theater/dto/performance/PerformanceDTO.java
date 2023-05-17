@@ -18,6 +18,9 @@ public class PerformanceDTO {
 
     String name;
     Date data;
-    String rating;
+    int rating;
     String genre;
+
+    int number;
+    String to_theater;
 }

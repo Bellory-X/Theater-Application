@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1049.0" prefWidth="1479.0" style="-fx-background-color: #000000; " xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.theater.controller.employee.WorkerController">
-    <Text fill="WHITE" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Actor" textAlignment="CENTER" wrappingWidth="1479.0">
+    <Text fill="WHITE" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Worker" textAlignment="CENTER" wrappingWidth="1479.0">
         <font>
             <Font name="Times New Roman Bold" size="40.0" />
         </font>
@@ -26,7 +26,7 @@
                 <Font name="Times New Roman Bold" size="20.0" />
             </font>
         </Button>
-        <Button fx:id="characters" layoutX="14.0" layoutY="404.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Characters" textAlignment="CENTER" wrapText="true">
+        <Button fx:id="characters" layoutX="14.0" layoutY="308.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Characters" textAlignment="CENTER" wrapText="true">
             <font>
                 <Font name="Times New Roman Bold" size="18.0" />
             </font>
@@ -41,12 +41,12 @@
                 <Font name="Times New Roman Bold" size="20.0" />
             </font>
         </Button>
-        <Button fx:id="actor" layoutX="14.0" layoutY="26.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Actor" textAlignment="CENTER" wrapText="true">
+        <Button fx:id="actor" layoutX="14.0" layoutY="26.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Worker" textAlignment="CENTER" wrapText="true">
             <font>
                 <Font name="Times New Roman Bold" size="20.0" />
             </font>
         </Button>
-        <Button fx:id="search" layoutX="824.0" layoutY="476.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Search" textAlignment="CENTER" wrapText="true">
+        <Button fx:id="search" layoutX="812.0" layoutY="490.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Search" textAlignment="CENTER" wrapText="true">
             <font>
                 <Font name="Times New Roman Bold" size="20.0" />
             </font>
@@ -68,8 +68,8 @@
         </Button>
 
         <TableView fx:id="actorTable" layoutX="134.0" layoutY="26.0" prefHeight="258.0" prefWidth="561.0" />
-        <TableView fx:id="categoryTable" layoutX="134.0" layoutY="292.0" prefHeight="258.0" prefWidth="180.0" />
-        <TableView fx:id="characterTable" layoutX="325.0" layoutY="292.0" prefHeight="258.0" prefWidth="180.0" />
+        <TableView fx:id="categoryTable" layoutX="134.0" layoutY="292.0" prefHeight="258.0" prefWidth="275.0" />
+        <TableView fx:id="characterTable" layoutX="421.0" layoutY="292.0" prefHeight="258.0" prefWidth="275.0" />
         <TableView fx:id="charactersTable" layoutX="135.0" layoutY="558.0" prefHeight="200.0" prefWidth="561.0" />
 
         <ListView fx:id="queries" layoutX="1042.0" layoutY="25.0" prefHeight="539.0" prefWidth="416.0" />
@@ -81,63 +81,109 @@
         </TextField>
 
         <!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!SEARCH FIELDS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-        <TextField fx:id="searchField1" layoutX="824.0" layoutY="42.0" prefHeight="25.0" prefWidth="174.0">
+        <TextField fx:id="searchField1" layoutX="866.0" layoutY="14.0" prefHeight="25.0" prefWidth="174.0" text="11">
             <font>
-                <Font size="20.0" />
+                <Font size="19.0" />
             </font></TextField>
-        <Text fx:id="searchText1" layoutX="726.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="11">
+        <Text fx:id="searchText1" layoutX="705.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="11">
             <font>
-                <Font size="20.0" />
+                <Font size="19.0" />
             </font></Text>
 
-        <TextField fx:id="searchField2" layoutX="824.0" layoutY="93.0" prefHeight="44.0" prefWidth="174.0" text="12">
+        <TextField fx:id="searchField2" layoutX="866.0" layoutY="54.0" prefHeight="44.0" prefWidth="174.0" text="12">
             <font>
-                <Font size="20.0" />
+                <Font size="19.0" />
             </font></TextField>
-        <Text fx:id="searchText2" layoutX="713.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0" text="12">
+        <Text fx:id="searchText2" layoutX="705.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="12">
             <font>
-                <Font size="20.0" />
+                <Font size="19.0" />
             </font></Text>
 
-        <TextField fx:id="searchField3" layoutX="824.0" layoutY="147.0" prefHeight="25.0" prefWidth="174.0" text="13">
+        <TextField fx:id="searchField3" layoutX="866.0" layoutY="100.0" prefHeight="25.0" prefWidth="174.0" text="13">
             <font>
-                <Font size="20.0" />
+                <Font size="19.0" />
             </font></TextField>
-        <Text fx:id="searchText3" layoutX="728.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="13">
+        <Text fx:id="searchText3" layoutX="705.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="13">
             <font>
-                <Font size="20.0" />
+                <Font size="19.0" />
             </font></Text>
 
-        <DatePicker fx:id="searchField4" layoutX="824.0" layoutY="198.0" prefHeight="44.0" prefWidth="174.0" />
-        <Text fx:id="searchText4" layoutX="724.0" layoutY="228.0" strokeType="OUTSIDE" strokeWidth="0.0" text="14">
+        <TextField fx:id="searchField4" layoutX="866.0" layoutY="144.0" prefHeight="25.0" prefWidth="174.0" text="14">
             <font>
-                <Font size="20.0" />
+                <Font size="19.0" />
+            </font>
+        </TextField>
+        <Text fx:id="searchText4" layoutX="705.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="14">
+            <font>
+                <Font size="19.0" />
             </font></Text>
 
-        <TextField fx:id="searchField5" layoutX="824.0" layoutY="252.0" prefHeight="25.0" prefWidth="174.0" text="15">
+        <DatePicker fx:id="searchField5" layoutX="866.0" layoutY="186.0" prefHeight="41.0" prefWidth="174.0" />
+        <Text fx:id="searchText5" layoutX="705.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="15">
             <font>
-                <Font size="20.0" />
-            </font></TextField>
-        <Text fx:id="searchText5" layoutX="702.0" layoutY="282.0" strokeType="OUTSIDE" strokeWidth="0.0" text="15">
-            <font>
-                <Font size="20.0" />
+                <Font size="19.0" />
             </font></Text>
 
-        <TextField fx:id="searchField6" layoutX="824.0" layoutY="306.0" prefHeight="25.0" prefWidth="174.0" text="16">
+        <DatePicker fx:id="searchField6" layoutX="866.0" layoutY="228.0" prefHeight="41.0" prefWidth="174.0" />
+        <Text fx:id="searchText6" layoutX="705.0" layoutY="257.0" strokeType="OUTSIDE" strokeWidth="0.0" text="16">
             <font>
-                <Font size="20.0" />
-            </font></TextField>
-        <Text fx:id="searchText6" layoutX="734.0" layoutY="335.0" strokeType="OUTSIDE" strokeWidth="0.0" text="16">
-            <font>
-                <Font size="20.0" />
+                <Font size="19.0" />
             </font></Text>
+
+        <TextField fx:id="searchField7" layoutX="866.0" layoutY="272.0" prefHeight="25.0" prefWidth="174.0" text="17">
+            <font>
+                <Font size="19.0" />
+            </font></TextField>
+        <Text fx:id="searchText7" layoutX="705.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" text="17">
+            <font>
+                <Font size="19.0" />
+            </font>
+        </Text>
+
+        <TextField fx:id="searchField8" layoutX="866.0" layoutY="316.0" prefHeight="41.0" prefWidth="174.0" text="18">
+            <font>
+                <Font size="19.0" />
+            </font></TextField>
+        <Text fx:id="searchText8" layoutX="705.0" layoutY="345.0" strokeType="OUTSIDE" strokeWidth="0.0" text="18">
+            <font>
+                <Font size="19.0" />
+            </font>
+        </Text>
+
+        <TextField fx:id="searchField9" layoutX="866.0" layoutY="360.0" prefHeight="25.0" prefWidth="174.0" text="19">
+            <font>
+                <Font size="19.0" />
+            </font>
+        </TextField>
+        <Text fx:id="searchText9" layoutX="705.0" layoutY="388.0" strokeType="OUTSIDE" strokeWidth="0.0" text="19">
+            <font>
+                <Font size="19.0" />
+            </font>
+        </Text>
+
+        <TextField fx:id="searchField10" layoutX="866.0" layoutY="401.0" prefHeight="25.0" prefWidth="174.0" text="20">
+            <font>
+                <Font size="19.0" />
+            </font>
+        </TextField>
+        <Text fx:id="searchText10" layoutX="705.0" layoutY="429.0" strokeType="OUTSIDE" strokeWidth="0.0" text="20">
+            <font>
+                <Font size="19.0" />
+            </font>
+        </Text>
+        <DatePicker fx:id="searchField11" layoutX="866.0" layoutY="441.0" prefHeight="41.0" prefWidth="174.0" />
+        <Text fx:id="searchText11" layoutX="705.0" layoutY="470.0" strokeType="OUTSIDE" strokeWidth="0.0" text="21">
+            <font>
+                <Font size="19.0" />
+            </font>
+        </Text>
 
         <!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!INPUT FIELDS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
         <TextField fx:id="addField1" layoutX="869.0" layoutY="586.0" prefHeight="25.0" prefWidth="174.0" text="01">
             <font>
                 <Font size="20.0" />
             </font></TextField>
-        <Text fx:id="addText1" layoutX="763.0" layoutY="615.0" strokeType="OUTSIDE" strokeWidth="0.0" text="01">
+        <Text fx:id="addText1" layoutX="704.0" layoutY="615.0" strokeType="OUTSIDE" strokeWidth="0.0" text="01">
             <font>
                 <Font size="20.0" />
             </font></Text>
@@ -147,7 +193,7 @@
                 <Font size="20.0" />
             </font>
         </TextField>
-        <Text fx:id="addText2" layoutX="1107.0" layoutY="615.0" strokeType="OUTSIDE" strokeWidth="0.0" text="02">
+        <Text fx:id="addText2" layoutX="1065.0" layoutY="615.0" strokeType="OUTSIDE" strokeWidth="0.0" text="02">
             <font>
                 <Font size="20.0" />
             </font></Text>
@@ -156,14 +202,14 @@
             <font>
                 <Font size="20.0" />
             </font></TextField>
-        <Text fx:id="addText3" layoutX="775.0" layoutY="671.0" strokeType="OUTSIDE" strokeWidth="0.0" text="03">
+        <Text fx:id="addText3" layoutX="704.0" layoutY="672.0" strokeType="OUTSIDE" strokeWidth="0.0" text="03">
             <font>
                 <Font size="20.0" />
             </font>
         </Text>
 
         <DatePicker fx:id="addField4" layoutX="1230.0" layoutY="643.0" prefHeight="44.0" prefWidth="174.0" />
-        <Text fx:id="addText4" layoutX="1123.0" layoutY="670.0" strokeType="OUTSIDE" strokeWidth="0.0" text="04">
+        <Text fx:id="addText4" layoutX="1065.0" layoutY="673.0" strokeType="OUTSIDE" strokeWidth="0.0" text="04">
             <font>
                 <Font size="20.0" />
             </font></Text>
@@ -172,7 +218,7 @@
             <font>
                 <Font size="20.0" />
             </font></TextField>
-        <Text fx:id="addText5" layoutX="756.0" layoutY="727.0" strokeType="OUTSIDE" strokeWidth="0.0" text="05">
+        <Text fx:id="addText5" layoutX="704.0" layoutY="726.0" strokeType="OUTSIDE" strokeWidth="0.0" text="05">
             <font>
                 <Font size="20.0" />
             </font></Text>
@@ -181,7 +227,7 @@
             <font>
                 <Font size="20.0" />
             </font></TextField>
-        <Text fx:id="addText6" layoutX="1133.0" layoutY="726.0" strokeType="OUTSIDE" strokeWidth="0.0" text="06">
+        <Text fx:id="addText6" layoutX="1065.0" layoutY="726.0" strokeType="OUTSIDE" strokeWidth="0.0" text="06">
             <font>
                 <Font size="20.0" />
             </font></Text>
@@ -190,7 +236,7 @@
             <font>
                 <Font size="20.0" />
             </font></TextField>
-        <Text fx:id="addText7" layoutX="763.0" layoutY="782.0" strokeType="OUTSIDE" strokeWidth="0.0" text="07">
+        <Text fx:id="addText7" layoutX="704.0" layoutY="782.0" strokeType="OUTSIDE" strokeWidth="0.0" text="07">
             <font>
                 <Font size="20.0" />
             </font></Text>
@@ -199,7 +245,7 @@
             <font>
                 <Font size="20.0" />
             </font></TextField>
-        <Text fx:id="addText8" layoutX="1126.0" layoutY="782.0" strokeType="OUTSIDE" strokeWidth="0.0" text="08">
+        <Text fx:id="addText8" layoutX="1065.0" layoutY="782.0" strokeType="OUTSIDE" strokeWidth="0.0" text="08">
             <font>
                 <Font size="20.0" />
             </font></Text>

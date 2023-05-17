@@ -11,5 +11,5 @@ public class PlaceDTO {
     int idHall;
     int price;
     boolean reserve;
-    int idSubscription;
+    Integer idSubscription;
 }

@@ -3,12 +3,14 @@ package com.example.theater.service.employee;
 import com.example.theater.dao.entity.employee.Employee;
 import com.example.theater.dao.repository.employee.EmployeeRepository;
 import com.example.theater.dto.employee.EmployeeDTO;
+import com.example.theater.dto.employee.WorkerDTO;
 import com.example.theater.exception.RecordNotFoundException;
 import com.example.theater.mapper.employee.EmployeeMapper;
 import com.example.theater.service.Generator;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -49,5 +51,11 @@ public class EmployeeService {
 
         Employee employee = mapper.toEmployee(dto);
         repository.delete(employee);
+    }
+
+    public List<EmployeeDTO> findActorQuery1(String theater, int exp1, int exp2, String gender, Date birthday1,
+                                           Date birthday2, int countChild1, int countChild2, int salary1, int salary2) {
+        return repository.findActorQuery1(theater, exp1, exp2, gender, birthday1, birthday2, countChild1, countChild2, salary1, salary2)
+                .stream().map(mapper::toEmployeeDTO).toList();
     }
 }

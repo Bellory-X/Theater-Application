@@ -2,6 +2,7 @@ package com.example.theater.service.employee;
 
 import com.example.theater.dao.entity.employee.Director;
 import com.example.theater.dao.repository.employee.DirectorRepository;
+import com.example.theater.dto.employee.ActorDTO;
 import com.example.theater.dto.employee.DirectorDTO;
 import com.example.theater.dto.employee.EmployeeDTO;
 import com.example.theater.exception.RecordNotFoundException;
@@ -9,6 +10,7 @@ import com.example.theater.mapper.employee.DirectorMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -80,5 +82,11 @@ public class DirectorService {
                 .build());
         Director director = mapper.toDirector(dto);
         repository.delete(director);
+    }
+
+    public List<DirectorDTO> findActorQuery1(String theater, int exp1, int exp2, String gender, Date birthday1,
+                                          Date birthday2, int countChild1, int countChild2, int salary1, int salary2) {
+        return repository.findActorQuery1(theater, exp1, exp2, gender, birthday1, birthday2, countChild1, countChild2, salary1, salary2)
+                .stream().map(mapper::toDirectorDTO).toList();
     }
 }

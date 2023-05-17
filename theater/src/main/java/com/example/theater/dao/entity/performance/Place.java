@@ -24,5 +24,5 @@ public class Place {
     @Column(name = "reserve")
     boolean reserve;
     @Column(name = "id_subscription")
-    int idSubscription;
+    Integer idSubscription;
 }
