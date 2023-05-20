@@ -49,7 +49,7 @@ public class ActorService {
             Actor actor = mapper.toActor(dto);
             repository.save(actor);
         } catch (DataAccessException e) {
-            throw new QueryException("query error", e);
+            throw new QueryException("Recheck fields maybe it exists");
         }
     }
 

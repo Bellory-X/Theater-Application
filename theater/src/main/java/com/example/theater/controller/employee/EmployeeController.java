@@ -2,8 +2,8 @@ package com.example.theater.controller.employee;
 
 import com.example.theater.controller.TheaterController;
 import com.example.theater.dto.employee.EmployeeDTO;
-import com.example.theater.dto.employee.WorkerDTO;
-import com.example.theater.service.employee.*;
+import com.example.theater.exception.ItemException;
+import com.example.theater.service.employee.EmployeeService;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -11,7 +11,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import net.rgielen.fxweaver.core.FxWeaver;
 import net.rgielen.fxweaver.core.FxmlView;
@@ -26,8 +25,6 @@ import java.util.Map;
 @Component
 @FxmlView("/controller/employee/employee-view.fxml")
 public class EmployeeController {
-    @FXML private Button employee;
-    @FXML private ListView<String> queries;
     @FXML private Button search;
     @FXML private Button actor;
     @FXML private Button musician;
@@ -36,31 +33,22 @@ public class EmployeeController {
     @FXML private Button back;
     @FXML private Button close;
     @FXML private TableView <EmployeeDTO> table;
+    @FXML private ListView<String> queries;
     @FXML private TextField result;
-    @FXML private Text searchText10;
-    @FXML private TextField searchField10;
-    @FXML private Text searchText9;
-    @FXML private TextField searchField9;
-    @FXML private Text searchText8;
-    @FXML private Text searchText7;
-    @FXML private DatePicker searchField6;
-    @FXML private TextField searchField4;
-    @FXML private Text searchText1;
-    @FXML private Text searchText2;
-    @FXML private Text searchText3;
-    @FXML private Text searchText4;
-    @FXML private Text searchText5;
-    @FXML private Text searchText6;
-    @FXML private TextField searchField8;
-    @FXML private TextField searchField7;
-    @FXML private TextField searchField3;
-    @FXML private TextField searchField2;
-    @FXML private DatePicker searchField5;
     @FXML private TextField searchField1;
+    @FXML private TextField searchField2;
+    @FXML private TextField searchField3;
+    @FXML private TextField searchField4;
+    @FXML private DatePicker searchField5;
+    @FXML private DatePicker searchField6;
+    @FXML private TextField searchField7;
+    @FXML private TextField searchField8;
+    @FXML private TextField searchField9;
+    @FXML private TextField searchField10;
+    private WorkerQueryStatus queryStatus = WorkerQueryStatus.QUERY1;
     private final EmployeeService employeeService;
     private final FxWeaver fxWeaver;
-    private QueryStatus queryStatus = QueryStatus.QUERY1;
-    private final Map<QueryStatus, String> queryMap = new HashMap<>();
+    private final Map<WorkerQueryStatus, String> queryMap = new HashMap<>();
 
     public EmployeeController(EmployeeService employeeService, FxWeaver fxWeaver) {
         this.employeeService = employeeService;
@@ -69,8 +57,6 @@ public class EmployeeController {
 
     @FXML
     public void initialize() {
-        queryMap.put(QueryStatus.QUERY0, "Получить всех служащих");
-        queryMap.put(QueryStatus.QUERY1, "Получить служащих, по атрибутам работника");
         initTable();
         initQueryList();
         clickButton();
@@ -78,10 +64,6 @@ public class EmployeeController {
 
     private void clickButton() {
         search.setOnAction(event -> searchEvent());
-        employee.setOnAction(event -> {
-            table.setItems(FXCollections.observableList(employeeService.getAll()));
-            table.refresh();
-        });
         actor.setOnAction(event -> showNewStage(fxWeaver.loadView(ActorController.class)));
         musician.setOnAction(event -> showNewStage(fxWeaver.loadView(MusicianController.class)));
         director.setOnAction(event -> showNewStage(fxWeaver.loadView(DirectorController.class)));
@@ -91,53 +73,44 @@ public class EmployeeController {
     }
 
     private void searchEvent() {
-        table.getItems().clear();
         switch (queryStatus) {
             case QUERY0 -> {
                 List<EmployeeDTO> dtoList = employeeService.getAll();
                 result.setText(String.valueOf(dtoList.size()));
-                table.getItems().addAll(dtoList);
+                table.setItems(FXCollections.observableList(dtoList));
             }
             case QUERY1 -> {
-                List<EmployeeDTO> dtoList = employeeService
-                        .findActorQuery1(searchField1.getText(), Integer.parseInt(searchField2.getText()),
-                                Integer.parseInt(searchField3.getText()), searchField4.getText(),
-                                Date.from(searchField5.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
-                                Date.from(searchField6.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
-                                Integer.parseInt(searchField7.getText()), Integer.parseInt(searchField8.getText()),
-                                Integer.parseInt(searchField9.getText()), Integer.parseInt(searchField10.getText()));
-                result.setText(String.valueOf(dtoList.size()));
-                table.getItems().addAll(dtoList);
+                try {
+                    List<EmployeeDTO> dtoList = employeeService.findActorQuery1(
+                            searchField1.getText(),
+                            Integer.parseInt(searchField2.getText()),
+                            Integer.parseInt(searchField3.getText()),
+                            searchField4.getText(),
+                            Date.from(searchField5.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
+                            Date.from(searchField6.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
+                            Integer.parseInt(searchField7.getText()),
+                            Integer.parseInt(searchField8.getText()),
+                            Integer.parseInt(searchField9.getText()),
+                            Integer.parseInt(searchField10.getText()));
+                    result.setText(String.valueOf(dtoList.size()));
+                    table.setItems(FXCollections.observableList(dtoList));
+                } catch (NumberFormatException e) {
+                    result.setText("All fields except theater and gender must be positive number");
+                }
             }
         }
-        table.refresh();
     }
 
     private void initQueryList() {
-        queries.getItems().add(queryMap.get(QueryStatus.QUERY0));
-        queries.getItems().add(queryMap.get(QueryStatus.QUERY1));
-        searchText1.setText("theater");
-        searchText2.setText("from exp");
-        searchText3.setText("before exp");
-        searchText4.setText("gender");
-        searchText5.setText("from birthday");
-        searchText6.setText("before birthday");
-        searchText7.setText("from countChild");
-        searchText8.setText("before countChild");
-        searchText9.setText("from salary");
-        searchText10.setText("before salary");
+        queryMap.put(WorkerQueryStatus.QUERY0, "Получить всех служащих");
+        queryMap.put(WorkerQueryStatus.QUERY1, "Получить служащих, по атрибутам работника");
+        queries.getItems().add(queryMap.get(WorkerQueryStatus.QUERY0));
+        queries.getItems().add(queryMap.get(WorkerQueryStatus.QUERY1));
         queries.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
-            if (queries.getSelectionModel().getSelectedItem().equals(queryMap.get(QueryStatus.QUERY0))) {
-                queryStatus = QueryStatus.QUERY0;
-            }
-            if (queries.getSelectionModel().getSelectedItem().equals(queryMap.get(QueryStatus.QUERY1))) {
-                queryStatus = QueryStatus.QUERY1;
-                searchField4.setVisible(true);
-                searchField7.setVisible(true);
-                searchField8.setVisible(true);
-                searchField9.setVisible(true);
-                searchField10.setVisible(true);
-            }
+            if (queries.getSelectionModel().getSelectedItem().equals(queryMap.get(WorkerQueryStatus.QUERY0)))
+                queryStatus = WorkerQueryStatus.QUERY0;
+            if (queries.getSelectionModel().getSelectedItem().equals(queryMap.get(WorkerQueryStatus.QUERY1)))
+                queryStatus = WorkerQueryStatus.QUERY1;
         });
     }
 
@@ -181,10 +154,5 @@ public class EmployeeController {
         table.getColumns().add(column8);
 
         table.setItems(FXCollections.observableList(employeeService.getAll()));
-    }
-
-    public enum QueryStatus {
-        QUERY0,
-        QUERY1
     }
 }

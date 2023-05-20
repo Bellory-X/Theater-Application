@@ -48,7 +48,7 @@ public class WorkerService {
 
     public void edit(WorkerDTO dto) {
         if (!repository.existsById(dto.getIdEmployee()))
-            throw new RecordNotFoundException("Not found " + dto.getIdEmployee());
+            throw new RecordNotFoundException("Not found " + dto.getFullName());
 
         employeeService.edit(EmployeeDTO.builder()
                 .id(dto.getIdEmployee())
@@ -67,7 +67,7 @@ public class WorkerService {
 
     public void drop(WorkerDTO dto) {
         if (!repository.existsById(dto.getIdEmployee()))
-            throw new RecordNotFoundException("Not found " + dto.getIdEmployee());
+            throw new RecordNotFoundException("Not found " + dto.getFullName());
 
         employeeService.edit(EmployeeDTO.builder()
                 .id(dto.getIdEmployee())
