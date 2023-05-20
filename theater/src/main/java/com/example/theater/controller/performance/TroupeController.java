@@ -1,7 +1,6 @@
 package com.example.theater.controller.performance;
 
 import com.example.theater.controller.TheaterController;
-import com.example.theater.dao.entity.Theater;
 import com.example.theater.dto.performance.PerformanceDTO;
 import com.example.theater.dto.performance.troupe.DirectorsPerformanceDTO;
 import com.example.theater.dto.performance.troupe.MusiciansPerformanceDTO;
@@ -25,11 +24,12 @@ import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
-import java.util.Optional;
 
 @Component
 @FxmlView("/controller/performance/troupe-view.fxml")
 public class TroupeController {
+    /*TODO:
+    *  queries and add, edit, drop*/
     public Button back;
     public Button close;
     public Button musicians;

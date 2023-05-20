@@ -26,8 +26,6 @@ import java.util.Map;
 @Component
 @FxmlView("/controller/employee/employee-view.fxml")
 public class EmployeeController {
-    /*TODO:
-       1.Получить список и общее число всех работников театра*/
     @FXML private Button employee;
     @FXML private ListView<String> queries;
     @FXML private Button search;

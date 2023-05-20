@@ -1,8 +1,6 @@
 package com.example.theater.controller.performance;
 
 import com.example.theater.controller.TheaterController;
-import com.example.theater.controller.employee.ActorController;
-import com.example.theater.dto.employee.ActorDTO;
 import com.example.theater.dto.performance.HallDTO;
 import com.example.theater.dto.performance.PerformanceDTO;
 import com.example.theater.dto.performance.PlaceDTO;
@@ -24,7 +22,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import net.rgielen.fxweaver.core.FxWeaver;
 import net.rgielen.fxweaver.core.FxmlView;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
@@ -45,28 +42,16 @@ public class PlaceController {
     @FXML private Text addText4;
     @FXML private TextField addField5;
     @FXML private Text addText5;
-    @FXML private TextField result;
-    @FXML private Text searchText1;
-    @FXML private Text searchText2;
-    @FXML private Text searchText3;
-    @FXML private Text searchText4;
     @FXML private Text searchText5;
     @FXML private Text searchText6;
-    @FXML private Text searchText7;
-    @FXML private Text searchText8;
-    @FXML private TextField searchField8;
-    @FXML private TextField searchField7;
-    @FXML private TextField searchField3;
-    @FXML private TextField searchField2;
     @FXML private DatePicker searchField5;
-    @FXML private TextField searchField1;
     @FXML private DatePicker searchField6;
-    @FXML private TextField searchField4;
     @FXML private TableView<TimeHallDTO> timeHallTable;
     @FXML private TableView<PlaceDTO> placeTable;
     @FXML private TableView<HallDTO> hallTable;
     @FXML private TableView<PerformanceDTO> performanceTable;
     @FXML private ListView<String> queries;
+    @FXML private TextField result;
     @FXML private Button search;
     @FXML private Button timeHall;
     @FXML private Button hall;
@@ -76,13 +61,13 @@ public class PlaceController {
     @FXML private Button drop;
     @FXML private Button edit;
     @FXML private Button add;
+    private TableStatus tableStatus = TableStatus.NOT_SELECT;
+    private QueryStatus queryStatus = QueryStatus.QUERY0;
     private final PerformanceService performanceService;
     private final HallService hallService;
     private final PlaceService placeService;
     private final TimeHallService timeHallService;
     private final FxWeaver fxWeaver;
-    private TableStatus tableStatus = TableStatus.HALL;
-    private QueryStatus queryStatus = QueryStatus.QUERY1;
     private final Map<QueryStatus, String> queryMap = new HashMap<>();
 
     public PlaceController(PerformanceService performanceService, HallService hallService,
@@ -117,76 +102,97 @@ public class PlaceController {
     }
 
     private void initQueries() {
-        queryMap.put(QueryStatus.QUERY1, "Получить число пpоданных билетов на все спектакли");
-        queryMap.put(QueryStatus.QUERY2, "Получить число пpоданных билетов на кокретный спектакли");
-        queryMap.put(QueryStatus.QUERY3, "Получить число пpоданных билетов на премьеры спектакли");
-        queryMap.put(QueryStatus.QUERY4, "Получить общую сумму выpученных денег за спектакль");
-        queryMap.put(QueryStatus.QUERY5, "Получить число свободных мест на все спектакли");
-        queryMap.put(QueryStatus.QUERY6, "Получить число свободных мест на конкpетный спектакль");
-        queryMap.put(QueryStatus.QUERY7, "Получить число свободных мест на пpемьеpы");
-        queries.getItems().add(queryMap.get(QueryStatus.QUERY1));
-        queries.getItems().add(queryMap.get(QueryStatus.QUERY2));
-        queries.getItems().add(queryMap.get(QueryStatus.QUERY3));
-        queries.getItems().add(queryMap.get(QueryStatus.QUERY4));
-        queries.getItems().add(queryMap.get(QueryStatus.QUERY5));
-        queries.getItems().add(queryMap.get(QueryStatus.QUERY6));
-        queries.getItems().add(queryMap.get(QueryStatus.QUERY7));
-
-        searchText7.setVisible(false);
-        searchText7.setVisible(false);
-        searchText5.setText("from data");
-        searchText6.setText("to data");
-
+        queryMap.put(QueryStatus.QUERY11_1, "Получить число пpоданных билетов на все спектакли");
+        queryMap.put(QueryStatus.QUERY11_2, "Получить число пpоданных билетов на кокретный спектакли");
+        queryMap.put(QueryStatus.QUERY11_3, "Получить число пpоданных билетов на премьеры спектакли");
+        queryMap.put(QueryStatus.QUERY12, "Получить общую сумму выpученных денег за спектакль");
+        queryMap.put(QueryStatus.QUERY13_1, "Получить число свободных мест на все спектакли");
+        queryMap.put(QueryStatus.QUERY13_2, "Получить число свободных мест на конкpетный спектакль");
+        queryMap.put(QueryStatus.QUERY13_3, "Получить число свободных мест на пpемьеpы");
+        queries.getItems().add(queryMap.get(QueryStatus.QUERY11_1));
+        queries.getItems().add(queryMap.get(QueryStatus.QUERY11_2));
+        queries.getItems().add(queryMap.get(QueryStatus.QUERY11_3));
+        queries.getItems().add(queryMap.get(QueryStatus.QUERY12));
+        queries.getItems().add(queryMap.get(QueryStatus.QUERY13_1));
+        queries.getItems().add(queryMap.get(QueryStatus.QUERY13_2));
+        queries.getItems().add(queryMap.get(QueryStatus.QUERY13_3));
         queries.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
-            if (queries.getSelectionModel().getSelectedItem().equals(queryMap.get(QueryStatus.QUERY1))) {
-                queryStatus = QueryStatus.QUERY1;
+            if (queries.getSelectionModel().getSelectedItem()
+                    .equals(queryMap.get(QueryStatus.QUERY11_1))) {
+                queryStatus = QueryStatus.QUERY11_1;
+                searchText5.setVisible(true);
+                searchField5.setVisible(true);
+                searchText6.setVisible(true);
+                searchField6.setVisible(true);
             }
-            if (queries.getSelectionModel().getSelectedItem().equals(queryMap.get(QueryStatus.QUERY2))) {
-                queryStatus = QueryStatus.QUERY2;
+            if (queries.getSelectionModel().getSelectedItem()
+                    .equals(queryMap.get(QueryStatus.QUERY11_2))) {
+                queryStatus = QueryStatus.QUERY11_2;
+                searchText5.setVisible(true);
+                searchField5.setVisible(true);
+                searchText6.setVisible(true);
+                searchField6.setVisible(true);
             }
-            if (queries.getSelectionModel().getSelectedItem().equals(queryMap.get(QueryStatus.QUERY3))) {
-                queryStatus = QueryStatus.QUERY3;
+            if (queries.getSelectionModel().getSelectedItem()
+                    .equals(queryMap.get(QueryStatus.QUERY11_3))) {
+                queryStatus = QueryStatus.QUERY11_3;
+                searchText5.setVisible(true);
+                searchField5.setVisible(true);
+                searchText6.setVisible(true);
+                searchField6.setVisible(true);
             }
-            if (queries.getSelectionModel().getSelectedItem().equals(queryMap.get(QueryStatus.QUERY4))) {
-                queryStatus = QueryStatus.QUERY4;
+            if (queries.getSelectionModel().getSelectedItem()
+                    .equals(queryMap.get(QueryStatus.QUERY12))) {
+                queryStatus = QueryStatus.QUERY12;
+                searchText5.setVisible(false);
+                searchField5.setVisible(false);
+                searchText6.setVisible(false);
+                searchField6.setVisible(false);
             }
-            if (queries.getSelectionModel().getSelectedItem().equals(queryMap.get(QueryStatus.QUERY5))) {
-                queryStatus = QueryStatus.QUERY5;
+            if (queries.getSelectionModel().getSelectedItem()
+                    .equals(queryMap.get(QueryStatus.QUERY13_1))) {
+                queryStatus = QueryStatus.QUERY13_1;
+                searchText5.setVisible(true);
+                searchField5.setVisible(true);
+                searchText6.setVisible(true);
+                searchField6.setVisible(true);
             }
-            if (queries.getSelectionModel().getSelectedItem().equals(queryMap.get(QueryStatus.QUERY6))) {
-                queryStatus = QueryStatus.QUERY6;
+            if (queries.getSelectionModel().getSelectedItem()
+                    .equals(queryMap.get(QueryStatus.QUERY13_2))) {
+                queryStatus = QueryStatus.QUERY13_2;
+                searchText5.setVisible(true);
+                searchField5.setVisible(true);
+                searchText6.setVisible(true);
+                searchField6.setVisible(true);
             }
-            if (queries.getSelectionModel().getSelectedItem().equals(queryMap.get(QueryStatus.QUERY7))) {
-                queryStatus = QueryStatus.QUERY7;
+            if (queries.getSelectionModel().getSelectedItem()
+                    .equals(queryMap.get(QueryStatus.QUERY13_3))) {
+                queryStatus = QueryStatus.QUERY13_3;
+                searchText5.setVisible(true);
+                searchField5.setVisible(true);
+                searchText6.setVisible(true);
+                searchField6.setVisible(true);
             }
         });
     }
 
     private void clickSearch() {
         switch (queryStatus) {
-            case QUERY1 -> {
-                result.setText(String.valueOf(placeService
-                        .findActorQuery11_1(
-                                Date.from(searchField5.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
-                                Date.from(searchField6.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant())
-                        ).size()));
-            }
-            case QUERY2 -> {
-                result.setText(String.valueOf(placeService
-                        .findActorQuery11_2(
-                                Date.from(searchField5.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
-                                Date.from(searchField6.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
-                                performanceTable.getSelectionModel().getSelectedItem().getId()
-                ).size()));
-            }
-            case QUERY3 -> {
-                result.setText(String.valueOf(placeService
-                        .findActorQuery11_3(
-                                Date.from(searchField5.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
-                                Date.from(searchField6.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant())
-                        ).size()));
-            }
-            case QUERY4 -> {
+            case QUERY0 -> result.setText("Select query");
+            case QUERY11_1 -> result.setText(String.valueOf(placeService.findActorQuery11_1(
+                    Date.from(searchField5.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
+                    Date.from(searchField6.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant())
+            ).size()));
+            case QUERY11_2 -> result.setText(String.valueOf(placeService.findActorQuery11_2(
+                    Date.from(searchField5.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
+                    Date.from(searchField6.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
+                    performanceTable.getSelectionModel().getSelectedItem().getId()
+            ).size()));
+            case QUERY11_3 -> result.setText(String.valueOf(placeService.findActorQuery11_3(
+                    Date.from(searchField5.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
+                    Date.from(searchField6.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant())
+            ).size()));
+            case QUERY12 -> {
                 int count = 0;
                 List<TimeHallDTO> thList = timeHallService.getAll().stream()
                         .filter(el-> el.getIdPerformance() == performanceTable.getSelectionModel().getSelectedItem().getId())
@@ -202,102 +208,74 @@ public class PlaceController {
                 }
                 result.setText(String.valueOf(count));
             }
-            case QUERY5 -> {
-                result.setText(String.valueOf(placeService
-                        .findActorQuery13_1(
-                                Date.from(searchField5.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
-                                Date.from(searchField6.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant())
-                        ).size()));
-            }
-            case QUERY6 -> {
-                result.setText(String.valueOf(placeService
-                        .findActorQuery13_2(
-                                Date.from(searchField5.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
-                                Date.from(searchField6.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
-                                performanceTable.getSelectionModel().getSelectedItem().getId()
-                        ).size()));
-            }
-            case QUERY7 -> {
-                result.setText(String.valueOf(placeService
-                        .findActorQuery13_3(
-                                Date.from(searchField5.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
-                                Date.from(searchField6.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant())
-                        ).size()));
-            }
+            case QUERY13_1 -> result.setText(String.valueOf(placeService.findActorQuery13_1(
+                    Date.from(searchField5.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
+                    Date.from(searchField6.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant())
+            ).size()));
+            case QUERY13_2 -> result.setText(String.valueOf(placeService.findActorQuery13_2(
+                    Date.from(searchField5.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
+                    Date.from(searchField6.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
+                    performanceTable.getSelectionModel().getSelectedItem().getId()
+            ).size()));
+            case QUERY13_3 -> result.setText(String.valueOf(placeService.findActorQuery13_3(
+                    Date.from(searchField5.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
+                    Date.from(searchField6.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant())
+            ).size()));
         }
     }
 
     private void clickDrop() {
         try {
             switch (tableStatus) {
+                case NOT_SELECT -> result.setText("Select table");
                 case HALL -> {
                     if (hallTable.getSelectionModel().getSelectedItem() == null)
-                        throw new ItemException("null");
-
+                        throw new ItemException("select record");
                     hallService.drop(hallTable.getSelectionModel().getSelectedItem());
                     hallTable.setItems(FXCollections.observableList(hallService.getAll()));
-                    hallTable.refresh();
+                    result.setText("Success");
                 }
-                case PLACE -> {
-                    result.setText("Function not available");
-//                    if (placeTable.getSelectionModel().getSelectedItem() == null)
-//                        throw new ItemException("null");
-//
-//                    placeService.drop(placeTable.getSelectionModel().getSelectedItem());
-                }
+                case PLACE -> result.setText("Function not available");
                 case TIME_HALL -> {
                     if (timeHallTable.getSelectionModel().getSelectedItem() == null)
                         throw new ItemException("null");
-
                     timeHallService.drop(timeHallTable.getSelectionModel().getSelectedItem());
+                    result.setText("Success");
                 }
             }
-            result.setText("Success");
         } catch (NumberFormatException e) {
             result.setText("In one of the fields not number");
         } catch (ItemException e) {
-            result.setText("select record");
+            result.setText(e.getMessage());
         }
     }
 
     private void clickEdit() {
         try {
             switch (tableStatus) {
-                case HALL -> {
-                    result.setText("Function not available");
-//                    if (hallTable.getSelectionModel().getSelectedItem() == null)
-//                        throw new ItemException("null");
-//
-//                    hallService.edit(hallTable.getSelectionModel().getSelectedItem());
-                }
+                case NOT_SELECT -> result.setText("Select table");
+                case HALL, TIME_HALL -> result.setText("Function not available");
                 case PLACE -> {
                     if (placeTable.getSelectionModel().getSelectedItem() == null)
-                        throw new ItemException("null");
-
+                        throw new ItemException("select record");
                     PlaceDTO dto = placeTable.getSelectionModel().getSelectedItem();
                     dto.setPrice(Integer.parseInt(addField1.getText()));
                     dto.setReserve(Boolean.parseBoolean(addField2.getText()));
                     placeService.edit(dto);
-                }
-                case TIME_HALL -> {
-                    result.setText("Function not available");
-//                    if (timeHallTable.getSelectionModel().getSelectedItem() == null)
-//                        throw new ItemException("null");
-//
-//                    timeHallService.edit(timeHallTable.getSelectionModel().getSelectedItem());
+                    result.setText("Success");
                 }
             }
-            result.setText("Success");
         } catch (NumberFormatException e) {
             result.setText("Price not positive number");
         } catch (ItemException e) {
-            result.setText("select record");
+            result.setText(e.getMessage());
         }
     }
 
     private void clickAdd() {
         try {
             switch (tableStatus) {
+                case NOT_SELECT -> result.setText("Select table");
                 case HALL -> {
                     hallService.add(HallDTO.builder()
                             .name(addField1.getText())
@@ -305,16 +283,13 @@ public class PlaceController {
                             .count(Integer.parseInt(addField5.getText()))
                             .build());
                     hallTable.setItems(FXCollections.observableList(hallService.getAll()));
-                    hallTable.refresh();
+                    result.setText("Success");
                 }
-                case PLACE -> {
-                    result.setText("Function not available");
-                }
+                case PLACE -> result.setText("Function not available");
                 case TIME_HALL -> {
                     if (hallTable.getSelectionModel().getSelectedItem() == null ||
                             performanceTable.getSelectionModel().getSelectedItem() == null)
-                        throw new ItemException("null");
-
+                        throw new ItemException("select record");
                     timeHallService.add(TimeHallDTO.builder()
                             .idHall(hallTable.getSelectionModel().getSelectedItem().getId())
                             .idPerformance((performanceTable.getSelectionModel().getSelectedItem().getId()))
@@ -322,15 +297,16 @@ public class PlaceController {
                             .end(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(addField4.getText()))
                             .count(hallTable.getSelectionModel().getSelectedItem().getCount())
                             .build());
+                    timeHallTable.setItems(FXCollections.observableList(timeHallService.getAll().stream()
+                            .filter(el -> el.getIdPerformance() == performanceTable.getSelectionModel().getSelectedItem().getId())
+                            .toList()));
+                    result.setText("Success");
                 }
             }
-            result.setText("Success");
         } catch (NumberFormatException e) {
             result.setText("Count not positive number");
-        } catch (QueryException e) {
+        } catch (QueryException | ItemException e) {
             result.setText(e.getMessage());
-        } catch (ItemException e) {
-            result.setText("select record");
         } catch (ParseException e) {
             result.setText("Start ot end not date (dd-MM-yyyy HH:mm:ss)");
         }
@@ -348,8 +324,6 @@ public class PlaceController {
         addText3.setVisible(true);
         addText4.setVisible(true);
         addText5.setVisible(false);
-        addText3.setText("Start");
-        addText4.setText("End");
     }
 
     private void setPlace() {
@@ -454,13 +428,10 @@ public class PlaceController {
         column8.setCellValueFactory(new PropertyValueFactory<>("to_theater"));
         performanceTable.getColumns().add(column8);
 
-        performanceTable.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
-            timeHallTable.setItems(FXCollections.observableList(timeHallService.getAll().stream()
-                    .filter(el -> el.getIdPerformance() == performanceTable.getSelectionModel().getSelectedItem().getId())
-                    .toList()
-            ));
-            timeHallTable.refresh();
-        });
+        performanceTable.addEventFilter(MouseEvent.MOUSE_CLICKED,
+                event -> timeHallTable.setItems(FXCollections.observableList(timeHallService.getAll().stream()
+                        .filter(el -> el.getIdPerformance() == performanceTable.getSelectionModel().getSelectedItem().getId())
+                        .toList())));
 
         performanceTable.setItems(FXCollections.observableList(performanceService.getAll()));
     }
@@ -482,18 +453,14 @@ public class PlaceController {
         column4.setCellValueFactory(new PropertyValueFactory<>("theater"));
         timeHallTable.getColumns().add(column4);
 
-        timeHallTable.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
-            placeTable.setItems(FXCollections.observableList(placeService.getAll().stream()
-                    .filter(el -> el.getIdHall() == timeHallTable.getSelectionModel().getSelectedItem().getId())
-                    .toList()
-            ));
-            placeTable.refresh();
-        });
-
-//        timeHallTable.setItems(FXCollections.observableList(timeHallService.getAll()));
+        timeHallTable.addEventFilter(MouseEvent.MOUSE_CLICKED, event ->
+                placeTable.setItems(FXCollections.observableList(placeService.getAll().stream()
+                        .filter(el -> el.getIdHall() == timeHallTable.getSelectionModel().getSelectedItem().getId())
+                        .toList())));
     }
 
     public enum TableStatus {
+        NOT_SELECT,
         HALL,
         PLACE,
         TIME_HALL
@@ -501,14 +468,12 @@ public class PlaceController {
 
     public enum QueryStatus {
         QUERY0,
-        QUERY1,
-        QUERY2,
-        QUERY3,
-        QUERY4,
-        QUERY5,
-        QUERY6,
-        QUERY7,
-        QUERY8,
-        QUERY9
+        QUERY11_1,
+        QUERY11_2,
+        QUERY11_3,
+        QUERY12,
+        QUERY13_1,
+        QUERY13_2,
+        QUERY13_3
     }
 }

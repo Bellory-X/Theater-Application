@@ -62,10 +62,10 @@
             </font>
         </Button>
 
-        <TableView fx:id="performanceTable" layoutX="134.0" layoutY="26.0" prefHeight="187.0" prefWidth="561.0" />
-        <TableView fx:id="hallTable" layoutX="134.0" layoutY="223.0" prefHeight="187.0" prefWidth="561.0" />
-        <TableView fx:id="placeTable" layoutX="426.0" layoutY="419.0" prefHeight="258.0" prefWidth="269.0" />
-        <TableView fx:id="timeHallTable" layoutX="134.0" layoutY="419.0" prefHeight="258.0" prefWidth="269.0" />
+        <TableView fx:id="performanceTable" layoutX="134.0" layoutY="41.0" prefHeight="187.0" prefWidth="561.0" />
+        <TableView fx:id="hallTable" layoutX="134.0" layoutY="261.0" prefHeight="187.0" prefWidth="561.0" />
+        <TableView fx:id="placeTable" layoutX="426.0" layoutY="474.0" prefHeight="258.0" prefWidth="269.0" />
+        <TableView fx:id="timeHallTable" layoutX="134.0" layoutY="474.0" prefHeight="258.0" prefWidth="269.0" />
 
         <ListView fx:id="queries" layoutX="1042.0" layoutY="25.0" prefHeight="539.0" prefWidth="416.0" />
 
@@ -76,73 +76,82 @@
         </TextField>
 
         <DatePicker fx:id="searchField5" layoutX="866.0" layoutY="186.0" prefHeight="41.0" prefWidth="174.0" />
-        <Text fx:id="searchText5" layoutX="705.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="15">
+        <Text fx:id="searchText5" layoutX="705.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="from data">
             <font>
                 <Font size="19.0" />
             </font></Text>
 
         <DatePicker fx:id="searchField6" layoutX="866.0" layoutY="228.0" prefHeight="41.0" prefWidth="174.0" />
-        <Text fx:id="searchText6" layoutX="705.0" layoutY="257.0" strokeType="OUTSIDE" strokeWidth="0.0" text="16">
+        <Text fx:id="searchText6" layoutX="705.0" layoutY="257.0" strokeType="OUTSIDE" strokeWidth="0.0" text="to data">
             <font>
                 <Font size="19.0" />
             </font></Text>
-
-        <TextField fx:id="searchField7" layoutX="866.0" layoutY="272.0" prefHeight="25.0" prefWidth="174.0" text="17">
-            <font>
-                <Font size="19.0" />
-            </font></TextField>
-        <Text fx:id="searchText7" layoutX="705.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" text="17">
-            <font>
-                <Font size="19.0" />
-            </font>
-        </Text>
 
         <!--!!!!!!!!!!!!!!!!!!!!!!!!!!!!!INPUT FIELDS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-        <TextField fx:id="addField1" layoutX="870.0" layoutY="640.0" prefHeight="25.0" prefWidth="174.0" text="01">
+        <TextField fx:id="addField1" layoutX="870.0" layoutY="640.0" prefHeight="25.0" prefWidth="174.0">
             <font>
                 <Font size="20.0" />
             </font></TextField>
-        <Text fx:id="addText1" layoutX="715.0" layoutY="669.0" strokeType="OUTSIDE" strokeWidth="0.0" text="01">
+        <Text fx:id="addText1" layoutX="715.0" layoutY="669.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
             <font>
                 <Font size="20.0" />
             </font></Text>
 
-        <TextField fx:id="addField2" layoutX="1231.0" layoutY="640.0" prefHeight="44.0" prefWidth="174.0" text="02">
+        <TextField fx:id="addField2" layoutX="1231.0" layoutY="640.0" prefHeight="44.0" prefWidth="174.0">
             <font>
                 <Font size="20.0" />
             </font>
         </TextField>
-        <Text fx:id="addText2" layoutX="1066.0" layoutY="669.0" strokeType="OUTSIDE" strokeWidth="0.0" text="02">
+        <Text fx:id="addText2" layoutX="1066.0" layoutY="669.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Theater">
             <font>
                 <Font size="20.0" />
             </font></Text>
-        <Text fx:id="addText3" layoutX="715.0" layoutY="726.0" strokeType="OUTSIDE" strokeWidth="0.0" text="03">
+        <TextField fx:id="addField3" layoutX="870.0" layoutY="696.0" prefHeight="25.0" prefWidth="174.0">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </TextField>
+        <Text fx:id="addText3" layoutX="715.0" layoutY="726.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start">
             <font>
                 <Font size="20.0" />
             </font>
         </Text>
-        <Text fx:id="addText4" layoutX="1066.0" layoutY="727.0" strokeType="OUTSIDE" strokeWidth="0.0" text="04">
+        <TextField fx:id="addField4" layoutX="1231.0" layoutY="697.0" prefHeight="25.0" prefWidth="174.0">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </TextField>
+        <Text fx:id="addText4" layoutX="1066.0" layoutY="727.0" strokeType="OUTSIDE" strokeWidth="0.0" text="End">
             <font>
                 <Font size="20.0" />
             </font></Text>
-
-        <TextField fx:id="addField5" layoutX="870.0" layoutY="751.0" prefHeight="44.0" prefWidth="174.0" text="05">
+        <TextField fx:id="addField5" layoutX="870.0" layoutY="751.0" prefHeight="44.0" prefWidth="174.0">
             <font>
                 <Font size="20.0" />
             </font></TextField>
-        <Text fx:id="addText5" layoutX="715.0" layoutY="780.0" strokeType="OUTSIDE" strokeWidth="0.0" text="05">
+        <Text fx:id="addText5" layoutX="715.0" layoutY="780.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Count Places">
             <font>
                 <Font size="20.0" />
             </font></Text>
-      <TextField fx:id="addField3" layoutX="870.0" layoutY="696.0" prefHeight="25.0" prefWidth="174.0" text="03">
+      <Text layoutX="373.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Performance">
          <font>
-            <Font size="20.0" />
+            <Font size="15.0" />
          </font>
-      </TextField>
-      <TextField fx:id="addField4" layoutX="1231.0" layoutY="697.0" prefHeight="25.0" prefWidth="174.0" text="04">
+      </Text>
+      <Text layoutX="402.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hall">
          <font>
-            <Font size="20.0" />
+            <Font size="15.0" />
          </font>
-      </TextField>
+      </Text>
+      <Text layoutX="238.0" layoutY="467.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time Hall">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Text layoutX="543.0" layoutY="467.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Place">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
     </AnchorPane>
 </AnchorPane>
