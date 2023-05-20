@@ -13,7 +13,7 @@ public class CharactersMusician {
     @Id
     @Column(name = "id")
     @EqualsAndHashCode.Include
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
     @Column(name = "id_employee")
     int idEmployee;

@@ -7,8 +7,12 @@ import java.util.Date;
 
 @Data
 @Builder
-public class HallDTO {
+public class TimeHallDTO {
     int id;
+    int idHall;
+    Date start;
+    Date end;
+    int idPerformance;
     String name;
     String theater;
     int count;

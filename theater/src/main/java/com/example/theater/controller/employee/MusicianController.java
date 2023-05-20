@@ -11,6 +11,7 @@ import com.example.theater.dto.employee.character.CharactersMusicianDTO;
 import com.example.theater.dto.employee.character.MusicianCharacterDTO;
 import com.example.theater.dto.employee.rank.RankDTO;
 import com.example.theater.dto.employee.rank.RanksActorDTO;
+import com.example.theater.exception.ItemException;
 import com.example.theater.exception.QueryException;
 import com.example.theater.service.employee.ActorService;
 import com.example.theater.service.employee.EmployeeService;
@@ -42,8 +43,6 @@ import java.util.*;
 @Component
 @FxmlView("/controller/employee/musician-view.fxml")
 public class MusicianController {
-    @FXML private Text searchText11;
-    @FXML private DatePicker searchField11;
     @FXML private Text searchText10;
     @FXML private TextField searchField10;
     @FXML private Text searchText9;
@@ -75,8 +74,6 @@ public class MusicianController {
     @FXML private Text searchText4;
     @FXML private Text searchText5;
     @FXML private Text searchText6;
-    //    @FXML private TableView<RankDTO> rankTable;
-//    @FXML private TableView<RankDTO> ranksTable;
     @FXML private TableView<CharactersMusicianDTO> charactersTable;
     @FXML private TableView<MusicianCharacterDTO> characterTable;
     @FXML private TableView<MusicianCategoryDTO> categoryTable;
@@ -89,8 +86,6 @@ public class MusicianController {
     @FXML private TextField searchField1;
     @FXML private ListView<String> queries;
     @FXML private Button search;
-    //    @FXML private Button rank;
-//    @FXML private Button ranks;
     @FXML private Button actor;
     @FXML private Button category;
     @FXML private Button character;
@@ -138,44 +133,29 @@ public class MusicianController {
         try {
             switch (tableStatus) {
                 case ACTOR -> {
+                    if (actorTable.getSelectionModel().getSelectedItem() == null)
+                        throw new ItemException("null");
                     actorService.drop(actorTable.getSelectionModel().getSelectedItem());
                     actorTable.setItems(FXCollections.observableList(actorService.getAll()));
                     actorTable.refresh();
                 }
                 case CATEGORY -> {
+                    if (categoryTable.getSelectionModel().getSelectedItem() == null)
+                        throw new ItemException("null");
                     actorCategoryService.drop(categoryTable.getSelectionModel().getSelectedItem());
                     categoryTable.setItems(FXCollections.observableList(actorCategoryService.getAll()));
                     categoryTable.refresh();
                 }
                 case CHARACTER -> {
+                    if (characterTable.getSelectionModel().getSelectedItem() == null)
+                        throw new ItemException("null");
                     actorCharacterService.drop(characterTable.getSelectionModel().getSelectedItem());
                     characterTable.setItems(FXCollections.observableList(actorCharacterService.getAll()));
                     characterTable.refresh();
                 }
-//                case RANK -> {
-//                    rankService.drop(rankTable.getSelectionModel().getSelectedItem());
-//                    rankTable.setItems(FXCollections.observableList(rankService.getAll()));
-//                    rankTable.refresh();
-//                }
-//                case RANKS -> {
-//                    Optional<RanksActorDTO> ddto = ranksActorService.getAll().stream().filter(el ->
-//                            el.getIdEmployee() == actorTable.getSelectionModel().getSelectedItem().getIdEmployee()
-//                                    && el.getIdRank() == ranksTable.getSelectionModel().getSelectedItem().getId()).findFirst();
-//                    if (ddto.isPresent())
-//                        ranksActorService.drop(ddto.get());
-//                    else
-//                        throw new QueryException("Not found");
-//
-//                    ActorDTO dto = actorTable.getSelectionModel().getSelectedItem();
-//                    List<RanksActorDTO> ranksList = ranksActorService.getAll().stream()
-//                            .filter(el -> el.getIdEmployee() == dto.getIdEmployee()).toList();
-//                    List<RankDTO> rankList = new ArrayList<>();
-//                    ranksList.forEach(el-> rankService.getById(el.getIdRank()).ifPresent(rankList::add));
-//                    ranksTable.getItems().clear();
-//                    ranksTable.getItems().addAll(rankList);
-//                    ranksTable.refresh();
-//                }
                 case CHARACTERS -> {
+                    if (charactersTable.getSelectionModel().getSelectedItem() == null)
+                        throw new ItemException("null");
                     charactersActorService.drop(charactersTable.getSelectionModel().getSelectedItem());
 
                     MusicianDTO dto = actorTable.getSelectionModel().getSelectedItem();
@@ -190,7 +170,9 @@ public class MusicianController {
         } catch (NumberFormatException e) {
             result.setText("In one of the fields not number");
         } catch (QueryException e) {
-            result.setText("Recheck fields");
+            result.setText("Recheck fields maybe it exists");
+        } catch (ItemException e) {
+            result.setText("select record");
         }
     }
 
@@ -198,6 +180,8 @@ public class MusicianController {
         try {
             switch (tableStatus) {
                 case ACTOR -> {
+                    if (actorTable.getSelectionModel().getSelectedItem() == null)
+                        throw new ItemException("null");
                     actorService.edit(MusicianDTO.builder()
                             .idEmployee(actorTable.getSelectionModel().getSelectedItem().getIdEmployee())
                             .fullName(addField1.getText())
@@ -214,6 +198,8 @@ public class MusicianController {
                     actorTable.refresh();
                 }
                 case CATEGORY -> {
+                    if (categoryTable.getSelectionModel().getSelectedItem() == null)
+                        throw new ItemException("null");
                     actorCategoryService.edit(MusicianCategoryDTO.builder()
                             .id(categoryTable.getSelectionModel().getSelectedItem().getId())
                             .category(addField1.getText())
@@ -222,6 +208,8 @@ public class MusicianController {
                     categoryTable.refresh();
                 }
                 case CHARACTER -> {
+                    if (characterTable.getSelectionModel().getSelectedItem() == null)
+                        throw new ItemException("null");
                     actorCharacterService.edit(MusicianCharacterDTO.builder()
                             .id(characterTable.getSelectionModel().getSelectedItem().getId())
                             .character(addField1.getText())
@@ -229,38 +217,9 @@ public class MusicianController {
                     characterTable.setItems(FXCollections.observableList(actorCharacterService.getAll()));
                     characterTable.refresh();
                 }
-//                case RANK -> {
-//                    rankService.edit(RankDTO.builder()
-//                            .id(rankTable.getSelectionModel().getSelectedItem().getId())
-//                            .name(addField1.getText())
-//                            .contest(addField2.getText())
-//                            .data(Date.from(addField4.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()))
-//                            .build());
-//                    rankTable.setItems(FXCollections.observableList(rankService.getAll()));
-//                    rankTable.refresh();
-//                }
-//                case RANKS -> {
-//                    Optional<RanksActorDTO> ddto = ranksActorService.getAll().stream().filter(el ->
-//                            el.getIdEmployee() == actorTable.getSelectionModel().getSelectedItem().getIdEmployee()
-//                                    && el.getIdRank() == ranksTable.getSelectionModel().getSelectedItem().getId()).findFirst();
-//                    if (ddto.isPresent())
-//                        ranksActorService.edit(RanksActorDTO.builder()
-//                                .id(ddto.get().getId())
-//                                .idEmployee(actorTable.getSelectionModel().getSelectedItem().getIdEmployee())
-//                                .idRank(rankTable.getSelectionModel().getSelectedItem().getId())
-//                                .build());
-//                    else
-//                        throw new QueryException("Not found");
-//                    ActorDTO dto = actorTable.getSelectionModel().getSelectedItem();
-//                    List<RanksActorDTO> ranksList = ranksActorService.getAll().stream()
-//                            .filter(el -> el.getIdEmployee() == dto.getIdEmployee()).toList();
-//                    List<RankDTO> rankList = new ArrayList<>();
-//                    ranksList.forEach(el-> rankService.getById(el.getIdRank()).ifPresent(rankList::add));
-//                    ranksTable.getItems().clear();
-//                    ranksTable.getItems().addAll(rankList);
-//                    ranksTable.refresh();
-//                }
                 case CHARACTERS -> {
+                    if (characterTable.getSelectionModel().getSelectedItem() == null)
+                        throw new ItemException("null");
                     charactersActorService.edit(CharactersMusicianDTO.builder()
                             .id(charactersTable.getSelectionModel().getSelectedItem().getId())
                             .idEmployee(actorTable.getSelectionModel().getSelectedItem().getIdEmployee())
@@ -277,9 +236,11 @@ public class MusicianController {
             }
             result.setText("Success");
         } catch (NumberFormatException e) {
-            result.setText("In one of the fields not number");
+            result.setText("experience or countChild or salary not positive number");
         } catch (QueryException e) {
-            result.setText("Recheck fields");
+            result.setText("Recheck fields maybe it exists");
+        } catch (ItemException e) {
+            result.setText("select record");
         }
     }
 
@@ -310,32 +271,9 @@ public class MusicianController {
                     characterTable.setItems(FXCollections.observableList(actorCharacterService.getAll()));
                     characterTable.refresh();
                 }
-//                case RANK -> {
-//                    rankService.add(RankDTO.builder().name(addField1.getText()).contest(addField2.getText())
-//                            .data(Date.from(addField4.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()))
-//                            .build());
-//                    rankTable.setItems(FXCollections.observableList(rankService.getAll()));
-//                    rankTable.refresh();
-//                }
-//                case RANKS -> {
-//                    ranksActorService.add(RanksActorDTO.builder()
-//                            .idEmployee(actorTable.getSelectionModel().getSelectedItem().getIdEmployee())
-//                            .idRank(rankTable.getSelectionModel().getSelectedItem().getId())
-//                            .build());
-//
-//                    ActorDTO dto = actorTable.getSelectionModel().getSelectedItem();
-//                    List<RanksActorDTO> ranksList = ranksActorService.getAll().stream()
-//                            .filter(el -> el.getIdEmployee() == dto.getIdEmployee()).toList();
-//                    List<RankDTO> rankList = new ArrayList<>();
-//                    ranksList.forEach(el-> rankService.getById(el.getIdRank()).ifPresent(rankList::add));
-//                    ranksTable.getItems().clear();
-//                    ranksTable.getItems().addAll(rankList);
-//                    ranksTable.refresh();
-//
-//                    characterTable.setItems(FXCollections.observableList(actorCharacterService.getAll()));
-//                    characterTable.refresh();
-//                }
                 case CHARACTERS -> {
+                    if (actorTable.getSelectionModel().getSelectedItem() == null || characterTable.getSelectionModel().getSelectedItem() == null)
+                        throw new ItemException("null");
                     charactersActorService.add(CharactersMusicianDTO.builder()
                             .idEmployee(actorTable.getSelectionModel().getSelectedItem().getIdEmployee())
                             .character(characterTable.getSelectionModel().getSelectedItem().getCharacter())
@@ -350,9 +288,11 @@ public class MusicianController {
             }
             result.setText("Success");
         } catch (NumberFormatException e) {
-            result.setText("In one of the fields not number");
+            result.setText("experience or countChild or salary not positive number");
         } catch (QueryException e) {
-            result.setText("Recheck fields");
+            result.setText("Recheck fields maybe it exists");
+        } catch (ItemException e) {
+            result.setText("select record");
         }
     }
 

@@ -9,8 +9,8 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1049.0" prefWidth="1479.0" style="-fx-background-color: #000000; " xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.theater.controller.performance.PerformanceController">
-    <Text fill="WHITE" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Performance" textAlignment="CENTER" wrappingWidth="1479.0">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1049.0" prefWidth="1479.0" style="-fx-background-color: #000000; " xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.theater.controller.performance.TroupeController">
+    <Text fill="WHITE" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Troupe" textAlignment="CENTER" wrappingWidth="1479.0">
         <font>
             <Font name="Times New Roman Bold" size="40.0" />
         </font>
@@ -26,24 +26,19 @@
                 <Font name="Times New Roman Bold" size="20.0" />
             </font>
         </Button>
-        <Button fx:id="play" layoutX="14.0" layoutY="404.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Play" textAlignment="CENTER" wrapText="true">
+        <Button fx:id="musicians" layoutX="14.0" layoutY="214.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Musicians" textAlignment="CENTER" wrapText="true">
             <font>
                 <Font name="Times New Roman Bold" size="20.0" />
             </font>
         </Button>
-        <Button fx:id="place" layoutX="14.0" layoutY="214.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Place" textAlignment="CENTER" wrapText="true">
+        <Button fx:id="directors" layoutX="14.0" layoutY="120.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Directors" textAlignment="CENTER" wrapText="true">
             <font>
                 <Font name="Times New Roman Bold" size="20.0" />
             </font>
         </Button>
-        <Button fx:id="hall" layoutX="14.0" layoutY="120.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Hall" textAlignment="CENTER" wrapText="true">
+        <Button fx:id="actors" layoutX="14.0" layoutY="26.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Actors" textAlignment="CENTER" wrapText="true">
             <font>
                 <Font name="Times New Roman Bold" size="20.0" />
-            </font>
-        </Button>
-        <Button fx:id="performance" layoutX="14.0" layoutY="26.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Performance" textAlignment="CENTER" wrapText="true">
-            <font>
-                <Font name="Times New Roman Bold" size="16.0" />
             </font>
         </Button>
         <Button fx:id="search" layoutX="812.0" layoutY="490.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Search" textAlignment="CENTER" wrapText="true">
@@ -66,22 +61,18 @@
                 <Font name="Times New Roman Bold" size="20.0" />
             </font>
         </Button>
-        <Button fx:id="troupe" layoutX="14.0" layoutY="498.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Troupe" textAlignment="CENTER" wrapText="true">
-            <font>
-                <Font name="Times New Roman Bold" size="20.0" />
-            </font>
-        </Button>
-        <Button fx:id="repertoire" layoutX="14.0" layoutY="308.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Repertoire" textAlignment="CENTER" wrapText="true">
+        <Button fx:id="roles" layoutX="14.0" layoutY="308.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Role" textAlignment="CENTER" wrapText="true">
             <font>
                 <Font name="Times New Roman Bold" size="19.0" />
             </font>
         </Button>
 
         <TableView fx:id="performanceTable" layoutX="134.0" layoutY="26.0" prefHeight="258.0" prefWidth="561.0" />
-        <TableView fx:id="hallTable" layoutX="134.0" layoutY="292.0" prefHeight="258.0" prefWidth="180.0" />
-        <TableView fx:id="placeTable" layoutX="325.0" layoutY="292.0" prefHeight="258.0" prefWidth="180.0" />
-        <TableView fx:id="repertoireTable" layoutX="135.0" layoutY="558.0" prefHeight="200.0" prefWidth="561.0" />
-        <TableView fx:id="playTable" layoutX="515.0" layoutY="292.0" prefHeight="258.0" prefWidth="180.0" />
+        <TableView fx:id="actorsTable" layoutX="134.0" layoutY="292.0" prefHeight="258.0" prefWidth="180.0" />
+        <TableView fx:id="directorsTable" layoutX="325.0" layoutY="292.0" prefHeight="258.0" prefWidth="180.0" />
+        <TableView fx:id="musiciansTable" layoutX="515.0" layoutY="292.0" prefHeight="258.0" prefWidth="180.0" />
+        <TableView fx:id="rolesTable" layoutX="135.0" layoutY="558.0" prefHeight="200.0" prefWidth="561.0" />
+<!--        <TableView fx:id="actorTable" layoutX="135.0" layoutY="760.0" prefHeight="200.0" prefWidth="561.0" />-->
 
         <ListView fx:id="queries" layoutX="1042.0" layoutY="25.0" prefHeight="539.0" prefWidth="416.0" />
 

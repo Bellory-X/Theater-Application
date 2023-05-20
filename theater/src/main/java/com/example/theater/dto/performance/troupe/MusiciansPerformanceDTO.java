@@ -9,4 +9,6 @@ public class MusiciansPerformanceDTO {
     int id;
     int idPerformance;
     int idEmployee;
+
+    String fullName;
 }

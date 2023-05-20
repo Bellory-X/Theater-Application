@@ -2,6 +2,7 @@ package com.example.theater.service.performance;
 
 import com.example.theater.dao.entity.performance.Place;
 import com.example.theater.dao.repository.performance.PlaceRepository;
+import com.example.theater.dto.employee.ActorDTO;
 import com.example.theater.dto.performance.PlaceDTO;
 import com.example.theater.exception.RecordNotFoundException;
 import com.example.theater.mapper.performance.PlaceMapper;
@@ -9,6 +10,7 @@ import com.example.theater.service.Generator;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -52,5 +54,35 @@ public class PlaceService {
 
         Place place = mapper.toPlace(dto);
         repository.delete(place);
+    }
+
+    public List<PlaceDTO> findActorQuery11_1(Date birthday1, Date birthday2) {
+        return repository.findActorQuery11_1(birthday1, birthday2)
+                .stream().map(mapper::toPlaceDTO).toList();
+    }
+
+    public List<PlaceDTO> findActorQuery11_2(Date birthday1, Date birthday2, int id) {
+        return repository.findActorQuery11_2(birthday1, birthday2, id)
+                .stream().map(mapper::toPlaceDTO).toList();
+    }
+
+    public List<PlaceDTO> findActorQuery11_3(Date birthday1, Date birthday2) {
+        return repository.findActorQuery11_3(birthday1, birthday2)
+                .stream().map(mapper::toPlaceDTO).toList();
+    }
+
+    public List<PlaceDTO> findActorQuery13_1(Date birthday1, Date birthday2) {
+        return repository.findActorQuery13_1(birthday1, birthday2)
+                .stream().map(mapper::toPlaceDTO).toList();
+    }
+
+    public List<PlaceDTO> findActorQuery13_2(Date birthday1, Date birthday2, int id) {
+        return repository.findActorQuery13_2(birthday1, birthday2, id)
+                .stream().map(mapper::toPlaceDTO).toList();
+    }
+
+    public List<PlaceDTO> findActorQuery13_3(Date birthday1, Date birthday2) {
+        return repository.findActorQuery13_3(birthday1, birthday2)
+                .stream().map(mapper::toPlaceDTO).toList();
     }
 }

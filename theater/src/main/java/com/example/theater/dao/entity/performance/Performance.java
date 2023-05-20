@@ -16,13 +16,13 @@ import lombok.Setter;
 public class Performance {
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     int id;
     @Column(name = "id_play")
     int idPlay;
-    @Column(name = "id_repertoire")
-    int idRepertoire;
+//    @Column(name = "id_repertoire")
+//    int idRepertoire;
     @Column(name = "price")
     int price;
     @Column(name = "theater")

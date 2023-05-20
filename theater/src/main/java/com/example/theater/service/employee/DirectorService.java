@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -21,6 +22,10 @@ public class DirectorService {
     DirectorRepository repository;
     DirectorMapper mapper;
     private final EmployeeService employeeService;
+
+    public Optional<DirectorDTO> getById(int id) {
+        return repository.findById(id).map(mapper::toDirectorDTO);
+    }
 
     public List<DirectorDTO> getAll() {
         Iterable<Director> iterable = repository.findAll();

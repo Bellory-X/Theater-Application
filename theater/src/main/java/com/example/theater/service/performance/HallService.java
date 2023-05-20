@@ -3,10 +3,12 @@ package com.example.theater.service.performance;
 import com.example.theater.dao.entity.performance.Hall;
 import com.example.theater.dao.repository.performance.HallRepository;
 import com.example.theater.dto.performance.HallDTO;
+import com.example.theater.exception.QueryException;
 import com.example.theater.exception.RecordNotFoundException;
 import com.example.theater.mapper.performance.HallMapper;
 import com.example.theater.service.Generator;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,9 +35,13 @@ public class HallService {
     }
 
     public void add(HallDTO dto) {
-        dto.setId(Generator.generateId());
-        Hall hall = mapper.toHall(dto);
-        repository.save(hall);
+        try {
+            dto.setId(Generator.generateId());
+            Hall hall = mapper.toHall(dto);
+            repository.save(hall);
+        } catch (DataAccessException e) {
+            throw new QueryException("Recheck field theater");
+        }
     }
 
     public void edit(HallDTO dto) {

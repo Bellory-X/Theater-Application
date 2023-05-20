@@ -6,6 +6,7 @@ import com.example.theater.dto.performance.troupe.RolesActorDTO;
 import com.example.theater.exception.RecordNotFoundException;
 import com.example.theater.mapper.performance.troupe.RolesActorMapper;
 import com.example.theater.service.Generator;
+import com.example.theater.service.employee.EmployeeService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,8 @@ import java.util.stream.StreamSupport;
 public class RolesActorService {
     private final RolesActorRepository repository;
     private final RolesActorMapper mapper;
+    private final RoleService roleService;
+    private final EmployeeService employeeService;
 
     public Optional<RolesActorDTO> getById(int id) {
         return repository.findById(id).map(mapper::toRolesActorDTO);
@@ -29,6 +32,13 @@ public class RolesActorService {
 
         return StreamSupport.stream(iterable.spliterator(), false)
                 .map(mapper::toRolesActorDTO)
+                .peek(el -> employeeService.getById(el.getIdEmployee()).ifPresent(v -> el.setFullName(v.getFullName())))
+                .peek(el -> roleService.getById(el.getIdRole()).ifPresent(v -> {
+                    el.setName(v.getName());
+                    el.setMain(v.isMain());
+                    el.setUnderstudy(v.isUnderstudy());
+                    el.setIdPerformance(v.getIdPerformance());
+                }))
                 .collect(Collectors.toList());
     }
 

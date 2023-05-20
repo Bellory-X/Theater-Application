@@ -6,6 +6,7 @@ import com.example.theater.dto.performance.troupe.MusiciansPerformanceDTO;
 import com.example.theater.exception.RecordNotFoundException;
 import com.example.theater.mapper.performance.troupe.MusiciansPerformanceMapper;
 import com.example.theater.service.Generator;
+import com.example.theater.service.employee.EmployeeService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ import java.util.stream.StreamSupport;
 public class MusiciansPerformanceService {
     private final MusiciansPerformanceRepository repository;
     private final MusiciansPerformanceMapper mapper;
+    private final EmployeeService employeeService;
 
     public Optional<MusiciansPerformanceDTO> getById(int id) {
         return repository.findById(id).map(mapper::toMusiciansPerformanceDTO);
@@ -29,6 +31,7 @@ public class MusiciansPerformanceService {
 
         return StreamSupport.stream(iterable.spliterator(), false)
                 .map(mapper::toMusiciansPerformanceDTO)
+                .peek(el -> employeeService.getById(el.getIdEmployee()).ifPresent(v -> el.setFullName(v.getFullName())))
                 .collect(Collectors.toList());
     }
 

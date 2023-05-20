@@ -1,7 +1,7 @@
 package com.example.theater.service;
 
 public class Generator {
-    private static int count = 15;
+    private static int count = 55;
 
     public static int generateId() {
         count++;

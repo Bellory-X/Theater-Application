@@ -9,4 +9,7 @@ public class DirectorsPerformanceDTO {
     int id;
     int idPerformance;
     int idEmployee;
+
+    String fullName;
+    String category;
 }

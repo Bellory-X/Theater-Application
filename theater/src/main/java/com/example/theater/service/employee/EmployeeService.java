@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -20,6 +21,10 @@ import java.util.stream.StreamSupport;
 public class EmployeeService {
     private final EmployeeRepository repository;
     private final EmployeeMapper mapper;
+
+    public Optional<EmployeeDTO> getById(int id) {
+        return repository.findById(id).map(mapper::toEmployeeDTO);
+    }
 
     public List<EmployeeDTO> getAll() {
         Iterable<Employee> iterable = repository.findAll();

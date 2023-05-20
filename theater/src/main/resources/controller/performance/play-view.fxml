@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1049.0" prefWidth="1479.0" style="-fx-background-color: #000000; " xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.theater.controller.performance.PlayController">
-    <Text fill="WHITE" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Actor" textAlignment="CENTER" wrappingWidth="1479.0">
+    <Text fill="WHITE" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Play" textAlignment="CENTER" wrappingWidth="1479.0">
         <font>
             <Font name="Times New Roman Bold" size="40.0" />
         </font>
@@ -26,17 +26,17 @@
                 <Font name="Times New Roman Bold" size="20.0" />
             </font>
         </Button>
-        <Button fx:id="authors" layoutX="14.0" layoutY="214.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Actors" textAlignment="CENTER" wrapText="true">
+        <Button fx:id="authors" layoutX="14.0" layoutY="310.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Actors" textAlignment="CENTER" wrapText="true">
             <font>
                 <Font name="Times New Roman Bold" size="20.0" />
             </font>
         </Button>
-        <Button fx:id="author" layoutX="14.0" layoutY="120.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Actor" textAlignment="CENTER" wrapText="true">
+        <Button fx:id="author" layoutX="14.0" layoutY="216.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Actor" textAlignment="CENTER" wrapText="true">
             <font>
                 <Font name="Times New Roman Bold" size="20.0" />
             </font>
         </Button>
-        <Button fx:id="play" layoutX="14.0" layoutY="26.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Play" textAlignment="CENTER" wrapText="true">
+        <Button fx:id="play" layoutX="14.0" layoutY="122.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Play" textAlignment="CENTER" wrapText="true">
             <font>
                 <Font name="Times New Roman Bold" size="20.0" />
             </font>
@@ -61,16 +61,22 @@
                 <Font name="Times New Roman Bold" size="20.0" />
             </font>
         </Button>
-        <Button fx:id="genre" layoutX="14.0" layoutY="308.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Genre" textAlignment="CENTER" wrapText="true">
+        <Button fx:id="genre" layoutX="14.0" layoutY="404.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Genre" textAlignment="CENTER" wrapText="true">
             <font>
                 <Font name="Times New Roman Bold" size="20.0" />
             </font>
         </Button>
+        <Button fx:id="performance" layoutX="14.0" layoutY="25.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Performance" textAlignment="CENTER" wrapText="true">
+            <font>
+                <Font name="Times New Roman Bold" size="16.0" />
+            </font>
+        </Button>
 
-        <TableView fx:id="playTable" layoutX="134.0" layoutY="26.0" prefHeight="258.0" prefWidth="561.0" />
-        <TableView fx:id="authorTable" layoutX="134.0" layoutY="292.0" prefHeight="258.0" prefWidth="180.0" />
-        <TableView fx:id="authorsTable" layoutX="325.0" layoutY="292.0" prefHeight="258.0" prefWidth="180.0" />
-        <TableView fx:id="genreTable" layoutX="515.0" layoutY="292.0" prefHeight="258.0" prefWidth="180.0" />
+        <TableView fx:id="performanceTable" layoutX="135.0" layoutY="22.0" prefHeight="258.0" prefWidth="561.0" />
+        <TableView fx:id="playTable" layoutX="135.0" layoutY="292.0" prefHeight="258.0" prefWidth="561.0" />
+        <TableView fx:id="authorTable" layoutX="135.0" layoutY="558.0" prefHeight="258.0" prefWidth="180.0" />
+        <TableView fx:id="authorsTable" layoutX="326.0" layoutY="558.0" prefHeight="258.0" prefWidth="180.0" />
+        <TableView fx:id="genreTable" layoutX="516.0" layoutY="558.0" prefHeight="258.0" prefWidth="180.0" />
 
         <ListView fx:id="queries" layoutX="1042.0" layoutY="25.0" prefHeight="539.0" prefWidth="416.0" />
 
@@ -175,5 +181,12 @@
             <font>
                 <Font size="20.0" />
             </font></Text>
+      <Button fx:id="troupe" layoutX="14.0" layoutY="499.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Troupe" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="Times New Roman Bold" size="20.0" />
+         </font>
+      </Button>
+
+
     </AnchorPane>
 </AnchorPane>

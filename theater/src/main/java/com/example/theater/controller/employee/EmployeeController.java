@@ -39,8 +39,6 @@ public class EmployeeController {
     @FXML private Button close;
     @FXML private TableView <EmployeeDTO> table;
     @FXML private TextField result;
-    @FXML private Text searchText11;
-    @FXML private DatePicker searchField11;
     @FXML private Text searchText10;
     @FXML private TextField searchField10;
     @FXML private Text searchText9;

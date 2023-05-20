@@ -202,7 +202,7 @@ public class ActorController {
         } catch (NumberFormatException e) {
             result.setText("In one of the fields not number");
         } catch (DataAccessException | QueryException e) {
-            result.setText("Recheck fields");
+            result.setText("Recheck fields maybe it exists");
         } catch (ItemException e) {
             result.setText("select record");
         }
@@ -305,9 +305,9 @@ public class ActorController {
             }
             result.setText("Success");
         } catch (NumberFormatException e) {
-            result.setText("In one of the fields not number");
+            result.setText("experience or countChild or salary not positive number");
         } catch (DataAccessException | QueryException e) {
-            result.setText("Recheck fields");
+            result.setText("Recheck fields maybe it exists");
         } catch (ItemException e) {
             result.setText("select record");
         }
@@ -379,9 +379,9 @@ public class ActorController {
             }
             result.setText("Success");
         } catch (NumberFormatException e) {
-            result.setText("In one of the fields not number");
+            result.setText("experience or countChild or salary not positive number");
         } catch (DataAccessException | QueryException e) {
-            result.setText("Recheck fields");
+            result.setText("Recheck fields maybe it exists");
         } catch (ItemException e) {
             result.setText("select record");
         }
@@ -529,7 +529,7 @@ public class ActorController {
             case QUERY0 -> {
                 List<ActorDTO> dtoList = service.getAll();
                 result.setText(String.valueOf(dtoList.size()));
-                actorTable.getItems().addAll(dtoList);
+                actorTable.setItems(FXCollections.observableList(dtoList));
             }
             case QUERY1 -> {
                 List<ActorDTO> dtoList = service
@@ -540,7 +540,7 @@ public class ActorController {
                                 Integer.parseInt(searchField7.getText()), Integer.parseInt(searchField8.getText()),
                                 Integer.parseInt(searchField9.getText()), Integer.parseInt(searchField10.getText()));
                 result.setText(String.valueOf(dtoList.size()));
-                actorTable.getItems().addAll(dtoList);
+                actorTable.setItems(FXCollections.observableList(dtoList));
             }
             case QUERY2 -> {
                 List<ActorDTO> dtoList = service
@@ -550,10 +550,9 @@ public class ActorController {
                                 searchField2.getText(), searchField3.getText(),
                                 Date.from(searchField11.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
                 result.setText(String.valueOf(dtoList.size()));
-                actorTable.getItems().addAll(dtoList);
+                actorTable.setItems(FXCollections.observableList(dtoList));
             }
         }
-        actorTable.refresh();
     }
 
     private void initQueryList() {
@@ -657,14 +656,12 @@ public class ActorController {
             charactersTable.setItems(FXCollections.observableList(charactersService.getAll().stream()
                     .filter(el -> el.getIdEmployee() == dto.getIdEmployee())
                     .toList()));
-            charactersTable.refresh();
             ranksTable.setItems(FXCollections.observableList(ranksService.getAll().stream()
                     .filter(el -> el.getIdEmployee() == dto.getIdEmployee())
                     .map(el-> rankService.getById(el.getIdRank()))
                     .filter(Optional::isPresent)
                     .map(Optional::get)
                     .toList()));
-            ranksTable.refresh();
         });
 
         actorTable.setItems(FXCollections.observableList(service.getAll()));

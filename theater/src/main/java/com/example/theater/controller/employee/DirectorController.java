@@ -10,6 +10,7 @@ import com.example.theater.dto.employee.character.CharactersDirectorDTO;
 import com.example.theater.dto.employee.character.DirectorCharacterDTO;
 import com.example.theater.dto.employee.rank.RankDTO;
 import com.example.theater.dto.employee.rank.RanksActorDTO;
+import com.example.theater.exception.ItemException;
 import com.example.theater.exception.QueryException;
 import com.example.theater.service.employee.ActorService;
 import com.example.theater.service.employee.DirectorService;
@@ -41,8 +42,8 @@ import java.util.*;
 @Component
 @FxmlView("/controller/employee/director-view.fxml")
 public class DirectorController {
-    @FXML private Text searchText11;
-    @FXML private DatePicker searchField11;
+//    @FXML private Text searchText11;
+//    @FXML private DatePicker searchField11;
     @FXML private Text searchText10;
     @FXML private TextField searchField10;
     @FXML private Text searchText9;
@@ -138,21 +139,29 @@ public class DirectorController {
         try {
             switch (tableStatus) {
                 case ACTOR -> {
+                    if (actorTable.getSelectionModel().getSelectedItem() == null)
+                        throw new ItemException("null");
                     actorService.drop(actorTable.getSelectionModel().getSelectedItem());
                     actorTable.setItems(FXCollections.observableList(actorService.getAll()));
                     actorTable.refresh();
                 }
                 case CATEGORY -> {
+                    if (categoryTable.getSelectionModel().getSelectedItem() == null)
+                        throw new ItemException("null");
                     actorCategoryService.drop(categoryTable.getSelectionModel().getSelectedItem());
                     categoryTable.setItems(FXCollections.observableList(actorCategoryService.getAll()));
                     categoryTable.refresh();
                 }
                 case CHARACTER -> {
+                    if (characterTable.getSelectionModel().getSelectedItem() == null)
+                        throw new ItemException("null");
                     actorCharacterService.drop(characterTable.getSelectionModel().getSelectedItem());
                     characterTable.setItems(FXCollections.observableList(actorCharacterService.getAll()));
                     characterTable.refresh();
                 }
                 case CHARACTERS -> {
+                    if (charactersTable.getSelectionModel().getSelectedItem() == null)
+                        throw new ItemException("null");
                     charactersActorService.drop(charactersTable.getSelectionModel().getSelectedItem());
 
                     DirectorDTO dto = actorTable.getSelectionModel().getSelectedItem();
@@ -167,7 +176,9 @@ public class DirectorController {
         } catch (NumberFormatException e) {
             result.setText("In one of the fields not number");
         } catch (QueryException e) {
-            result.setText("Recheck fields");
+            result.setText("Recheck fields maybe it exists");
+        } catch (ItemException e) {
+            result.setText("select record");
         }
     }
 
@@ -175,6 +186,8 @@ public class DirectorController {
         try {
             switch (tableStatus) {
                 case ACTOR -> {
+                    if (actorTable.getSelectionModel().getSelectedItem() == null)
+                        throw new ItemException("null");
                     actorService.edit(DirectorDTO.builder()
                             .idEmployee(actorTable.getSelectionModel().getSelectedItem().getIdEmployee())
                             .fullName(addField1.getText())
@@ -191,6 +204,8 @@ public class DirectorController {
                     actorTable.refresh();
                 }
                 case CATEGORY -> {
+                    if (categoryTable.getSelectionModel().getSelectedItem() == null)
+                        throw new ItemException("null");
                     actorCategoryService.edit(DirectorCategoryDTO.builder()
                             .id(categoryTable.getSelectionModel().getSelectedItem().getId())
                             .category(addField1.getText())
@@ -199,6 +214,8 @@ public class DirectorController {
                     categoryTable.refresh();
                 }
                 case CHARACTER -> {
+                    if (characterTable.getSelectionModel().getSelectedItem() == null)
+                        throw new ItemException("null");
                     actorCharacterService.edit(DirectorCharacterDTO.builder()
                             .id(characterTable.getSelectionModel().getSelectedItem().getId())
                             .character(addField1.getText())
@@ -207,6 +224,8 @@ public class DirectorController {
                     characterTable.refresh();
                 }
                 case CHARACTERS -> {
+                    if (characterTable.getSelectionModel().getSelectedItem() == null)
+                        throw new ItemException("null");
                     charactersActorService.edit(CharactersDirectorDTO.builder()
                             .id(charactersTable.getSelectionModel().getSelectedItem().getId())
                             .idEmployee(actorTable.getSelectionModel().getSelectedItem().getIdEmployee())
@@ -223,9 +242,11 @@ public class DirectorController {
             }
             result.setText("Success");
         } catch (NumberFormatException e) {
-            result.setText("In one of the fields not number");
+            result.setText("experience or countChild or salary not positive number");
         } catch (QueryException e) {
-            result.setText("Recheck fields");
+            result.setText("Recheck fields maybe it exists");
+        } catch (ItemException e) {
+            result.setText("select record");
         }
     }
 
@@ -257,6 +278,8 @@ public class DirectorController {
                     characterTable.refresh();
                 }
                 case CHARACTERS -> {
+                    if (actorTable.getSelectionModel().getSelectedItem() == null || characterTable.getSelectionModel().getSelectedItem() == null)
+                        throw new ItemException("null");
                     charactersActorService.add(CharactersDirectorDTO.builder()
                             .idEmployee(actorTable.getSelectionModel().getSelectedItem().getIdEmployee())
                             .character(characterTable.getSelectionModel().getSelectedItem().getCharacter())
@@ -272,9 +295,11 @@ public class DirectorController {
             }
             result.setText("Success");
         } catch (NumberFormatException e) {
-            result.setText("In one of the fields not number");
+            result.setText("experience or countChild or salary not positive number");
         } catch (QueryException e) {
-            result.setText("Recheck fields");
+            result.setText("Recheck fields maybe it exists");
+        } catch (ItemException e) {
+            result.setText("select record");
         }
     }
 

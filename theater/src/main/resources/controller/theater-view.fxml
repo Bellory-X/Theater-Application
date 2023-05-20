@@ -25,9 +25,9 @@
                 <Font name="Times New Roman Bold" size="20.0" />
             </font>
         </Button>
-        <Button fx:id="performance" layoutX="14.0" layoutY="310.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Performance" textAlignment="CENTER" wrapText="true">
+        <Button fx:id="performance" layoutX="14.0" layoutY="310.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Play" textAlignment="CENTER" wrapText="true">
             <font>
-                <Font name="Times New Roman Bold" size="16.0" />
+                <Font name="Times New Roman Bold" size="20.0" />
             </font>
         </Button>
         <Button fx:id="employee" layoutX="14.0" layoutY="216.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Employee" textAlignment="CENTER" wrapText="true">
@@ -80,5 +80,10 @@
             <Font size="20.0" />
          </font>
       </Text>
+      <Button fx:id="place" layoutX="14.0" layoutY="414.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Place" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="Times New Roman Bold" size="20.0" />
+         </font>
+      </Button>
     </AnchorPane>
 </AnchorPane>

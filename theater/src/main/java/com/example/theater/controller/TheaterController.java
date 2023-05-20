@@ -1,9 +1,11 @@
 package com.example.theater.controller;
 
 import com.example.theater.controller.employee.EmployeeController;
-import com.example.theater.controller.performance.PerformanceController;
+import com.example.theater.controller.performance.PlaceController;
+import com.example.theater.controller.performance.PlayController;
 import com.example.theater.dto.SubscriptionDTO;
 import com.example.theater.dto.TheaterDTO;
+import com.example.theater.exception.ItemException;
 import com.example.theater.exception.QueryException;
 import com.example.theater.service.SubscriptionService;
 import com.example.theater.service.TheaterService;
@@ -25,6 +27,7 @@ import org.springframework.stereotype.Component;
 @Component
 @FxmlView("/controller/theater-view.fxml")
 public class TheaterController {
+    public Button place;
     @FXML private Button subscription;
     @FXML private Button theater;
     @FXML private Button performance;
@@ -88,8 +91,9 @@ public class TheaterController {
             priceText.setVisible(true);
             price.setVisible(true);
         });
+        place.setOnAction(event -> showNewStage(fxWeaver.loadView(PlaceController.class)));
         employee.setOnAction(event -> showNewStage(fxWeaver.loadView(EmployeeController.class)));
-        performance.setOnAction(event -> showNewStage(fxWeaver.loadView(PerformanceController.class)));
+        performance.setOnAction(event -> showNewStage(fxWeaver.loadView(PlayController.class)));
         add.setOnAction(event -> addEvent());
         edit.setOnAction(event -> editEvent());
         drop.setOnAction(event -> dropEvent());
@@ -109,7 +113,6 @@ public class TheaterController {
                 case THEATER -> {
                     theaterService.add(TheaterDTO.builder().name(name.getText()).build());
                     theaterTable.setItems(FXCollections.observableList(theaterService.getAll()));
-                    theaterTable.refresh();
                 }
                 case SUBSCRIPTION -> {
                     subscriptionService.add(SubscriptionDTO.builder()
@@ -117,14 +120,13 @@ public class TheaterController {
                             .price(Integer.parseInt(price.getText()))
                             .build());
                     subscriptionsTable.setItems(FXCollections.observableList(subscriptionService.getAll()));
-                    subscriptionsTable.refresh();
                 }
             }
             result.setText("Success");
         } catch (NumberFormatException e) {
-            result.setText("In one of the fields not number");
+            result.setText("Count or Price not positive number");
         } catch (QueryException e) {
-            result.setText(e.getMessage());
+            result.setText("Recheck fields");
         }
     }
 
@@ -132,26 +134,32 @@ public class TheaterController {
         try {
             switch (status) {
                 case THEATER -> {
+                    if (theaterTable.getSelectionModel().getSelectedItem() == null)
+                        throw new ItemException("null");
+
                     TheaterDTO dto = theaterTable.getSelectionModel().getSelectedItem();
                     dto.setName(name.getText());
                     theaterService.edit(dto);
                     theaterTable.setItems(FXCollections.observableList(theaterService.getAll()));
-                    theaterTable.refresh();
                 }
                 case SUBSCRIPTION -> {
+                    if (subscriptionsTable.getSelectionModel().getSelectedItem() == null)
+                        throw new ItemException("null");
+
                     SubscriptionDTO dto = subscriptionsTable.getSelectionModel().getSelectedItem();
                     dto.setCount(Integer.parseInt(name.getText()));
                     dto.setPrice(Integer.parseInt(price.getText()));
                     subscriptionService.edit(dto);
                     subscriptionsTable.setItems(FXCollections.observableList(subscriptionService.getAll()));
-                    subscriptionsTable.refresh();
                 }
             }
             result.setText("Success");
         } catch (NumberFormatException e) {
-            result.setText("In one of the fields not number");
+            result.setText("Count or Price not positive number");
         } catch (QueryException e) {
-            result.setText(e.getMessage());
+            result.setText("Recheck fields");
+        } catch (ItemException e) {
+            result.setText("Select record");
         }
     }
 
@@ -159,21 +167,27 @@ public class TheaterController {
         try {
             switch (status) {
                 case THEATER -> {
+                    if (theaterTable.getSelectionModel().getSelectedItem() == null)
+                        throw new ItemException("null");
+
                     theaterService.drop(theaterTable.getSelectionModel().getSelectedItem());
                     theaterTable.setItems(FXCollections.observableList(theaterService.getAll()));
-                    theaterTable.refresh();
                 }
                 case SUBSCRIPTION -> {
+                    if (subscriptionsTable.getSelectionModel().getSelectedItem() == null)
+                        throw new ItemException("null");
+
                     subscriptionService.drop(subscriptionsTable.getSelectionModel().getSelectedItem());
                     subscriptionsTable.setItems(FXCollections.observableList(subscriptionService.getAll()));
-                    subscriptionsTable.refresh();
                 }
             }
             result.setText("Success");
         } catch (NumberFormatException e) {
-            result.setText("In one of the fields not number");
+            result.setText("Count or Price not positive number");
         } catch (QueryException e) {
-            result.setText(e.getMessage());
+            result.setText("Recheck fields");
+        } catch (ItemException e) {
+            result.setText("Select record");
         }
     }
 

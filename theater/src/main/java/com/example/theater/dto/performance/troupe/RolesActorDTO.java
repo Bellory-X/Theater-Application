@@ -9,4 +9,11 @@ public class RolesActorDTO {
     int id;
     int idRole;
     int idEmployee;
+
+    String name;
+    boolean main;
+    boolean understudy;
+    int idPerformance;
+
+    String fullName;
 }
