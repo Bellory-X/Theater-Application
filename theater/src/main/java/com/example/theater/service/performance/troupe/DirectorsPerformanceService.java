@@ -2,7 +2,9 @@ package com.example.theater.service.performance.troupe;
 
 import com.example.theater.dao.entity.performance.troupe.DirectorsPerformance;
 import com.example.theater.dao.repository.performance.troupe.DirectorsPerformanceRepository;
+import com.example.theater.dto.employee.DirectorDTO;
 import com.example.theater.dto.employee.EmployeeDTO;
+import com.example.theater.dto.employee.MusicianDTO;
 import com.example.theater.dto.performance.troupe.DirectorsPerformanceDTO;
 import com.example.theater.exception.RecordNotFoundException;
 import com.example.theater.mapper.performance.troupe.DirectorsPerformanceMapper;
@@ -26,6 +28,10 @@ public class DirectorsPerformanceService {
 
     public Optional<DirectorsPerformanceDTO> getById(int id) {
         return repository.findById(id).map(mapper::toDirectorsPerformanceDTO);
+    }
+
+    public List<DirectorDTO> getAllDirector(String theater) {
+        return directorService.getAll().stream().filter(el -> el.getTheater().equals(theater)).toList();
     }
 
     public List<DirectorsPerformanceDTO> getAll() {

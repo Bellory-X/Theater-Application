@@ -197,8 +197,9 @@ public class ActorController {
         try {
             switch (tableStatus) {
                 case WORKER -> {
-                    if (workerTable.getSelectionModel().getSelectedItem() == null)
-                        throw new ItemException("null");
+                    if (workerTable.getSelectionModel().getSelectedItem() == null ||
+                            categoryTable.getSelectionModel().getSelectedItem() == null)
+                        throw new ItemException("select record");
                     workerService.edit(ActorDTO.builder()
                             .idEmployee(workerTable.getSelectionModel().getSelectedItem().getIdEmployee())
                             .fullName(addField1.getText())
@@ -215,7 +216,7 @@ public class ActorController {
                 }
                 case CATEGORY -> {
                     if (categoryTable.getSelectionModel().getSelectedItem() == null)
-                        throw new ItemException("null");
+                        throw new ItemException("select record");
                     categoryService.edit(ActorCategoryDTO.builder()
                             .id(categoryTable.getSelectionModel().getSelectedItem().getId())
                             .category(addField1.getText())
@@ -224,7 +225,7 @@ public class ActorController {
                 }
                 case CHARACTER -> {
                     if (characterTable.getSelectionModel().getSelectedItem() == null)
-                        throw new ItemException("null");
+                        throw new ItemException("select record");
                     characterService.edit(ActorCharacterDTO.builder()
                             .id(characterTable.getSelectionModel().getSelectedItem().getId())
                             .character(addField1.getText())
@@ -233,7 +234,7 @@ public class ActorController {
                 }
                 case RANK -> {
                     if (rankTable.getSelectionModel().getSelectedItem() == null)
-                        throw new ItemException("null");
+                        throw new ItemException("select record");
                     rankService.edit(RankDTO.builder()
                             .id(rankTable.getSelectionModel().getSelectedItem().getId())
                             .name(addField1.getText())
@@ -244,7 +245,7 @@ public class ActorController {
                 }
                 case RANKS -> {
                     if (ranksTable.getSelectionModel().getSelectedItem() == null)
-                        throw new ItemException("null");
+                        throw new ItemException("select record");
                     Optional<RanksActorDTO> dto = ranksService.getAll().stream().filter(el ->
                             el.getIdEmployee() == workerTable.getSelectionModel().getSelectedItem().getIdEmployee()
                                     && el.getIdRank() == ranksTable.getSelectionModel().getSelectedItem().getId()).findFirst();
@@ -263,8 +264,8 @@ public class ActorController {
                             .toList()));
                 }
                 case CHARACTERS -> {
-                    if (characterTable.getSelectionModel().getSelectedItem() == null)
-                        throw new ItemException("null");
+                    if (charactersTable.getSelectionModel().getSelectedItem() == null)
+                        throw new ItemException("select record");
                     charactersService.edit(CharactersActorDTO.builder()
                             .id(charactersTable.getSelectionModel().getSelectedItem().getId())
                             .idEmployee(workerTable.getSelectionModel().getSelectedItem().getIdEmployee())
@@ -281,7 +282,7 @@ public class ActorController {
         } catch (DataAccessException | QueryException e) {
             result.setText("Recheck fields maybe it exists");
         } catch (ItemException e) {
-            result.setText("select record");
+            result.setText(e.getMessage());
         }
     }
 
@@ -318,7 +319,7 @@ public class ActorController {
                 case RANKS -> {
                     if (workerTable.getSelectionModel().getSelectedItem() == null ||
                             rankTable.getSelectionModel().getSelectedItem() == null)
-                        throw new ItemException("null");
+                        throw new ItemException("select record");
                     ranksService.add(RanksActorDTO.builder()
                             .idEmployee(workerTable.getSelectionModel().getSelectedItem().getIdEmployee())
                             .idRank(rankTable.getSelectionModel().getSelectedItem().getId())
@@ -333,7 +334,7 @@ public class ActorController {
                 case CHARACTERS -> {
                     if (workerTable.getSelectionModel().getSelectedItem() == null ||
                             characterTable.getSelectionModel().getSelectedItem() == null)
-                        throw new ItemException("null");
+                        throw new ItemException("select record");
                     charactersService.add(CharactersActorDTO.builder()
                             .idEmployee(workerTable.getSelectionModel().getSelectedItem().getIdEmployee())
                             .character(characterTable.getSelectionModel().getSelectedItem().getCharacter())
@@ -349,7 +350,7 @@ public class ActorController {
         } catch (DataAccessException | QueryException e) {
             result.setText("Recheck fields maybe it exists");
         } catch (ItemException e) {
-            result.setText("select record");
+            result.setText(e.getMessage());
         }
     }
 
@@ -427,7 +428,7 @@ public class ActorController {
                     result.setText(String.valueOf(dtoList.size()));
                     workerTable.setItems(FXCollections.observableList(dtoList));
                 }
-                case QUERY2 -> {
+                case QUERY7 -> {
                     List<ActorDTO> dtoList = workerService.findActorQuery2(
                             searchField1.getText(),
                             Date.from(searchField5.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
@@ -447,10 +448,10 @@ public class ActorController {
     private void initQueryList() {
         queryMap.put(WorkerQueryStatus.QUERY0, "Получить всех служащих");
         queryMap.put(WorkerQueryStatus.QUERY1, "Получить служащих, по атрибутам работника");
-        queryMap.put(WorkerQueryStatus.QUERY2, "Получить актеpов по атрибутам звания");
+        queryMap.put(WorkerQueryStatus.QUERY7, "Получить актеpов по атрибутам звания");
         queries.getItems().add(queryMap.get(WorkerQueryStatus.QUERY0));
         queries.getItems().add(queryMap.get(WorkerQueryStatus.QUERY1));
-        queries.getItems().add(queryMap.get(WorkerQueryStatus.QUERY2));
+        queries.getItems().add(queryMap.get(WorkerQueryStatus.QUERY7));
         queries.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
             if (queries.getSelectionModel().getSelectedItem().equals(queryMap.get(WorkerQueryStatus.QUERY0)))
                 queryStatus = WorkerQueryStatus.QUERY0;
@@ -474,8 +475,8 @@ public class ActorController {
                 searchText5.setText("from birthday");
                 searchText6.setText("before birthday");
             }
-            if (queries.getSelectionModel().getSelectedItem().equals(queryMap.get(WorkerQueryStatus.QUERY2))) {
-                queryStatus = WorkerQueryStatus.QUERY2;
+            if (queries.getSelectionModel().getSelectedItem().equals(queryMap.get(WorkerQueryStatus.QUERY7))) {
+                queryStatus = WorkerQueryStatus.QUERY7;
                 searchField4.setVisible(false);
                 searchField7.setVisible(false);
                 searchField8.setVisible(false);

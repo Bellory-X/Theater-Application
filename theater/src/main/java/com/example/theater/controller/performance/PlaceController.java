@@ -93,9 +93,9 @@ public class PlaceController {
         hall.setOnAction(event -> setHall());
         place.setOnAction(event -> setPlace());
         timeHall.setOnAction(event -> setTimeHall());
-        add.setOnAction(event -> clickAdd());
-        edit.setOnAction(event -> clickEdit());
-        drop.setOnAction(event -> clickDrop());
+        add.setOnAction(event -> addEvent());
+        edit.setOnAction(event -> editEvent());
+        drop.setOnAction(event -> dropEvent());
         search.setOnAction(event -> clickSearch());
         back.setOnAction(event -> showNewStage(fxWeaver.loadView(TheaterController.class)));
         close.setOnAction(event -> close.getScene().getWindow().hide());
@@ -224,7 +224,7 @@ public class PlaceController {
         }
     }
 
-    private void clickDrop() {
+    private void dropEvent() {
         try {
             switch (tableStatus) {
                 case NOT_SELECT -> result.setText("Select table");
@@ -240,6 +240,9 @@ public class PlaceController {
                     if (timeHallTable.getSelectionModel().getSelectedItem() == null)
                         throw new ItemException("null");
                     timeHallService.drop(timeHallTable.getSelectionModel().getSelectedItem());
+                    timeHallTable.setItems(FXCollections.observableList(timeHallService.getAll().stream()
+                            .filter(el -> el.getIdPerformance() == performanceTable.getSelectionModel().getSelectedItem().getId())
+                            .toList()));
                     result.setText("Success");
                 }
             }
@@ -250,7 +253,7 @@ public class PlaceController {
         }
     }
 
-    private void clickEdit() {
+    private void editEvent() {
         try {
             switch (tableStatus) {
                 case NOT_SELECT -> result.setText("Select table");
@@ -262,6 +265,9 @@ public class PlaceController {
                     dto.setPrice(Integer.parseInt(addField1.getText()));
                     dto.setReserve(Boolean.parseBoolean(addField2.getText()));
                     placeService.edit(dto);
+                    placeTable.setItems(FXCollections.observableList(placeService.getAll().stream()
+                            .filter(el -> el.getIdHall() == timeHallTable.getSelectionModel().getSelectedItem().getId())
+                            .toList()));
                     result.setText("Success");
                 }
             }
@@ -272,7 +278,7 @@ public class PlaceController {
         }
     }
 
-    private void clickAdd() {
+    private void addEvent() {
         try {
             switch (tableStatus) {
                 case NOT_SELECT -> result.setText("Select table");

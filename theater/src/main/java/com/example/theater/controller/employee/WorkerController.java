@@ -21,6 +21,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import net.rgielen.fxweaver.core.FxWeaver;
 import net.rgielen.fxweaver.core.FxmlView;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
 
 import java.time.ZoneId;
@@ -212,7 +213,9 @@ public class WorkerController {
             result.setText("Success");
         } catch (NumberFormatException e) {
             result.setText("experience or count child or salary not positive number");
-        } catch (QueryException | ItemException e) {
+        } catch (DataAccessException | QueryException e) {
+            result.setText("Recheck fields maybe it exists");
+        } catch (ItemException e) {
             result.setText(e.getMessage());
         }
     }
@@ -259,7 +262,9 @@ public class WorkerController {
             result.setText("Success");
         } catch (NumberFormatException e) {
             result.setText("experience or count child or salary not positive number");
-        } catch (QueryException | ItemException e) {
+        } catch (DataAccessException | QueryException e) {
+            result.setText("Recheck fields maybe it exists");
+        } catch (ItemException e) {
             result.setText(e.getMessage());
         }
     }

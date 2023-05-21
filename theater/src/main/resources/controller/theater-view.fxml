@@ -35,7 +35,7 @@
                 <Font name="Times New Roman Bold" size="20.0" />
             </font>
         </Button>
-        <TableView fx:id="theaterTable" layoutX="134.0" layoutY="26.0" prefHeight="452.0" prefWidth="545.0" tableMenuButtonVisible="true" />
+        <TableView fx:id="theaterTable" layoutX="134.0" layoutY="52.0" prefHeight="426.0" prefWidth="265.0" tableMenuButtonVisible="true" />
         <Button fx:id="add" layoutX="896.0" layoutY="816.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="114.0" style="-fx-background-radius: 100; -fx-background-color: silver;" text="Add" textAlignment="CENTER" wrapText="true">
             <font>
                 <Font name="Times New Roman Bold" size="20.0" />
@@ -69,7 +69,7 @@
             <Font name="Times New Roman Bold" size="16.0" />
          </font>
       </Button>
-      <TableView fx:id="subscriptionsTable" layoutX="134.0" layoutY="502.0" prefHeight="452.0" prefWidth="545.0" tableMenuButtonVisible="true" />
+      <TableView fx:id="subscriptionsTable" layoutX="411.0" layoutY="52.0" prefHeight="426.0" prefWidth="265.0" tableMenuButtonVisible="true" />
       <TextField fx:id="price" layoutX="1155.0" layoutY="755.0" prefHeight="44.0" prefWidth="174.0" visible="false">
          <font>
             <Font size="20.0" />
@@ -85,5 +85,15 @@
             <Font name="Times New Roman Bold" size="20.0" />
          </font>
       </Button>
+      <Text layoutX="240.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Theater">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <Text layoutX="500.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Subscription">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
     </AnchorPane>
 </AnchorPane>

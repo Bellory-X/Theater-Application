@@ -3,6 +3,7 @@ package com.example.theater.service.employee;
 import com.example.theater.dao.entity.employee.Musician;
 import com.example.theater.dao.repository.employee.MusicianRepository;
 import com.example.theater.dto.employee.ActorDTO;
+import com.example.theater.dto.employee.DirectorDTO;
 import com.example.theater.dto.employee.EmployeeDTO;
 import com.example.theater.dto.employee.MusicianDTO;
 import com.example.theater.exception.RecordNotFoundException;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -21,6 +23,10 @@ public class MusicianService {
     MusicianRepository repository;
     MusicianMapper mapper;
     private final EmployeeService employeeService;
+
+    public Optional<MusicianDTO> getById(int id) {
+        return repository.findById(id).map(mapper::toMusicianDTO);
+    }
 
     public List<MusicianDTO> getAll() {
         Iterable<Musician> iterable = repository.findAll();

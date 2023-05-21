@@ -1,8 +1,6 @@
 package com.example.theater.event;
 
 import com.example.theater.controller.TheaterController;
-import com.example.theater.controller.performance.RoleController;
-import com.example.theater.controller.performance.TroupeController;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import net.rgielen.fxweaver.core.FxWeaver;

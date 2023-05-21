@@ -67,10 +67,10 @@
             </font>
         </Button>
 
-        <TableView fx:id="workerTable" layoutX="134.0" layoutY="26.0" prefHeight="258.0" prefWidth="561.0" />
-        <TableView fx:id="categoryTable" layoutX="134.0" layoutY="292.0" prefHeight="258.0" prefWidth="275.0" />
-        <TableView fx:id="characterTable" layoutX="421.0" layoutY="292.0" prefHeight="258.0" prefWidth="275.0" />
-        <TableView fx:id="charactersTable" layoutX="135.0" layoutY="558.0" prefHeight="200.0" prefWidth="561.0" />
+        <TableView fx:id="workerTable" layoutX="134.0" layoutY="46.0" prefHeight="238.0" prefWidth="561.0" />
+        <TableView fx:id="categoryTable" layoutX="134.0" layoutY="322.0" prefHeight="228.0" prefWidth="275.0" />
+        <TableView fx:id="characterTable" layoutX="421.0" layoutY="322.0" prefHeight="228.0" prefWidth="275.0" />
+        <TableView fx:id="charactersTable" layoutX="135.0" layoutY="589.0" prefHeight="169.0" prefWidth="561.0" />
 
         <ListView fx:id="queries" layoutX="1042.0" layoutY="25.0" prefHeight="539.0" prefWidth="416.0" />
 
@@ -243,5 +243,25 @@
             <font>
                 <Font size="20.0" />
             </font></Text>
+      <Text layoutX="389.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Worker">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <Text layoutX="246.0" layoutY="314.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Category">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <Text layoutX="525.0" layoutY="314.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Character">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <Text layoutX="356.0" layoutY="584.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Worker Characters">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
     </AnchorPane>
 </AnchorPane>
