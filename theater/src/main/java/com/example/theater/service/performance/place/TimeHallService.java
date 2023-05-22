@@ -1,8 +1,7 @@
-package com.example.theater.service.performance;
+package com.example.theater.service.performance.place;
 
 import com.example.theater.dao.entity.performance.TimeHall;
 import com.example.theater.dao.repository.performance.TimeHallRepository;
-import com.example.theater.dto.performance.PerformanceDTO;
 import com.example.theater.dto.performance.PlaceDTO;
 import com.example.theater.dto.performance.TimeHallDTO;
 import com.example.theater.exception.QueryException;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
@@ -47,6 +45,7 @@ public class TimeHallService {
     }
 
     public void add(TimeHallDTO dto) {
+//        TODO: trigger time
         try {
             dto.setId(Generator.generateId());
             TimeHall repertoire = mapper.toTimeHall(dto);

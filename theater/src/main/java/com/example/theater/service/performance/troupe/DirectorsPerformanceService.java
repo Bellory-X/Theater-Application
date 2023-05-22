@@ -6,12 +6,14 @@ import com.example.theater.dto.employee.DirectorDTO;
 import com.example.theater.dto.employee.EmployeeDTO;
 import com.example.theater.dto.employee.MusicianDTO;
 import com.example.theater.dto.performance.troupe.DirectorsPerformanceDTO;
+import com.example.theater.exception.QueryException;
 import com.example.theater.exception.RecordNotFoundException;
 import com.example.theater.mapper.performance.troupe.DirectorsPerformanceMapper;
 import com.example.theater.service.Generator;
 import com.example.theater.service.employee.DirectorService;
 import com.example.theater.service.employee.EmployeeService;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -47,9 +49,13 @@ public class DirectorsPerformanceService {
     }
 
     public void add(DirectorsPerformanceDTO dto) {
-        dto.setId(Generator.generateId());
-        DirectorsPerformance directorsPerformance = mapper.toDirectorsPerformance(dto);
-        repository.save(directorsPerformance);
+        try {
+            dto.setId(Generator.generateId());
+            DirectorsPerformance directorsPerformance = mapper.toDirectorsPerformance(dto);
+            repository.save(directorsPerformance);
+        } catch (DataAccessException e) {
+            throw new QueryException("Recheck fields maybe it exists");
+        }
     }
 
     public void edit(DirectorsPerformanceDTO dto) {

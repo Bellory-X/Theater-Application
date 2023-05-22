@@ -4,12 +4,14 @@ import com.example.theater.dao.entity.performance.troupe.MusiciansPerformance;
 import com.example.theater.dao.repository.performance.troupe.MusiciansPerformanceRepository;
 import com.example.theater.dto.employee.MusicianDTO;
 import com.example.theater.dto.performance.troupe.MusiciansPerformanceDTO;
+import com.example.theater.exception.QueryException;
 import com.example.theater.exception.RecordNotFoundException;
 import com.example.theater.mapper.performance.troupe.MusiciansPerformanceMapper;
 import com.example.theater.service.Generator;
 import com.example.theater.service.employee.EmployeeService;
 import com.example.theater.service.employee.MusicianService;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,9 +47,13 @@ public class MusiciansPerformanceService {
     }
 
     public void add(MusiciansPerformanceDTO dto) {
-        dto.setId(Generator.generateId());
-        MusiciansPerformance musiciansPerformance = mapper.toMusiciansPerformance(dto);
-        repository.save(musiciansPerformance);
+        try {
+            dto.setId(Generator.generateId());
+            MusiciansPerformance musiciansPerformance = mapper.toMusiciansPerformance(dto);
+            repository.save(musiciansPerformance);
+        } catch (DataAccessException e) {
+            throw new QueryException("Recheck fields maybe it exists");
+        }
     }
 
     public void edit(MusiciansPerformanceDTO dto) {

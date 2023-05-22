@@ -290,7 +290,10 @@ public class ActorController {
         try {
             switch (tableStatus) {
                 case WORKER -> {
-                    workerService.add(ActorDTO.builder().fullName(addField1.getText())
+                    if (categoryTable.getSelectionModel().getSelectedItem() == null)
+                        throw new ItemException("select record");
+                    workerService.add(ActorDTO.builder()
+                            .fullName(addField1.getText())
                             .experience(Integer.parseInt(addField2.getText()))
                             .gender(addField3.getText())
                             .birthday(Date.from(addField4.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()))

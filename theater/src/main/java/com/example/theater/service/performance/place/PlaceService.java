@@ -1,4 +1,4 @@
-package com.example.theater.service.performance;
+package com.example.theater.service.performance.place;
 
 import com.example.theater.dao.entity.performance.Place;
 import com.example.theater.dao.repository.performance.PlaceRepository;

@@ -12,36 +12,31 @@ import java.util.List;
 public interface PerformanceRepository extends CrudRepository<Performance, Integer> {
     @Query("""
             SELECT p
-            FROM Play pl, Performance p
+            FROM Play pl, Performance p, TimeHall th, Hall h
             WHERE pl.id = p.idPlay
             AND pl.genre = :genre
-            AND p IN (SELECT p1
-                         FROM Performance p1, TimeHall th, Hall h
-                         WHERE p1.id = th.idPerformance
-                         AND h.id = th.idHall
-                         AND h.theater = :theater
-                         AND th.start >= :birthday1
-                         AND th.start <= :birthday2)
-                         """)
+            AND p.id = th.idPerformance
+            AND h.id = th.idHall
+            AND h.theater = :theater
+            AND th.start >= :birthday1
+            AND th.start <= :birthday2
+            GROUP BY (p)""")
     List<Performance> findActorQuery2(Date birthday1, Date birthday2, String genre, String theater);
 
     @Query("""
             SELECT p
-            FROM Play pl, Performance p
+            FROM Play pl, Performance p, TimeHall th
             WHERE pl.id = p.idPlay
             AND pl.genre = :genre
             AND p.theater = :theater
-            AND p IN (SELECT p1
-                         FROM Performance p1, TimeHall th
-                         WHERE p1.id = th.idPerformance
-                         AND th.start >= :birthday1
-                         AND th.start <= :birthday2)
-                         """)
+            AND p.id = th.idPerformance
+            AND th.start >= :birthday1
+            AND th.start <= :birthday2""")
     List<Performance> findActorQuery3(Date birthday1, Date birthday2, String genre, String theater);
 
     @Query("""
             SELECT p
-            FROM Play pl, Performance p, Author a, PlaysAuthor pa
+            FROM Play pl, Performance p, Author a, PlaysAuthor pa, TimeHall th
             WHERE pl.id = p.idPlay
             AND pl.genre = :genre
             AND pl.id = pa.idPlay
@@ -51,12 +46,9 @@ public interface PerformanceRepository extends CrudRepository<Performance, Integ
             AND EXTRACT(YEAR FROM pl.data) >= :year1
             AND EXTRACT(YEAR FROM pl.data) <= :year2
             AND p.theater = :theater
-            AND p IN (SELECT p1
-                         FROM Performance p1, TimeHall th
-                         WHERE p1.id = th.idPerformance
-                         AND th.start >= :birthday1
-                         AND th.start <= :birthday2)
-                         """)
+            AND p.id = th.idPerformance
+            AND th.start >= :birthday1
+            AND th.start <= :birthday2""")
     List<Performance> findActorQuery5(Date birthday1, Date birthday2, String genre, String theater, String country,
                                       String fullName, int year1, int year2);
 }

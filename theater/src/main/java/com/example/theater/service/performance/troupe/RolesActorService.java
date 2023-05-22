@@ -5,12 +5,14 @@ import com.example.theater.dao.repository.performance.troupe.RolesActorRepositor
 import com.example.theater.dto.employee.ActorDTO;
 import com.example.theater.dto.employee.MusicianDTO;
 import com.example.theater.dto.performance.troupe.RolesActorDTO;
+import com.example.theater.exception.QueryException;
 import com.example.theater.exception.RecordNotFoundException;
 import com.example.theater.mapper.performance.troupe.RolesActorMapper;
 import com.example.theater.service.Generator;
 import com.example.theater.service.employee.ActorService;
 import com.example.theater.service.employee.EmployeeService;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -51,9 +53,14 @@ public class RolesActorService {
     }
 
     public void add(RolesActorDTO dto) {
-        dto.setId(Generator.generateId());
-        RolesActor rolesActor = mapper.toRolesActor(dto);
-        repository.save(rolesActor);
+//        TODO: trigger
+        try {
+            dto.setId(Generator.generateId());
+            RolesActor rolesActor = mapper.toRolesActor(dto);
+            repository.save(rolesActor);
+        } catch (DataAccessException e) {
+            throw new QueryException("Recheck fields maybe actor in play");
+        }
     }
 
     public void edit(RolesActorDTO dto) {

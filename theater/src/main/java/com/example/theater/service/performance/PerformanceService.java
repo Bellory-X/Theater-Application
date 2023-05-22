@@ -67,8 +67,9 @@ public class PerformanceService {
     }
 
     public List<PerformanceDTO> findActorQuery2(Date birthday1, Date birthday2, String genre, String theater) {
-        return repository.findActorQuery2(birthday1, birthday2, genre, theater)
-                .stream().map(el -> {
+        List<Performance> list = repository.findActorQuery2(birthday1, birthday2, genre, theater);
+        System.out.println(list.size());
+        return list.stream().map(el -> {
                     PerformanceDTO dto = mapper.toPerformanceDTO(el);
                     playService.getById(dto.getIdPlay())
                             .ifPresent(v -> {
