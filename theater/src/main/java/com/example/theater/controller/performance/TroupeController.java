@@ -1,6 +1,7 @@
 package com.example.theater.controller.performance;
 
 import com.example.theater.controller.TheaterController;
+import com.example.theater.controller.employee.WorkerQueryStatus;
 import com.example.theater.dto.employee.ActorDTO;
 import com.example.theater.dto.employee.DirectorDTO;
 import com.example.theater.dto.employee.MusicianDTO;
@@ -23,9 +24,14 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import net.rgielen.fxweaver.core.FxWeaver;
 import net.rgielen.fxweaver.core.FxmlView;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
 
+import java.time.ZoneId;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Component
 @FxmlView("/controller/performance/troupe-view.fxml")
@@ -35,7 +41,7 @@ public class TroupeController {
     public Button musicians;
     public Button directors;
     public Button actors;
-//    public Button search;
+    public Button search;
     public Button add;
     public Button edit;
     public Button drop;
@@ -59,7 +65,12 @@ public class TroupeController {
     public TableView<MusiciansPerformanceDTO> musiciansTable;
     public TableView<DirectorDTO> directorTable;
     public TableView<MusicianDTO> musicianTable;
+    public DatePicker searchField5;
+    public Text searchText5;
+    public DatePicker searchField6;
+    public Text searchText6;
     private TableStatus tableStatus = TableStatus.ACTORS;
+    private QueryStatus queryStatus = QueryStatus.QUERY0;
     private final PerformanceService performanceService;
     private final RolesActorService actorsService;
     private final DirectorsPerformanceService directorsService;
@@ -68,6 +79,7 @@ public class TroupeController {
     private final RoleCharacterService charactersService;
     private final ActorCharacterService characterService;
     private final FxWeaver fxWeaver;
+    private final Map<QueryStatus, String> queryMap = new HashMap<>();
 
     public TroupeController(PerformanceService performanceService, RolesActorService actorsService,
                             DirectorsPerformanceService directorsService, MusiciansPerformanceService musiciansService,
@@ -95,7 +107,22 @@ public class TroupeController {
         initRoleTable();
         initCharacterTable();
         initCharactersTable();
+        initQuery();
         clickButton();
+    }
+
+    private void initQuery() {
+        queryMap.put(QueryStatus.QUERY0, "Получить все спектакли");
+        queryMap.put(QueryStatus.QUERY8, "Получить гастролирующие спектакли");
+        queries.getItems().add(queryMap.get(QueryStatus.QUERY0));
+        queries.getItems().add(queryMap.get(QueryStatus.QUERY8));
+        queries.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
+            if (queries.getSelectionModel().getSelectedItem().equals(queryMap.get(QueryStatus.QUERY0)))
+                queryStatus = QueryStatus.QUERY0;
+            if (queries.getSelectionModel().getSelectedItem().equals(queryMap.get(QueryStatus.QUERY8))) {
+                queryStatus = QueryStatus.QUERY8;
+            }
+        });
     }
 
     private void clickButton() {
@@ -106,9 +133,31 @@ public class TroupeController {
         characters.setOnAction(event -> tableEvent(TableStatus.CHARACTERS, false));
         add.setOnAction(event -> addEvent());
 //        edit.setOnAction(event -> editEvent());
+        search.setOnAction(event -> searchEvent());
         drop.setOnAction(event -> dropEvent());
         back.setOnAction(event -> showNewStage(fxWeaver.loadView(TheaterController.class)));
         close.setOnAction(event -> close.getScene().getWindow().hide());
+        tableEvent(TableStatus.ACTORS, false);
+    }
+
+    private void searchEvent() {
+        try {
+            switch (queryStatus) {
+                case QUERY0 -> {
+                    performanceTable.setItems(FXCollections.observableList(performanceService.getAll()));
+                }
+                case QUERY8 -> {
+                    performanceTable.setItems(FXCollections.observableList(performanceService.findActorQuery8(
+                            Date.from(searchField5.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
+                            Date.from(searchField6.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant())
+                    )));
+                }
+            }
+        } catch (NumberFormatException e) {
+            result.setText("All fields except theater and gender must be positive number");
+        } catch (DataAccessException e) {
+            result.setText("Recheck fields maybe theater not exist");
+        }
     }
 
     private void dropEvent() {
@@ -164,7 +213,7 @@ public class TroupeController {
                 case ACTORS -> {
                     if (roleTable.getSelectionModel().getSelectedItem() == null ||
                             actorTable.getSelectionModel().getSelectedItem() == null)
-                        throw new ItemException("select record");
+                        throw new ItemException("select records role and actor");
                     actorsService.add(RolesActorDTO.builder()
                             .idRole(roleTable.getSelectionModel().getSelectedItem().getId())
                             .idEmployee(actorTable.getSelectionModel().getSelectedItem().getIdEmployee())
@@ -173,7 +222,7 @@ public class TroupeController {
                 case DIRECTORS -> {
                     if (performanceTable.getSelectionModel().getSelectedItem() == null ||
                             directorsTable.getSelectionModel().getSelectedItem() == null)
-                        throw new ItemException("select record");
+                        throw new ItemException("select records performance and director");
                     directorsService.add(DirectorsPerformanceDTO.builder()
                             .idPerformance(performanceTable.getSelectionModel().getSelectedItem().getId())
                             .idEmployee(directorsTable.getSelectionModel().getSelectedItem().getIdEmployee())
@@ -182,7 +231,7 @@ public class TroupeController {
                 case MUSICIANS -> {
                     if (performanceTable.getSelectionModel().getSelectedItem() == null ||
                             directorsTable.getSelectionModel().getSelectedItem() == null)
-                        throw new ItemException("select record");
+                        throw new ItemException("select records performance and musician");
                     musiciansService.add(MusiciansPerformanceDTO.builder()
                             .idPerformance(performanceTable.getSelectionModel().getSelectedItem().getId())
                             .idEmployee(musiciansTable.getSelectionModel().getSelectedItem().getIdEmployee())
@@ -190,7 +239,7 @@ public class TroupeController {
                 }
                 case ROLE -> {
                     if (performanceTable.getSelectionModel().getSelectedItem() == null)
-                        throw new ItemException("select record");
+                        throw new ItemException("select records performance");
                     roleService.add(RoleDTO.builder()
                             .name(addField1.getText())
                             .main(Boolean.parseBoolean(addField2.getText()))
@@ -201,7 +250,7 @@ public class TroupeController {
                 case CHARACTERS -> {
                     if (roleTable.getSelectionModel().getSelectedItem() == null ||
                             characterTable.getSelectionModel().getSelectedItem() == null)
-                        throw new ItemException("select record");
+                        throw new ItemException("select records role and character");
                     charactersService.add(RoleCharacterDTO.builder()
                             .idRole(roleTable.getSelectionModel().getSelectedItem().getId())
                             .character(characterTable.getSelectionModel().getSelectedItem().getCharacter())
@@ -259,7 +308,7 @@ public class TroupeController {
 
         roleTable.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
             actorTable.setItems(FXCollections.observableList(actorsService
-                    .getAllActor(performanceTable.getSelectionModel().getSelectedItem().getTheater())
+                    .getAllActor(roleTable.getSelectionModel().getSelectedItem().getId())
             ));
             charactersTable.setItems(FXCollections.observableList(charactersService.getAll().stream()
                     .filter(el -> el.getIdRole() == roleTable.getSelectionModel().getSelectedItem().getId())
@@ -433,5 +482,10 @@ public class TroupeController {
         DIRECTORS,
         ROLE,
         CHARACTERS
+    }
+
+    public enum QueryStatus {
+        QUERY0,
+        QUERY8
     }
 }

@@ -45,22 +45,18 @@ public class TimeHallService {
     }
 
     public void add(TimeHallDTO dto) {
-//        TODO: trigger time
         try {
             dto.setId(Generator.generateId());
             TimeHall repertoire = mapper.toTimeHall(dto);
             repository.save(repertoire);
-            Optional<TimeHallDTO> timeHallDTO = getAll().stream().filter(el -> el.getIdHall() == dto.getIdHall() &&
-                    el.getIdPerformance() == dto.getIdPerformance()).findFirst();
-            if (timeHallDTO.isPresent())
-                for (int i = 0; i < dto.getCount(); i++) {
-                    placeService.add(PlaceDTO.builder()
-                            .idHall(timeHallDTO.get().getId())
-                            .number(i + 1)
-                            .price(0)
-                            .reserve(false)
-                            .build());
-                }
+            for (int i = 0; i < dto.getCount(); i++) {
+                placeService.add(PlaceDTO.builder()
+                        .idHall(repertoire.getId())
+                        .number(i + 1)
+                        .price(0)
+                        .reserve(false)
+                        .build());
+            }
         } catch (DataAccessException e) {
             throw new QueryException("Recheck fields, maybe time crosses");
         }

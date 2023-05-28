@@ -6,6 +6,7 @@ import com.example.theater.dto.employee.character.ActorCharacterDTO;
 import com.example.theater.dto.employee.character.CharactersActorDTO;
 import com.example.theater.dto.employee.rank.RankDTO;
 import com.example.theater.dto.employee.rank.RanksActorDTO;
+import com.example.theater.dto.performance.troupe.RoleDTO;
 import com.example.theater.exception.ItemException;
 import com.example.theater.exception.QueryException;
 import com.example.theater.service.employee.ActorService;
@@ -79,6 +80,7 @@ public class ActorController {
     @FXML private TableView<ActorCharacterDTO> characterTable;
     @FXML private TableView<ActorCategoryDTO> categoryTable;
     @FXML private TableView<ActorDTO> workerTable;
+    @FXML private TableView<RoleDTO> roleTable;
     @FXML private Button search;
     @FXML private Button rank;
     @FXML private Button ranks;
@@ -199,24 +201,28 @@ public class ActorController {
                 case WORKER -> {
                     if (workerTable.getSelectionModel().getSelectedItem() == null ||
                             categoryTable.getSelectionModel().getSelectedItem() == null)
-                        throw new ItemException("select record");
-                    workerService.edit(ActorDTO.builder()
-                            .idEmployee(workerTable.getSelectionModel().getSelectedItem().getIdEmployee())
-                            .fullName(addField1.getText())
-                            .experience(Integer.parseInt(addField2.getText()))
-                            .gender(addField3.getText())
-                            .birthday(Date.from(addField4.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()))
-                            .countChild(Integer.parseInt(addField5.getText()))
-                            .salary(Integer.parseInt(addField6.getText()))
-                            .worker(Boolean.parseBoolean(addField7.getText()))
-                            .theater(addField8.getText())
-                            .category(categoryTable.getSelectionModel().getSelectedItem().getCategory())
-                            .build());
+                        throw new ItemException("select records worker and category");
+                    try {
+                        workerService.edit(ActorDTO.builder()
+                                .idEmployee(workerTable.getSelectionModel().getSelectedItem().getIdEmployee())
+                                .fullName(addField1.getText())
+                                .experience(Integer.parseInt(addField2.getText()))
+                                .gender(addField3.getText())
+                                .birthday(Date.from(addField4.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()))
+                                .countChild(Integer.parseInt(addField5.getText()))
+                                .salary(Integer.parseInt(addField6.getText()))
+                                .worker(Boolean.parseBoolean(addField7.getText()))
+                                .theater(addField8.getText())
+                                .category(categoryTable.getSelectionModel().getSelectedItem().getCategory())
+                                .build());
+                    } catch (DataAccessException | QueryException e) {
+                        throw new ItemException("Recheck fields maybe theater not exist");
+                    }
                     workerTable.setItems(FXCollections.observableList(workerService.getAll()));
                 }
                 case CATEGORY -> {
                     if (categoryTable.getSelectionModel().getSelectedItem() == null)
-                        throw new ItemException("select record");
+                        throw new ItemException("select record category");
                     categoryService.edit(ActorCategoryDTO.builder()
                             .id(categoryTable.getSelectionModel().getSelectedItem().getId())
                             .category(addField1.getText())
@@ -225,7 +231,7 @@ public class ActorController {
                 }
                 case CHARACTER -> {
                     if (characterTable.getSelectionModel().getSelectedItem() == null)
-                        throw new ItemException("select record");
+                        throw new ItemException("select record character");
                     characterService.edit(ActorCharacterDTO.builder()
                             .id(characterTable.getSelectionModel().getSelectedItem().getId())
                             .character(addField1.getText())
@@ -234,7 +240,7 @@ public class ActorController {
                 }
                 case RANK -> {
                     if (rankTable.getSelectionModel().getSelectedItem() == null)
-                        throw new ItemException("select record");
+                        throw new ItemException("select record rank");
                     rankService.edit(RankDTO.builder()
                             .id(rankTable.getSelectionModel().getSelectedItem().getId())
                             .name(addField1.getText())
@@ -245,7 +251,7 @@ public class ActorController {
                 }
                 case RANKS -> {
                     if (ranksTable.getSelectionModel().getSelectedItem() == null)
-                        throw new ItemException("select record");
+                        throw new ItemException("select records worker and rank");
                     Optional<RanksActorDTO> dto = ranksService.getAll().stream().filter(el ->
                             el.getIdEmployee() == workerTable.getSelectionModel().getSelectedItem().getIdEmployee()
                                     && el.getIdRank() == ranksTable.getSelectionModel().getSelectedItem().getId()).findFirst();
@@ -265,7 +271,7 @@ public class ActorController {
                 }
                 case CHARACTERS -> {
                     if (charactersTable.getSelectionModel().getSelectedItem() == null)
-                        throw new ItemException("select record");
+                        throw new ItemException("select records worker and character");
                     charactersService.edit(CharactersActorDTO.builder()
                             .id(charactersTable.getSelectionModel().getSelectedItem().getId())
                             .idEmployee(workerTable.getSelectionModel().getSelectedItem().getIdEmployee())
@@ -291,18 +297,22 @@ public class ActorController {
             switch (tableStatus) {
                 case WORKER -> {
                     if (categoryTable.getSelectionModel().getSelectedItem() == null)
-                        throw new ItemException("select record");
-                    workerService.add(ActorDTO.builder()
-                            .fullName(addField1.getText())
-                            .experience(Integer.parseInt(addField2.getText()))
-                            .gender(addField3.getText())
-                            .birthday(Date.from(addField4.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()))
-                            .countChild(Integer.parseInt(addField5.getText()))
-                            .salary(Integer.parseInt(addField6.getText()))
-                            .worker(Boolean.parseBoolean(addField7.getText()))
-                            .theater(addField8.getText())
-                            .category(categoryTable.getSelectionModel().getSelectedItem().getCategory())
-                            .build());
+                        throw new ItemException("select record category");
+                    try {
+                        workerService.add(ActorDTO.builder()
+                                .fullName(addField1.getText())
+                                .experience(Integer.parseInt(addField2.getText()))
+                                .gender(addField3.getText())
+                                .birthday(Date.from(addField4.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()))
+                                .countChild(Integer.parseInt(addField5.getText()))
+                                .salary(Integer.parseInt(addField6.getText()))
+                                .worker(Boolean.parseBoolean(addField7.getText()))
+                                .theater(addField8.getText())
+                                .category(categoryTable.getSelectionModel().getSelectedItem().getCategory())
+                                .build());
+                    } catch (DataAccessException | QueryException e) {
+                        throw new ItemException("Recheck fields maybe theater not exist");
+                    }
                     workerTable.setItems(FXCollections.observableList(workerService.getAll()));
                 }
                 case CATEGORY -> {
@@ -322,7 +332,7 @@ public class ActorController {
                 case RANKS -> {
                     if (workerTable.getSelectionModel().getSelectedItem() == null ||
                             rankTable.getSelectionModel().getSelectedItem() == null)
-                        throw new ItemException("select record");
+                        throw new ItemException("select records worker and rank");
                     ranksService.add(RanksActorDTO.builder()
                             .idEmployee(workerTable.getSelectionModel().getSelectedItem().getIdEmployee())
                             .idRank(rankTable.getSelectionModel().getSelectedItem().getId())
@@ -337,7 +347,7 @@ public class ActorController {
                 case CHARACTERS -> {
                     if (workerTable.getSelectionModel().getSelectedItem() == null ||
                             characterTable.getSelectionModel().getSelectedItem() == null)
-                        throw new ItemException("select record");
+                        throw new ItemException("select records worker and character");
                     charactersService.add(CharactersActorDTO.builder()
                             .idEmployee(workerTable.getSelectionModel().getSelectedItem().getIdEmployee())
                             .character(characterTable.getSelectionModel().getSelectedItem().getCharacter())
@@ -403,6 +413,9 @@ public class ActorController {
         ranks.setOnAction(event -> editorEvent(WorkerTableStatus.RANKS,
                 "", "", "",
                 false, false, false, false));
+        editorEvent(WorkerTableStatus.WORKER,
+                "fullName", "experience", "birthday",
+                true, true, true, true);
         back.setOnAction(event -> showNewStage(fxWeaver.loadView(EmployeeController.class)));
         close.setOnAction(event -> close.getScene().getWindow().hide());
         search.setOnAction(event -> searchEvent());
@@ -445,6 +458,8 @@ public class ActorController {
             }
         } catch (NumberFormatException e) {
             result.setText("All fields except theater and gender must be positive number");
+        } catch (DataAccessException e) {
+            result.setText("Recheck fields maybe theater not exist");
         }
     }
 

@@ -22,6 +22,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import net.rgielen.fxweaver.core.FxWeaver;
 import net.rgielen.fxweaver.core.FxmlView;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
@@ -99,6 +100,7 @@ public class PlaceController {
         search.setOnAction(event -> clickSearch());
         back.setOnAction(event -> showNewStage(fxWeaver.loadView(TheaterController.class)));
         close.setOnAction(event -> close.getScene().getWindow().hide());
+        setHall();
     }
 
     private void initQueries() {
@@ -177,50 +179,54 @@ public class PlaceController {
     }
 
     private void clickSearch() {
-        switch (queryStatus) {
-            case QUERY0 -> result.setText("Select query");
-            case QUERY11_1 -> result.setText(String.valueOf(placeService.findActorQuery11_1(
-                    Date.from(searchField5.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
-                    Date.from(searchField6.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant())
-            ).size()));
-            case QUERY11_2 -> result.setText(String.valueOf(placeService.findActorQuery11_2(
-                    Date.from(searchField5.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
-                    Date.from(searchField6.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
-                    performanceTable.getSelectionModel().getSelectedItem().getId()
-            ).size()));
-            case QUERY11_3 -> result.setText(String.valueOf(placeService.findActorQuery11_3(
-                    Date.from(searchField5.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
-                    Date.from(searchField6.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant())
-            ).size()));
-            case QUERY12 -> {
-                int count = 0;
-                List<TimeHallDTO> thList = timeHallService.getAll().stream()
-                        .filter(el-> el.getIdPerformance() == performanceTable.getSelectionModel().getSelectedItem().getId())
-                        .toList();
-                for (var el : thList) {
-                    List<PlaceDTO> list = placeService.getAll().stream()
-                            .filter(PlaceDTO::isReserve)
-                            .filter(v -> v.getIdHall() == el.getId()).toList();
-                    for (var i: list) {
-                        count += i.getPrice();
-                        count += performanceTable.getSelectionModel().getSelectedItem().getPrice();
+        try {
+            switch (queryStatus) {
+                case QUERY0 -> result.setText("Select query");
+                case QUERY11_1 -> result.setText(String.valueOf(placeService.findActorQuery11_1(
+                        Date.from(searchField5.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
+                        Date.from(searchField6.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant())
+                ).size()));
+                case QUERY11_2 -> result.setText(String.valueOf(placeService.findActorQuery11_2(
+                        Date.from(searchField5.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
+                        Date.from(searchField6.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
+                        performanceTable.getSelectionModel().getSelectedItem().getId()
+                ).size()));
+                case QUERY11_3 -> result.setText(String.valueOf(placeService.findActorQuery11_3(
+                        Date.from(searchField5.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
+                        Date.from(searchField6.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant())
+                ).size()));
+                case QUERY12 -> {
+                    int count = 0;
+                    List<TimeHallDTO> thList = timeHallService.getAll().stream()
+                            .filter(el -> el.getIdPerformance() == performanceTable.getSelectionModel().getSelectedItem().getId())
+                            .toList();
+                    for (var el : thList) {
+                        List<PlaceDTO> list = placeService.getAll().stream()
+                                .filter(PlaceDTO::isReserve)
+                                .filter(v -> v.getIdHall() == el.getId()).toList();
+                        for (var i : list) {
+                            count += i.getPrice();
+                            count += performanceTable.getSelectionModel().getSelectedItem().getPrice();
+                        }
                     }
+                    result.setText(String.valueOf(count));
                 }
-                result.setText(String.valueOf(count));
+                case QUERY13_1 -> result.setText(String.valueOf(placeService.findActorQuery13_1(
+                        Date.from(searchField5.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
+                        Date.from(searchField6.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant())
+                ).size()));
+                case QUERY13_2 -> result.setText(String.valueOf(placeService.findActorQuery13_2(
+                        Date.from(searchField5.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
+                        Date.from(searchField6.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
+                        performanceTable.getSelectionModel().getSelectedItem().getId()
+                ).size()));
+                case QUERY13_3 -> result.setText(String.valueOf(placeService.findActorQuery13_3(
+                        Date.from(searchField5.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
+                        Date.from(searchField6.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant())
+                ).size()));
             }
-            case QUERY13_1 -> result.setText(String.valueOf(placeService.findActorQuery13_1(
-                    Date.from(searchField5.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
-                    Date.from(searchField6.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant())
-            ).size()));
-            case QUERY13_2 -> result.setText(String.valueOf(placeService.findActorQuery13_2(
-                    Date.from(searchField5.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
-                    Date.from(searchField6.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
-                    performanceTable.getSelectionModel().getSelectedItem().getId()
-            ).size()));
-            case QUERY13_3 -> result.setText(String.valueOf(placeService.findActorQuery13_3(
-                    Date.from(searchField5.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
-                    Date.from(searchField6.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant())
-            ).size()));
+        } catch (NullPointerException e) {
+            result.setText("select record performance");
         }
     }
 
@@ -295,7 +301,7 @@ public class PlaceController {
                 case TIME_HALL -> {
                     if (hallTable.getSelectionModel().getSelectedItem() == null ||
                             performanceTable.getSelectionModel().getSelectedItem() == null)
-                        throw new ItemException("select record");
+                        throw new ItemException("select records hall and performance");
                     timeHallService.add(TimeHallDTO.builder()
                             .idHall(hallTable.getSelectionModel().getSelectedItem().getId())
                             .idPerformance((performanceTable.getSelectionModel().getSelectedItem().getId()))

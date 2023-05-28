@@ -51,4 +51,15 @@ public interface PerformanceRepository extends CrudRepository<Performance, Integ
             AND th.start <= :birthday2""")
     List<Performance> findActorQuery5(Date birthday1, Date birthday2, String genre, String theater, String country,
                                       String fullName, int year1, int year2);
+
+    @Query("""
+            SELECT p
+            FROM Performance p, TimeHall th, Hall h
+            WHERE p.id = th.idPerformance
+            AND th.idHall = h.id
+            AND NOT h.theater = p.theater
+            AND th.start >= :birthday1
+            AND th.start <= :birthday2
+            GROUP BY (p)""")
+    List<Performance> findActorQuery8(Date birthday1, Date birthday2);
 }

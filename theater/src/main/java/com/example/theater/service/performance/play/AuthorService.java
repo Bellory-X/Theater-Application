@@ -4,10 +4,12 @@ import com.example.theater.dao.entity.performance.play.Author;
 import com.example.theater.dao.repository.performance.play.AuthorRepository;
 import com.example.theater.dto.performance.PerformanceDTO;
 import com.example.theater.dto.performance.play.AuthorDTO;
+import com.example.theater.exception.QueryException;
 import com.example.theater.exception.RecordNotFoundException;
 import com.example.theater.mapper.performance.play.AuthorMapper;
 import com.example.theater.service.Generator;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -35,17 +37,25 @@ public class AuthorService {
     }
 
     public void add(AuthorDTO dto) {
-        dto.setId(Generator.generateId());
-        Author author = mapper.toAuthor(dto);
-        repository.save(author);
+        try {
+            dto.setId(Generator.generateId());
+            Author author = mapper.toAuthor(dto);
+            repository.save(author);
+        } catch (DataAccessException e) {
+            throw new QueryException("Recheck fields maybe it exist");
+        }
     }
 
     public void edit(AuthorDTO dto) {
-        if (!repository.existsById(dto.getId()))
-            throw new RecordNotFoundException("Not found " + dto.getId());
+        try {
+            if (!repository.existsById(dto.getId()))
+                throw new RecordNotFoundException("Not found " + dto.getId());
 
-        Author author = mapper.toAuthor(dto);
-        repository.save(author);
+            Author author = mapper.toAuthor(dto);
+            repository.save(author);
+        } catch (DataAccessException e) {
+            throw new QueryException("Recheck fields maybe it exist");
+        }
     }
 
     public void drop(AuthorDTO dto) {

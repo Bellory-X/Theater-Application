@@ -4,11 +4,13 @@ import com.example.theater.dao.entity.performance.Performance;
 import com.example.theater.dao.repository.performance.PerformanceRepository;
 import com.example.theater.dto.performance.PerformanceDTO;
 import com.example.theater.dto.performance.PlaceDTO;
+import com.example.theater.exception.QueryException;
 import com.example.theater.exception.RecordNotFoundException;
 import com.example.theater.mapper.performance.PerformanceMapper;
 import com.example.theater.service.Generator;
 import com.example.theater.service.performance.play.PlayService;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -45,17 +47,25 @@ public class PerformanceService {
     }
 
     public void add(PerformanceDTO dto) {
-        dto.setId(Generator.generateId());
-        Performance performance = mapper.toPerformance(dto);
-        repository.save(performance);
+        try {
+            dto.setId(Generator.generateId());
+            Performance performance = mapper.toPerformance(dto);
+            repository.save(performance);
+        } catch (DataAccessException e) {
+            throw new QueryException("Recheck field theater");
+        }
     }
 
     public void edit(PerformanceDTO dto) {
-        if (!repository.existsById(dto.getId()))
-            throw new RecordNotFoundException("Not found " + dto.getId());
+        try {
+            if (!repository.existsById(dto.getId()))
+                throw new RecordNotFoundException("Not found " + dto.getId());
 
-        Performance performance = mapper.toPerformance(dto);
-        repository.save(performance);
+            Performance performance = mapper.toPerformance(dto);
+            repository.save(performance);
+        } catch (DataAccessException e) {
+            throw new QueryException("Recheck field theater");
+        }
     }
 
     public void drop(PerformanceDTO dto) {
@@ -101,6 +111,21 @@ public class PerformanceService {
                                                 String fullName, int year1, int year2) {
         return repository.findActorQuery5( birthday1,  birthday2,  genre,  theater, country,
                  fullName,  year1,  year2)
+                .stream().map(el -> {
+                    PerformanceDTO dto = mapper.toPerformanceDTO(el);
+                    playService.getById(dto.getIdPlay())
+                            .ifPresent(v -> {
+                                dto.setName(v.getName());
+                                dto.setData(v.getData());
+                                dto.setRating(v.getRating());
+                                dto.setGenre(v.getGenre());
+                            });
+                    return dto;
+                }).toList();
+    }
+
+    public List<PerformanceDTO> findActorQuery8(Date birthday1, Date birthday2) {
+        return repository.findActorQuery8( birthday1,  birthday2)
                 .stream().map(el -> {
                     PerformanceDTO dto = mapper.toPerformanceDTO(el);
                     playService.getById(dto.getIdPlay())

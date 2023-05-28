@@ -2,21 +2,27 @@ package com.example.theater.service.employee;
 
 import com.example.theater.dao.entity.employee.Actor;
 import com.example.theater.dao.entity.employee.Employee;
+import com.example.theater.dao.entity.employee.character.ActorCharacter;
 import com.example.theater.dao.repository.employee.ActorRepository;
 import com.example.theater.dto.employee.ActorDTO;
 import com.example.theater.dto.employee.EmployeeDTO;
 import com.example.theater.dto.employee.MusicianDTO;
+import com.example.theater.dto.employee.character.ActorCharacterDTO;
+import com.example.theater.dto.employee.character.CharactersActorDTO;
+import com.example.theater.dto.performance.troupe.RoleCharacterDTO;
+import com.example.theater.dto.performance.troupe.RoleDTO;
 import com.example.theater.exception.QueryException;
 import com.example.theater.exception.RecordNotFoundException;
 import com.example.theater.mapper.employee.ActorMapper;
 import com.example.theater.service.Generator;
+import com.example.theater.service.employee.character.CharactersActorService;
+import com.example.theater.service.performance.troupe.RoleCharacterService;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -26,6 +32,8 @@ public class ActorService {
     private final ActorRepository repository;
     private final ActorMapper mapper;
     private final EmployeeService employeeService;
+    private final CharactersActorService charactersActorService;
+    private final RoleCharacterService roleCharacterService;
 
     public Optional<ActorDTO> getById(int id) {
         return repository.findById(id).map(mapper::toActorDTO);
@@ -107,5 +115,36 @@ public class ActorService {
                                        Date birthday) {
         return repository.findActorQuery2(theater, dataRank1, dataRank2, contest, gender, birthday)
                 .stream().map(mapper::toActorDTO).toList();
+    }
+
+    public List<ActorDTO> findActorQuery6(int id) {
+
+        return repository.findActorQuery6(id).stream().map(mapper::toActorDTO).toList();
+    }
+
+    public List<ActorDTO> findActorFromRole(RoleDTO roleDTO) {
+        Map<ActorDTO, List<CharactersActorDTO>> actorMap = new HashMap<>();
+        List<RoleCharacterDTO> characterList = roleCharacterService.getAll().stream()
+                .filter(el -> el.getIdRole() == roleDTO.getId()).toList();
+        repository.findAll().forEach(el -> {
+            List<CharactersActorDTO> list = charactersActorService.getAll().stream()
+                    .filter(v -> v.getIdEmployee() == el.getIdEmployee())
+                    .toList();
+            actorMap.put(mapper.toActorDTO(el), list);
+        });
+        actorMap.entrySet().removeIf(key -> characterList.size() == key.getValue().size());
+        characterList.forEach(el -> {
+            for (var v : actorMap.keySet()) {
+                actorMap.get(v).removeIf(g -> g.getCharacter().equals(el.getCharacter()));
+            }
+        });
+        List<ActorDTO> resul = new ArrayList<>();
+
+        actorMap.forEach((key, value) -> {
+            if (value.size() == 0)
+                resul.add(key);
+        });
+
+        return resul;
     }
 }

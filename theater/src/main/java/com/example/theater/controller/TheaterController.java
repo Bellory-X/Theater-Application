@@ -69,6 +69,9 @@ public class TheaterController {
     }
 
     private void initSubscriptionTable() {
+        TableColumn<SubscriptionDTO, Integer> column0 = new TableColumn<>("Id");
+        column0.setCellValueFactory(new PropertyValueFactory<>("id"));
+        subscriptionsTable.getColumns().add(column0);
         TableColumn<SubscriptionDTO, Integer> column1 = new TableColumn<>("Count");
         column1.setCellValueFactory(new PropertyValueFactory<>("count"));
         subscriptionsTable.getColumns().add(column1);

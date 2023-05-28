@@ -14,6 +14,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import net.rgielen.fxweaver.core.FxWeaver;
 import net.rgielen.fxweaver.core.FxmlView;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
 
 import java.time.ZoneId;
@@ -96,6 +97,8 @@ public class EmployeeController {
                     table.setItems(FXCollections.observableList(dtoList));
                 } catch (NumberFormatException e) {
                     result.setText("All fields except theater and gender must be positive number");
+                } catch (DataAccessException e) {
+                    result.setText("Recheck fields maybe theater not exist");
                 }
             }
         }

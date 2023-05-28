@@ -45,11 +45,15 @@ public class HallService {
     }
 
     public void edit(HallDTO dto) {
-        if (!repository.existsById(dto.getId()))
-            throw new RecordNotFoundException("Not found " + dto.getId());
+        try {
+            if (!repository.existsById(dto.getId()))
+                throw new RecordNotFoundException("Not found " + dto.getId());
 
-        Hall hall = mapper.toHall(dto);
-        repository.save(hall);
+            Hall hall = mapper.toHall(dto);
+            repository.save(hall);
+        } catch (DataAccessException e) {
+            throw new QueryException("Recheck field theater");
+        }
     }
 
     public void drop(HallDTO dto) {

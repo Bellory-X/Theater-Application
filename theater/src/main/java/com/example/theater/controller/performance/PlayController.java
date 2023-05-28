@@ -23,6 +23,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import net.rgielen.fxweaver.core.FxWeaver;
 import net.rgielen.fxweaver.core.FxmlView;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
 
 import java.time.ZoneId;
@@ -173,40 +174,45 @@ public class PlayController {
     }
 
     private void clickSearch() {
-        switch (queryStatus) {
-            case QUERY0 -> performanceTable.setItems(FXCollections.observableList(performanceService.getAll()));
-            case QUERY0_1 -> authorTable.setItems(FXCollections.observableList(authorService.getAll()));
-            case QUERY2 -> performanceTable.setItems(FXCollections.observableList(performanceService.findActorQuery2(
-                    Date.from(searchField5.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
-                    Date.from(searchField6.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
-                    searchField1.getText(),
-                    searchField2.getText()
-            )));
-            case QUERY3 -> performanceTable.setItems(FXCollections.observableList(performanceService.findActorQuery3(
-                    Date.from(searchField5.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
-                    Date.from(searchField6.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
-                    searchField1.getText(),
-                    searchField2.getText()
-            )));
-            case QUERY4 -> authorTable.setItems(FXCollections.observableList(authorService.findActorQuery4(
-                    Date.from(searchField5.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
-                    Date.from(searchField6.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
-                    searchField1.getText(),
-                    searchField2.getText(),
-                    searchField3.getText(),
-                    Integer.parseInt(searchField4.getText()),
-                    Integer.parseInt(searchField7.getText())
-            )));
-            case QUERY5 -> performanceTable.setItems(FXCollections.observableList(performanceService.findActorQuery5(
-                    Date.from(searchField5.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
-                    Date.from(searchField6.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
-                    searchField1.getText(),
-                    searchField2.getText(),
-                    authorTable.getSelectionModel().getSelectedItem().getCountry(),
-                    authorTable.getSelectionModel().getSelectedItem().getFullName(),
-                    Integer.parseInt(searchField3.getText()),
-                    Integer.parseInt(searchField4.getText())
-            )));
+        try {
+            switch (queryStatus) {
+                case QUERY0 -> performanceTable.setItems(FXCollections.observableList(performanceService.getAll()));
+                case QUERY0_1 -> authorTable.setItems(FXCollections.observableList(authorService.getAll()));
+                case QUERY2 -> performanceTable.setItems(FXCollections.observableList(performanceService.findActorQuery2(
+                        Date.from(searchField5.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
+                        Date.from(searchField6.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
+                        searchField1.getText(),
+                        searchField2.getText()
+                )));
+                case QUERY3 -> performanceTable.setItems(FXCollections.observableList(performanceService.findActorQuery3(
+                        Date.from(searchField5.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
+                        Date.from(searchField6.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
+                        searchField1.getText(),
+                        searchField2.getText()
+                )));
+                case QUERY4 -> authorTable.setItems(FXCollections.observableList(authorService.findActorQuery4(
+                        Date.from(searchField5.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
+                        Date.from(searchField6.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
+                        searchField1.getText(),
+                        searchField2.getText(),
+                        searchField3.getText(),
+                        Integer.parseInt(searchField4.getText()),
+                        Integer.parseInt(searchField7.getText())
+                )));
+                case QUERY5 -> performanceTable.setItems(FXCollections.observableList(performanceService.findActorQuery5(
+                        Date.from(searchField5.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
+                        Date.from(searchField6.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()),
+                        searchField1.getText(),
+                        searchField2.getText(),
+                        authorTable.getSelectionModel().getSelectedItem().getCountry(),
+                        authorTable.getSelectionModel().getSelectedItem().getFullName(),
+                        Integer.parseInt(searchField3.getText()),
+                        Integer.parseInt(searchField4.getText())
+                )));
+            }
+            result.setText("Success");
+        } catch (DataAccessException e) {
+            result.setText("Recheck fields maybe theater or genre not exist");
         }
     }
 
@@ -229,6 +235,7 @@ public class PlayController {
         troupe.setOnAction(event -> showNewStage(fxWeaver.loadView(TroupeController.class)));
         back.setOnAction(event -> showNewStage(fxWeaver.loadView(PlaceController.class)));
         close.setOnAction(event -> close.getScene().getWindow().hide());
+        performanceEvent();
     }
 
     private void performanceEvent() {
@@ -356,7 +363,7 @@ public class PlayController {
             switch (tableStatus) {
                 case PERFORMANCE -> {
                     if (performanceTable.getSelectionModel().getSelectedItem() == null)
-                        throw new ItemException("select record");
+                        throw new ItemException("select records performance and play");
                     PerformanceDTO dto = performanceTable.getSelectionModel().getSelectedItem();
                     dto.setIdPlay(playTable.getSelectionModel().getSelectedItem().getId());
                     dto.setPrice(Integer.parseInt(addField1.getText()));
@@ -366,7 +373,7 @@ public class PlayController {
                 }
                 case PLAY -> {
                     if (playTable.getSelectionModel().getSelectedItem() == null)
-                        throw new ItemException("select record");
+                        throw new ItemException("select records play and genre");
                     PlayDTO dto = playTable.getSelectionModel().getSelectedItem();
                     dto.setName(addField1.getText());
                     dto.setData(Date.from(addField4.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
@@ -421,7 +428,7 @@ public class PlayController {
             switch (tableStatus) {
                 case PERFORMANCE -> {
                     if (playTable.getSelectionModel().getSelectedItem() == null)
-                        throw new ItemException("select record");
+                        throw new ItemException("select record play");
                     performanceService.add(PerformanceDTO.builder()
                             .idPlay(playTable.getSelectionModel().getSelectedItem().getId())
                             .price(Integer.parseInt(addField1.getText()))
@@ -431,7 +438,7 @@ public class PlayController {
                 }
                 case PLAY -> {
                     if (genreTable.getSelectionModel().getSelectedItem() == null)
-                        throw new ItemException("select record");
+                        throw new ItemException("select record genre");
                     playService.add(PlayDTO.builder()
                             .name(addField1.getText())
                             .data(Date.from(addField4.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()))
@@ -451,7 +458,7 @@ public class PlayController {
                 case AUTHORS -> {
                     if (playTable.getSelectionModel().getSelectedItem() == null ||
                             authorTable.getSelectionModel().getSelectedItem() == null)
-                        throw new ItemException("select record");
+                        throw new ItemException("select records play and author");
                     playsAuthorService.add(PlaysAuthorDTO.builder()
                             .idPlay(playTable.getSelectionModel().getSelectedItem().getId())
                             .idAuthor(authorTable.getSelectionModel().getSelectedItem().getId())

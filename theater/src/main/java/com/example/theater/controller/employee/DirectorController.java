@@ -167,24 +167,28 @@ public class DirectorController {
                 case WORKER -> {
                     if (workerTable.getSelectionModel().getSelectedItem() == null ||
                             categoryTable.getSelectionModel().getSelectedItem() == null)
-                        throw new ItemException("select record");
-                    workerService.edit(DirectorDTO.builder()
-                            .idEmployee(workerTable.getSelectionModel().getSelectedItem().getIdEmployee())
-                            .fullName(addField1.getText())
-                            .experience(Integer.parseInt(addField2.getText()))
-                            .gender(addField3.getText())
-                            .birthday(Date.from(addField4.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()))
-                            .countChild(Integer.parseInt(addField5.getText()))
-                            .salary(Integer.parseInt(addField6.getText()))
-                            .worker(Boolean.parseBoolean(addField7.getText()))
-                            .theater(addField8.getText())
-                            .category(categoryTable.getSelectionModel().getSelectedItem().getCategory())
-                            .build());
+                        throw new ItemException("select records worker and category");
+                    try {
+                        workerService.edit(DirectorDTO.builder()
+                                .idEmployee(workerTable.getSelectionModel().getSelectedItem().getIdEmployee())
+                                .fullName(addField1.getText())
+                                .experience(Integer.parseInt(addField2.getText()))
+                                .gender(addField3.getText())
+                                .birthday(Date.from(addField4.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()))
+                                .countChild(Integer.parseInt(addField5.getText()))
+                                .salary(Integer.parseInt(addField6.getText()))
+                                .worker(Boolean.parseBoolean(addField7.getText()))
+                                .theater(addField8.getText())
+                                .category(categoryTable.getSelectionModel().getSelectedItem().getCategory())
+                                .build());
+                    } catch (DataAccessException | QueryException e) {
+                        throw new ItemException("Recheck fields maybe theater not exist");
+                    }
                     workerTable.setItems(FXCollections.observableList(workerService.getAll()));
                 }
                 case CATEGORY -> {
                     if (categoryTable.getSelectionModel().getSelectedItem() == null)
-                        throw new ItemException("select record");
+                        throw new ItemException("select record category");
                     categoryService.edit(DirectorCategoryDTO.builder()
                             .id(categoryTable.getSelectionModel().getSelectedItem().getId())
                             .category(addField1.getText())
@@ -193,7 +197,7 @@ public class DirectorController {
                 }
                 case CHARACTER -> {
                     if (characterTable.getSelectionModel().getSelectedItem() == null)
-                        throw new ItemException("select record");
+                        throw new ItemException("select record character");
                     characterService.edit(DirectorCharacterDTO.builder()
                             .id(characterTable.getSelectionModel().getSelectedItem().getId())
                             .character(addField1.getText())
@@ -202,7 +206,7 @@ public class DirectorController {
                 }
                 case CHARACTERS -> {
                     if (characterTable.getSelectionModel().getSelectedItem() == null)
-                        throw new ItemException("select record");
+                        throw new ItemException("select record characters");
                     charactersService.edit(CharactersDirectorDTO.builder()
                             .id(charactersTable.getSelectionModel().getSelectedItem().getId())
                             .idEmployee(workerTable.getSelectionModel().getSelectedItem().getIdEmployee())
@@ -228,17 +232,21 @@ public class DirectorController {
             switch (tableStatus) {
                 case WORKER -> {
                     if (categoryTable.getSelectionModel().getSelectedItem() == null)
-                        throw new ItemException("select record");
-                    workerService.add(DirectorDTO.builder().fullName(addField1.getText())
-                            .experience(Integer.parseInt(addField2.getText()))
-                            .gender(addField3.getText())
-                            .birthday(Date.from(addField4.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()))
-                            .countChild(Integer.parseInt(addField5.getText()))
-                            .salary(Integer.parseInt(addField6.getText()))
-                            .worker(Boolean.parseBoolean(addField7.getText()))
-                            .theater(addField8.getText())
-                            .category(categoryTable.getSelectionModel().getSelectedItem().getCategory())
-                            .build());
+                        throw new ItemException("select record category");
+                    try {
+                        workerService.add(DirectorDTO.builder().fullName(addField1.getText())
+                                .experience(Integer.parseInt(addField2.getText()))
+                                .gender(addField3.getText())
+                                .birthday(Date.from(addField4.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()))
+                                .countChild(Integer.parseInt(addField5.getText()))
+                                .salary(Integer.parseInt(addField6.getText()))
+                                .worker(Boolean.parseBoolean(addField7.getText()))
+                                .theater(addField8.getText())
+                                .category(categoryTable.getSelectionModel().getSelectedItem().getCategory())
+                                .build());
+                    } catch (DataAccessException | QueryException e) {
+                        throw new ItemException("Recheck fields maybe theater not exist");
+                    }
                     workerTable.setItems(FXCollections.observableList(workerService.getAll()));
                 }
                 case CATEGORY -> {
@@ -252,7 +260,7 @@ public class DirectorController {
                 case CHARACTERS -> {
                     if (workerTable.getSelectionModel().getSelectedItem() == null ||
                             characterTable.getSelectionModel().getSelectedItem() == null)
-                        throw new ItemException("select record");
+                        throw new ItemException("select records worker and character");
                     charactersService.add(CharactersDirectorDTO.builder()
                             .idEmployee(workerTable.getSelectionModel().getSelectedItem().getIdEmployee())
                             .character(characterTable.getSelectionModel().getSelectedItem().getCharacter())
@@ -317,6 +325,8 @@ public class DirectorController {
                     workerTable.setItems(FXCollections.observableList(dtoList));
                 } catch (NumberFormatException e) {
                     result.setText("All fields except theater and gender must be positive number");
+                } catch (DataAccessException e) {
+                    result.setText("Recheck fields maybe theater not exist");
                 }
             }
         }

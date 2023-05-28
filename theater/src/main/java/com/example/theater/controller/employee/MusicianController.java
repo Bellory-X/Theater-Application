@@ -167,19 +167,23 @@ public class MusicianController {
                 case WORKER -> {
                     if (workerTable.getSelectionModel().getSelectedItem() == null ||
                             categoryTable.getSelectionModel().getSelectedItem() == null)
-                        throw new ItemException("select record");
-                    workerService.edit(MusicianDTO.builder()
-                            .idEmployee(workerTable.getSelectionModel().getSelectedItem().getIdEmployee())
-                            .fullName(addField1.getText())
-                            .experience(Integer.parseInt(addField2.getText()))
-                            .gender(addField3.getText())
-                            .birthday(Date.from(addField4.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()))
-                            .countChild(Integer.parseInt(addField5.getText()))
-                            .salary(Integer.parseInt(addField6.getText()))
-                            .worker(Boolean.parseBoolean(addField7.getText()))
-                            .theater(addField8.getText())
-                            .category(categoryTable.getSelectionModel().getSelectedItem().getCategory())
-                            .build());
+                        throw new ItemException("select records worker and category");
+                    try {
+                        workerService.edit(MusicianDTO.builder()
+                                .idEmployee(workerTable.getSelectionModel().getSelectedItem().getIdEmployee())
+                                .fullName(addField1.getText())
+                                .experience(Integer.parseInt(addField2.getText()))
+                                .gender(addField3.getText())
+                                .birthday(Date.from(addField4.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()))
+                                .countChild(Integer.parseInt(addField5.getText()))
+                                .salary(Integer.parseInt(addField6.getText()))
+                                .worker(Boolean.parseBoolean(addField7.getText()))
+                                .theater(addField8.getText())
+                                .category(categoryTable.getSelectionModel().getSelectedItem().getCategory())
+                                .build());
+                    } catch (DataAccessException | QueryException e) {
+                        throw new ItemException("Recheck fields maybe theater not exist");
+                    }
                     workerTable.setItems(FXCollections.observableList(workerService.getAll()));
                 }
                 case CATEGORY -> {
@@ -228,17 +232,21 @@ public class MusicianController {
             switch (tableStatus) {
                 case WORKER -> {
                     if (categoryTable.getSelectionModel().getSelectedItem() == null)
-                        throw new ItemException("select record");
-                    workerService.add(MusicianDTO.builder().fullName(addField1.getText())
-                            .experience(Integer.parseInt(addField2.getText()))
-                            .gender(addField3.getText())
-                            .birthday(Date.from(addField4.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()))
-                            .countChild(Integer.parseInt(addField5.getText()))
-                            .salary(Integer.parseInt(addField6.getText()))
-                            .worker(Boolean.parseBoolean(addField7.getText()))
-                            .theater(addField8.getText())
-                            .category(categoryTable.getSelectionModel().getSelectedItem().getCategory())
-                            .build());
+                        throw new ItemException("select record category");
+                    try {
+                        workerService.add(MusicianDTO.builder().fullName(addField1.getText())
+                                .experience(Integer.parseInt(addField2.getText()))
+                                .gender(addField3.getText())
+                                .birthday(Date.from(addField4.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()))
+                                .countChild(Integer.parseInt(addField5.getText()))
+                                .salary(Integer.parseInt(addField6.getText()))
+                                .worker(Boolean.parseBoolean(addField7.getText()))
+                                .theater(addField8.getText())
+                                .category(categoryTable.getSelectionModel().getSelectedItem().getCategory())
+                                .build());
+                    } catch (DataAccessException | QueryException e) {
+                        throw new ItemException("Recheck fields maybe theater not exist");
+                    }
                     workerTable.setItems(FXCollections.observableList(workerService.getAll()));
                 }
                 case CATEGORY -> {
@@ -252,7 +260,7 @@ public class MusicianController {
                 case CHARACTERS -> {
                     if (workerTable.getSelectionModel().getSelectedItem() == null ||
                             characterTable.getSelectionModel().getSelectedItem() == null)
-                        throw new ItemException("select record");
+                        throw new ItemException("select records worker and character");
                     charactersService.add(CharactersMusicianDTO.builder()
                             .idEmployee(workerTable.getSelectionModel().getSelectedItem().getIdEmployee())
                             .character(characterTable.getSelectionModel().getSelectedItem().getCharacter())
@@ -317,6 +325,8 @@ public class MusicianController {
                     workerTable.setItems(FXCollections.observableList(dtoList));
                 } catch (NumberFormatException e) {
                     result.setText("All fields except theater and gender must be positive number");
+                } catch (DataAccessException e) {
+                    result.setText("Recheck fields maybe theater not exist");
                 }
             }
         }

@@ -1,6 +1,7 @@
 package com.example.theater.dao.repository.employee;
 
 import com.example.theater.dao.entity.employee.Actor;
+import com.example.theater.dao.entity.performance.troupe.Role;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -41,4 +42,30 @@ public interface ActorRepository extends CrudRepository<Actor, Integer> {
                 AND e.birthday >= :birthday
                 GROUP BY a.idEmployee""")
     List<Actor> findActorQuery2(String theater, Date dataRank1, Date dataRank2, String contest, String gender, Date birthday);
+
+    @Query("""
+            SELECT a
+            FROM Actor a, Role r, RoleCharacter cr, CharactersActor ca, Performance p
+            WHERE a.idEmployee = ca.idEmployee
+            AND ca.character = cr.character
+            AND cr.idRole = r.id
+            AND r.id = :id
+            AND p.id = r.idPerformance
+            AND p.theater = a.employee.theater
+            GROUP BY (a)""")
+    List<Actor> findActorQuery6(int id);
+
+    @Query("""
+            SELECT r
+            FROM Actor a, Role r, RolesActor ra, TimeHall th, Performance p, Play pl
+            WHERE a.idEmployee = :id
+            AND ra.idEmployee = a.idEmployee
+            AND ra.idRole = r.id
+            AND r.idPerformance = th.idPerformance
+            AND th.start >= :data1
+            AND th.start <= :data2
+            AND p.id = r.idPerformance
+            AND p.idPlay = pl.id
+            GROUP BY (r)""")
+    List<Role> findActorQuery10(int id, Date data1, Date data2);
 }

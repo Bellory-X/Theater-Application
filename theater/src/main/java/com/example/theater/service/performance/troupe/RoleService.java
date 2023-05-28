@@ -3,10 +3,12 @@ package com.example.theater.service.performance.troupe;
 import com.example.theater.dao.entity.performance.troupe.Role;
 import com.example.theater.dao.repository.performance.troupe.RoleRepository;
 import com.example.theater.dto.performance.troupe.RoleDTO;
+import com.example.theater.exception.QueryException;
 import com.example.theater.exception.RecordNotFoundException;
 import com.example.theater.mapper.performance.troupe.RoleMapper;
 import com.example.theater.service.Generator;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,9 +35,13 @@ public class RoleService {
     }
 
     public void add(RoleDTO dto) {
-        dto.setId(Generator.generateId());
-        Role role = mapper.toRole(dto);
-        repository.save(role);
+        try {
+            dto.setId(Generator.generateId());
+            Role role = mapper.toRole(dto);
+            repository.save(role);
+        } catch (DataAccessException e) {
+            throw new QueryException("Recheck fields maybe it exist");
+        }
     }
 
     public void edit(RoleDTO dto) {

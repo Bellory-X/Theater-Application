@@ -32,9 +32,8 @@ public class RolesActorService {
         return repository.findById(id).map(mapper::toRolesActorDTO);
     }
 
-    public List<ActorDTO> getAllActor(String theater) {
-//        TODO: filter
-        return actorService.getAll().stream().filter(el -> el.getTheater().equals(theater) || !el.isWorker()).toList();
+    public List<ActorDTO> getAllActor(int id) {
+        return  actorService.findActorQuery6(id);
     }
 
     public List<RolesActorDTO> getAll() {
@@ -53,13 +52,12 @@ public class RolesActorService {
     }
 
     public void add(RolesActorDTO dto) {
-//        TODO: trigger
         try {
             dto.setId(Generator.generateId());
             RolesActor rolesActor = mapper.toRolesActor(dto);
             repository.save(rolesActor);
         } catch (DataAccessException e) {
-            throw new QueryException("Recheck fields maybe actor in play");
+            throw new QueryException("Recheck fields maybe actor in play or role exist");
         }
     }
 
